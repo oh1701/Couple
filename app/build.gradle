@@ -89,4 +89,7 @@ dependencies {
     /** GoogleMap API */
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    /** lottie Animation 사용 */
+    implementation 'com.airbnb.android:lottie:3.0.7'
 }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyDate">
         <activity
-            android:name=".intro.activity.BasicIntroActivity"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".Map"
@@ -21,7 +21,7 @@
             android:value="AIzaSyBKbbVXDjzHoIDp8sE3c8e-RoS_sMnyDfg" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".intro.activity.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

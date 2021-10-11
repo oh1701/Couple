@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivity() {
+abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel<BaseRepository>>:AppCompatActivity() {
     abstract val layoutResourceId:Int
     abstract val thisviewModel:V
     lateinit var binding:T
@@ -45,6 +45,8 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
 
     override fun onDestroy() { // compositeDisposable 해제
         super.onDestroy()
-        compositeDisposable.clear()
+
+        log("OnDestroy", "OnDestroy")
+        compositeDisposable.dispose()
     }
 }
