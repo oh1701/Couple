@@ -1,15 +1,16 @@
 package com.project.myapplication.base
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.project.myapplication.MainActivity
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel<R>, R:BaseRepository>:AppCompatActivity() {
+abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivity() {
     abstract val layoutResourceId:Int
     abstract val thisviewModel:V
     lateinit var binding:T
@@ -29,6 +30,10 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel<R>, R:BaseReposi
 
     abstract fun initView()
     abstract fun initObserve()
+
+    protected fun <T> moveActivity(moveName: Class<T>){
+        startActivity(Intent(this@BaseActivity, moveName))
+    }
 
     protected fun toast(msg:String){ // 토스트 메세지 설정.
         if(toast != null){

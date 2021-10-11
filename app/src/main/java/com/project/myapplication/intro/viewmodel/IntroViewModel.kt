@@ -1,21 +1,23 @@
 package com.project.myapplication.intro.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseRepository
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.intro.repository.IntroRepository
 import io.reactivex.disposables.CompositeDisposable
 
-class IntroViewModel:BaseViewModel<IntroRepository>() {
+class IntroViewModel(private val repository: IntroRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    override var repository: IntroRepository
-        get() = super.repository
-        set(value) {}
 
-    fun aa(){
+    private val _moveActivity = MutableLiveData<Boolean>()
+    val moveActivity: LiveData<Boolean> = _moveActivity
+
+    fun timeCheck(){
         val introTimeCheck = repository.introTime().subscribe {
-            Log.e("확인", "확인")
+            _moveActivity.value = true
         }
 
         compositeDisposable.add(introTimeCheck)

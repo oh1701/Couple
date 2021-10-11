@@ -1,27 +1,26 @@
 package com.project.myapplication.intro.activity
 
 import android.os.Bundle
+import com.project.myapplication.MainActivity
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding
-import com.project.myapplication.intro.repository.IntroRepository
 import com.project.myapplication.intro.viewmodel.IntroViewModel
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
 
-class IntroActivity : BaseActivity<ActivityIntroBinding, IntroViewModel, IntroRepository>() {
+class IntroActivity : BaseActivity<ActivityIntroBinding, IntroViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_intro
     override val thisviewModel: IntroViewModel by viewModel()
 
     override fun initView() {
+        thisviewModel.timeCheck()
     }
 
     override fun initObserve() {
-
+        thisviewModel.moveActivity.observe(this, {
+            moveActivity(MainActivity::class.java)
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

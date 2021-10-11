@@ -8,7 +8,7 @@ import com.project.myapplication.databinding.ActivityMainBinding
 import com.project.myapplication.di.MyModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel, BaseRepository>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_main
     override val thisviewModel: MainViewModel by viewModel()
