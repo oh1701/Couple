@@ -11,12 +11,11 @@ class IntroRepository:BaseRepository() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
 
-    fun introTime(): Observable<Long>{
-        val introTime = Observable.timer(1500L, TimeUnit.MILLISECONDS)
+    fun introTime(): Observable<Long> {
+
+        return Observable.timer(1500L, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-        return introTime
     }
 
 }

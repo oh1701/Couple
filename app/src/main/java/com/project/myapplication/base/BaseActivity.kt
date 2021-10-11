@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel<BaseRepository>>:AppCompatActivity() {
+abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel<R>, R:BaseRepository>:AppCompatActivity() {
     abstract val layoutResourceId:Int
     abstract val thisviewModel:V
     lateinit var binding:T

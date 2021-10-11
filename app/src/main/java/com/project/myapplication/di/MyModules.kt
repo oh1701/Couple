@@ -14,5 +14,4 @@ val koinViewModelModule = module {
 
 val koinFactoryModule = module{
     factory { BaseRepository() }
-    factory { MyModules() }
 }
