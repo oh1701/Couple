@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.project.myapplication.MainActivity
+import com.project.myapplication.intro.activity.IntroActivity
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivity() {
@@ -31,8 +32,15 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
     abstract fun initView()
     abstract fun initObserve()
 
-    protected fun <T> moveActivity(moveName: Class<T>){
-        startActivity(Intent(this@BaseActivity, moveName))
+    protected fun <T> moveActivity(moveName: Class<T>){ // Intent 설정
+        val intent = Intent(this@BaseActivity, moveName)
+
+        if(this.javaClass == IntroActivity::class.java){ // 만약 현재 클래스가 IntroActivity 면 액티비티 플래그 제거 후 이동.
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+
+        startActivity(intent)
     }
 
     protected fun toast(msg:String){ // 토스트 메세지 설정.
@@ -44,7 +52,7 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
         toast!!.show()
     }
 
-    protected fun log(title:String, content:String){
+    protected fun log(title:String, content:String){ // 로그 설정
         Log.d(title, content)
     }
 

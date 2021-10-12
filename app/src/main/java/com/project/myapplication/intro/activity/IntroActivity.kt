@@ -2,6 +2,7 @@ package com.project.myapplication.intro.activity
 
 import android.os.Bundle
 import com.project.myapplication.MainActivity
+import com.project.myapplication.Map
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding
