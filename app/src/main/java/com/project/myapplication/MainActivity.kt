@@ -2,6 +2,11 @@ package com.project.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
 import com.bumptech.glide.Glide
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.base.BaseRepository
@@ -20,11 +25,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initView() {
         thisviewModel.getmyDatetime()
+
+        binding.diary.setOnClickListener {
+            toast("123")
+        }
     }
 
     override fun initObserve() {
         thisviewModel.myDatetime.observe(this, {
-            binding.coupleText.text = "우리가 서로 만난 지\n 벌써,\n ${it}일 째"
+            var span = SpannableStringBuilder("우리 사랑\n벌써 ${it}일")
+            span.setSpan(RelativeSizeSpan(0.6f), 0, 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.coupleText.text = span
         })
     }
 }
