@@ -1,5 +1,7 @@
 package com.project.myapplication.di
 
+import com.project.myapplication.MainRepository
+import com.project.myapplication.MainViewModel
 import com.project.myapplication.base.BaseRepository
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.intro.repository.IntroRepository
@@ -11,7 +13,7 @@ class MyModules{
 
 }
 val koinViewModelModule = module {
-    viewModel { BaseViewModel() }
+    viewModel { MainViewModel(MainRepository()) }
     viewModel { IntroViewModel(IntroRepository()) }
 }
 

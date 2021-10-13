@@ -2,6 +2,7 @@ package com.project.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.base.BaseRepository
 import com.project.myapplication.databinding.ActivityMainBinding
@@ -15,14 +16,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        moveActivity(Map::class.java)
     }
 
     override fun initView() {
+        thisviewModel.getmyDatetime()
     }
 
     override fun initObserve() {
-
+        thisviewModel.myDatetime.observe(this, {
+            binding.coupleText.text = "우리가 서로 만난 지\n 벌써,\n ${it}일 째"
+        })
     }
 }

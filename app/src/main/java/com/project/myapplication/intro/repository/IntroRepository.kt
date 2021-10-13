@@ -8,14 +8,9 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class IntroRepository:BaseRepository() {
-    override val compositeDisposable: CompositeDisposable
-        get() = super.compositeDisposable
-
     fun introTime(): Observable<Long> {
-
         return Observable.timer(1500L, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-
 }
