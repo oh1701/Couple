@@ -5,162 +5,204 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-
-    android:paddingStart="15dp"
-    android:paddingEnd="15dp"
-    android:background="@drawable/couple4">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_guide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="60dp"/>
-
-    <Button
-        android:id="@+id/main"
-        android:text="시작"
-        android:textColor="#C6C6C6"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:typeface="serif"
-
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/top_guide"
-        android:background="@android:color/transparent"
-        android:layout_width="60dp"
-        android:layout_height="50dp"/>
-
-    <Button
-        android:id="@+id/travel"
-        android:text="여행"
-        android:textColor="#C6C6C6"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:typeface="serif"
-        android:gravity="center"
-
-        app:layout_constraintStart_toEndOf="@id/main"
-        app:layout_constraintBottom_toBottomOf="@id/top_guide"
-        android:background="@android:color/transparent"
-
-        android:layout_marginStart="10dp"
-        android:layout_width="60dp"
-        android:layout_height="50dp"/>
-
-    <Button
-        android:id="@+id/diary"
-        android:text="일기"
-        android:textColor="#C6C6C6"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:typeface="serif"
-        android:gravity="center"
-
-        app:layout_constraintStart_toEndOf="@id/travel"
-        app:layout_constraintBottom_toBottomOf="@id/top_guide"
-        android:background="@android:color/transparent"
-        android:layout_marginStart="10dp"
-        android:layout_width="60dp"
-        android:layout_height="50dp"/>
-
-    <ImageButton
-        android:id="@+id/menu"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/diary"
-        app:layout_constraintBottom_toBottomOf="@id/diary"
-        android:background="@android:color/transparent"
-
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_baseline_menu_24"
-        android:layout_width="36dp"
-        android:layout_height="50dp"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inside_layout"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/main_drawer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        app:layout_constraintTop_toTopOf="@id/top_guide"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/end_guide"
+            android:background="@drawable/couple4"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="60dp" />
+
+            <Button
+                android:id="@+id/main"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="시작"
+
+                android:textColor="#C6C6C6"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                app:layout_constraintBottom_toBottomOf="@id/top_guide"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/travel"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="여행"
+
+                android:textColor="#C6C6C6"
+                android:textSize="18dp"
+                android:textStyle="bold"
+
+                android:typeface="serif"
+                app:layout_constraintBottom_toBottomOf="@id/top_guide"
+                app:layout_constraintStart_toEndOf="@id/main" />
+
+            <Button
+                android:id="@+id/diary"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="일기"
+
+                android:textColor="#C6C6C6"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                app:layout_constraintBottom_toBottomOf="@id/top_guide"
+                app:layout_constraintStart_toEndOf="@id/travel" />
+
+            <ImageButton
+                android:id="@+id/menu"
+
+                android:layout_width="36dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+
+                android:src="@drawable/ic_baseline_menu_24"
+                app:layout_constraintBottom_toBottomOf="@id/diary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/diary" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/inside_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/top_guide">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/end_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="100dp" />
+
+                <!-- 커플 이미지 1-->
+                <ImageView
+                    android:id="@+id/couple_image_1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_white"
+                    android:scaleType="centerInside"
+
+                    android:src="@drawable/ic_baseline_face_24"
+                    app:layout_constraintBottom_toTopOf="@id/couple_name_1"
+                    app:layout_constraintEnd_toEndOf="@id/couple_heart"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 커플 네임 1-->
+                <TextView
+                    android:id="@+id/couple_name_1"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:text="이름 1"
+                    android:textColor="@color/white"
+
+                    app:layout_constraintBottom_toBottomOf="@id/end_guide"
+                    app:layout_constraintEnd_toEndOf="@id/couple_heart"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 커플 이미지 2-->
+                <ImageView
+                    android:id="@+id/couple_image_2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_white"
+                    android:scaleType="centerInside"
+
+                    android:src="@drawable/ic_baseline_face_24"
+                    app:layout_constraintBottom_toTopOf="@id/couple_name_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/couple_heart" />
+
+                <TextView
+                    android:id="@+id/couple_name_2"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:text="이름 2"
+                    android:textColor="@color/white"
+
+
+                    app:layout_constraintBottom_toBottomOf="@id/end_guide"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/couple_heart" />
+
+                <!-- 작은 하트-->
+                <ImageView
+                    android:id="@+id/couple_heart"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+
+                    android:background="@android:color/transparent"
+
+                    android:src="@drawable/heart2"
+                    app:layout_constraintBottom_toBottomOf="@id/couple_image_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintTop_toTopOf="@id/couple_image_2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/couple_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="130dp"
+                android:gravity="center"
+                android:textColor="#D3FFFFFF"
+                android:textSize="30dp"
+
+                android:textStyle="bold"
+
+                android:typeface="serif"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/couple_menu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="100dp" />
-
-        <!-- 커플 이미지 1-->
-    <ImageView
-        android:id="@+id/couple_1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-
-        app:layout_constraintBottom_toBottomOf="@id/end_guide"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/couple_heart"
-
-        android:background="@drawable/circle_white"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_face_24"/>
-
-        <!-- 커플 이미지 2-->
-    <ImageView
-        android:id="@+id/couple_2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-
-        app:layout_constraintBottom_toBottomOf="@id/end_guide"
-        app:layout_constraintStart_toStartOf="@id/couple_heart"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        android:background="@drawable/circle_white"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_face_24"/>
-
-        <!-- 작은 하트-->
-    <ImageView
-        android:id="@+id/couple_heart"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-
-        android:background="@color/white"
-
-        app:layout_constraintTop_toTopOf="@id/couple_2"
-        app:layout_constraintBottom_toBottomOf="@id/couple_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/couple_Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        android:layout_marginBottom="130dp"
-
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:typeface="serif"
-        android:gravity="center"
-        android:textColor="#D3FFFFFF"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:layout_gravity="end"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
