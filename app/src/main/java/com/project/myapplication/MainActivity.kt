@@ -36,6 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val photoFilePath: PhotoFilePath by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
+    private lateinit var cameraFileUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         binding.coupleImage1.setOnClickListener {
-            startForResultCamera.launch(photoFilePath.getImage())
+            cameraFileUri = photoFilePath.getImage()
+            startForResultCamera.launch(cameraFileUri)
         }
 
         binding.coupleImage2.setOnClickListener {
@@ -83,9 +85,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
         startForResultCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){check ->
             if(check) {
-                Glide.with(this).load(photoFilePath.getImage()).circleCrop().into(binding.coupleImage1)
+                Glide.with(this).load(cameraFileUri).circleCrop().into(binding.coupleImage1)
             }
-            log("확인", check.toString())
         }
     }
 }

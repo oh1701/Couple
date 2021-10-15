@@ -53,7 +53,7 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
     }
 
     protected fun log(title:String, content:String){ // 로그 설정
-        Log.d(title, content)
+        Log.d("APP_$title", content)
     }
 
     override fun onDestroy() { // compositeDisposable 해제
