@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivity() {
     abstract val layoutResourceId:Int
-    abstract val thisviewModel:V
+    abstract val thisViewModel:V
     lateinit var binding:T
 
     private var toast:Toast? = null

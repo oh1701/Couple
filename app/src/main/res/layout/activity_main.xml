@@ -88,8 +88,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/diary" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/inside_layout"
+            <FrameLayout
+                android:id="@+id/inside_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
 
@@ -98,105 +98,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/top_guide">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/end_guide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_end="100dp" />
-
-                <!-- 커플 이미지 1-->
-                <ImageView
-                    android:id="@+id/couple_image_1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/circle_white"
-                    android:scaleType="centerInside"
-
-                    android:src="@drawable/ic_baseline_face_24"
-                    app:layout_constraintBottom_toTopOf="@id/couple_name_1"
-                    app:layout_constraintEnd_toEndOf="@id/couple_heart"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <!-- 커플 네임 1-->
-                <TextView
-                    android:id="@+id/couple_name_1"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-
-                    android:gravity="center"
-                    android:text="이름 1"
-                    android:textColor="@color/white"
-
-                    app:layout_constraintBottom_toBottomOf="@id/end_guide"
-                    app:layout_constraintEnd_toEndOf="@id/couple_heart"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <!-- 커플 이미지 2-->
-                <ImageView
-                    android:id="@+id/couple_image_2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/circle_white"
-                    android:scaleType="centerInside"
-
-                    android:src="@drawable/ic_baseline_face_24"
-                    app:layout_constraintBottom_toTopOf="@id/couple_name_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/couple_heart" />
-
-                <TextView
-                    android:id="@+id/couple_name_2"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-
-                    android:gravity="center"
-                    android:text="이름 2"
-                    android:textColor="@color/white"
-
-
-                    app:layout_constraintBottom_toBottomOf="@id/end_guide"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/couple_heart" />
-
-                <!-- 작은 하트-->
-                <ImageView
-                    android:id="@+id/couple_heart"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-
-                    android:background="@android:color/transparent"
-
-                    android:src="@drawable/heart2"
-                    app:layout_constraintBottom_toBottomOf="@id/couple_image_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-
-                    app:layout_constraintTop_toTopOf="@id/couple_image_2" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/couple_Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="130dp"
-                android:gravity="center"
-                android:textColor="#D3FFFFFF"
-                android:textSize="30dp"
-
-                android:textStyle="bold"
-
-                android:typeface="serif"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.navigation.NavigationView

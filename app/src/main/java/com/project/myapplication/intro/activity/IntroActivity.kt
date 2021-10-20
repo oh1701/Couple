@@ -7,21 +7,22 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding
 import com.project.myapplication.intro.viewmodel.IntroViewModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
 
 class IntroActivity : BaseActivity<ActivityIntroBinding, IntroViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_intro
-    override val thisviewModel: IntroViewModel by viewModel()
+    override val thisViewModel: IntroViewModel by viewModel()
 
     override fun initView() {
-        thisviewModel.timeCheck()
+        timer()
     }
 
     override fun initObserve() {
-        thisviewModel.moveActivity.observe(this, {
-            moveActivity(MainActivity::class.java)
-        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,4 +30,14 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, IntroViewModel>() {
         setContentView(R.layout.activity_intro)
     }
 
+    private fun timer(){
+        val timer = Observable.timer(1500L, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(){
+                moveActivity(MainActivity::class.java)
+            }
+
+        compositeDisposable.add(timer)
+    }
 }
