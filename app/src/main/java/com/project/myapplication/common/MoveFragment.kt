@@ -1,14 +1,9 @@
 package com.project.myapplication.common
 
-import android.app.Activity
-import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.project.myapplication.MainActivity
 import com.project.myapplication.R
-import com.project.myapplication.map.FragmentMap
-import com.project.myapplication.travel.FragmentCall
 
 class MoveFragment {
     private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {

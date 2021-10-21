@@ -1,30 +1,24 @@
-package com.project.myapplication.travel
+package com.project.myapplication.start
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.project.myapplication.R
-import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.PermissionCheck
-import com.project.myapplication.data.PhotoFilePath
+import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentStartBinding
 import org.koin.android.ext.android.inject
 
-class FragmentCall: BaseFragment<FragmentStartBinding, FragementViewModel>() {
+class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_start
-    override val thisViewModel: FragementViewModel by inject()
+    override val thisViewModel: StartViewModel by inject()
     private val photoFilePath: PhotoFilePath by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
@@ -49,7 +43,7 @@ class FragmentCall: BaseFragment<FragmentStartBinding, FragementViewModel>() {
     override fun initView() {
         thisViewModel.getmyDatetime()
 
-        binding.coupleImage1.setOnClickListener {
+        binding.coupleImage1.setOnClickListener { // 카메라 권한 확인하기.
             cameraFileUri = photoFilePath.getImage()
             startForResultCamera.launch(cameraFileUri)
         }
