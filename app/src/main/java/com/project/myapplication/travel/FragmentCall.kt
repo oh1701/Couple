@@ -48,6 +48,7 @@ class FragmentCall: BaseFragment<FragmentStartBinding, FragementViewModel>() {
 
     override fun initView() {
         thisViewModel.getmyDatetime()
+
         binding.coupleImage1.setOnClickListener {
             cameraFileUri = photoFilePath.getImage()
             startForResultCamera.launch(cameraFileUri)

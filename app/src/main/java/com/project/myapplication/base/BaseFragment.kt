@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.project.myapplication.databinding.FragmentStartBinding
 import io.reactivex.disposables.CompositeDisposable
+import kotlin.reflect.jvm.jvmName
 
 abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
     abstract val layoutResourceId:Int
@@ -50,7 +51,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
     }
 
     protected fun log(title:String, content:String){ // 로그 설정
-        Log.d("APP_$title", content)
+        Log.e("MYAPP_LOG$title", content)
     }
 
     override fun onDestroyView() {
@@ -58,5 +59,6 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
 
         compositeDisposable.dispose()
         _binding = null
+        log("Fragment:${this::class.simpleName}", "onDestroyView")
     }
 }

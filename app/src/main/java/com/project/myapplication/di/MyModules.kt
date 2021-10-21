@@ -1,5 +1,6 @@
 package com.project.myapplication.di
 
+import android.app.Activity
 import com.project.myapplication.MainRepository
 import com.project.myapplication.MainViewModel
 import com.project.myapplication.common.PermissionCheck
@@ -20,6 +21,8 @@ val koinViewModelModule = module {
 }
 
 val koinSingleModule = module {
-    single { PermissionCheck(get()) }
     single { PhotoFilePath(get())}
+}
+
+val koinFactoryModule = module {
 }
