@@ -1,13 +1,14 @@
-package com.project.myapplication
+package com.project.myapplication.views
 
 import android.os.Bundle
 import androidx.core.view.GravityCompat
+import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.common.PermissionCheck
 import com.project.myapplication.databinding.ActivityMainBinding
-import com.project.myapplication.start.StartFragment
-import com.project.myapplication.travel.TravelFragment
+import com.project.myapplication.views.start.StartFragment
+import com.project.myapplication.views.travel.TravelActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -29,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         binding.travel.setOnClickListener {
-            MoveFragment().moveFragment(this.supportFragmentManager, TravelFragment())
+            moveActivity(TravelActivity::class.java)
         }
 
         binding.menu.setOnClickListener {
@@ -49,7 +50,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 R.anim.slide_in_right,
                 R.anim.slide_out_left,
                 R.anim.slide_in_left,
-                R.anim.slide_out_right)
+                R.anim.slide_out_right
+            )
             .replace(
                 R.id.inside_fragment,
                 StartFragment()

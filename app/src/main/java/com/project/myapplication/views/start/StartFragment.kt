@@ -1,4 +1,4 @@
-package com.project.myapplication.start
+package com.project.myapplication.views.start
 
 import android.app.Activity
 import android.content.Intent

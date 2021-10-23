@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
-        android:name=".di.AppApplication"
+        android:name=".di.KoinApplication"
         android:allowBackup="true"
         android:icon="@mipmap/myappicon"
         android:label="@string/app_name"
@@ -20,10 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true" />
         <activity
             android:name=".Map"
+            android:exported="true" />
+
+        <activity
+            android:name="com.project.myapplication.views.travel.TravelActivity"
             android:exported="true" />
 
         <provider
@@ -41,7 +45,7 @@
             android:value="AIzaSyBKbbVXDjzHoIDp8sE3c8e-RoS_sMnyDfg" />
 
         <activity
-            android:name=".intro.activity.IntroActivity"
+            android:name="com.project.myapplication.views.intro.activity.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

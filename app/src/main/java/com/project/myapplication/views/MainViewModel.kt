@@ -1,11 +1,5 @@
-package com.project.myapplication
+package com.project.myapplication.views
 
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.RelativeSizeSpan
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.project.myapplication.base.BaseRepository
 import com.project.myapplication.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 

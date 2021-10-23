@@ -1,7 +1,5 @@
-package com.project.myapplication.intro.viewmodel
+package com.project.myapplication.views.intro.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 

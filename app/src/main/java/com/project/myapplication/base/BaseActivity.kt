@@ -7,8 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.project.myapplication.MainActivity
-import com.project.myapplication.intro.activity.IntroActivity
+import com.project.myapplication.views.intro.activity.IntroActivity
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivity() {
@@ -53,7 +52,7 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
     }
 
     protected fun log(title:String, content:String){ // 로그 설정
-        Log.e("MYAPP_LOG$title", content)
+        Log.e("APP_LOG::$title", content)
     }
 
     override fun onDestroy() { // compositeDisposable 해제
