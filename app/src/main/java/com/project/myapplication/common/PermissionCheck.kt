@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import java.util.jar.Manifest
 
+/** 실행 시 권한이 부여되어있지 않으면 권한 부여 팝업을 띄우는 클래스 */
+
 class PermissionCheck(private val activity: Activity) {
     private fun checkSelfPermission(permission : String): Boolean{
         return ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED

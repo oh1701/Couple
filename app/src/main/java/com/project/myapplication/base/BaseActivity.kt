@@ -51,14 +51,14 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel>:AppCompatActivi
         toast!!.show()
     }
 
-    protected fun log(title:String, content:String){ // 로그 설정
-        Log.e("APP_LOG::$title", content)
+    protected fun log(content:String){ // 로그 설정
+        Log.e("APP_LOG::${this::class.simpleName}", content)
     }
 
     override fun onDestroy() { // compositeDisposable 해제
         super.onDestroy()
 
-        log("_Activity:${this::class.simpleName}", "onDestroy")
+        log("_Activity:${this::class.simpleName}::onDestroy")
         compositeDisposable.dispose()
     }
 }

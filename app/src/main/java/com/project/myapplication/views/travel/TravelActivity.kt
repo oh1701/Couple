@@ -5,16 +5,14 @@ import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
+import com.project.myapplication.common.MapSetting
 import com.project.myapplication.databinding.ActivityTravelBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,8 +20,8 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
     override val layoutResourceId: Int
         get() = R.layout.activity_travel
     override val thisViewModel: TravelViewModel by viewModel()
-    lateinit var googleMap: GoogleMap
-    lateinit var myLocationLatLng: LatLng
+    private lateinit var googleMap: GoogleMap
+    private lateinit var mapSetting: MapSetting
     private val checkLocation = LocationListener { location ->
         location.let{
             thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
@@ -35,8 +33,6 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
 
         val map = supportFragmentManager.findFragmentById(R.id.myMap) as SupportMapFragment
         map.getMapAsync(this)
-
-        getLocation()
     }
 
     override fun initView() {
@@ -51,29 +47,21 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
 
     override fun initObserve() {
         thisViewModel.myLocationLatLng.observe(this, { latlng ->
-            animateCamera(latlng)
-            log("확인", latlng.toString())
+            mapSetting.repeatFunction(latlng)
+            log("생성")
         })
     }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        googleMap.uiSettings.isTiltGesturesEnabled = false
-        googleMap.uiSettings.isRotateGesturesEnabled = false
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-        googleMap.isBuildingsEnabled = false
+
+        if(!::mapSetting.isInitialized){ // lateinit 할당되지 않았을 때만 실행
+            mapSetting = MapSetting(googleMap)
+            mapSetting.mapSetting()
+            getLocation()
+        }
     }
 
-    private fun animateCamera(latlng:LatLng){
-        val cameraPosition = CameraPosition.Builder()
-            .target(latlng)
-            .zoom(17f)
-            .build()
-
-        googleMap.animateCamera(
-            CameraUpdateFactory.newCameraPosition(cameraPosition)
-        )
-    }
 
     private fun getLocation(){
         val lm = getSystemService(LOCATION_SERVICE) as LocationManager
@@ -86,7 +74,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
         else{
             if(isGpsEnabled && isNetworkEnabled) {
                 lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 1000, 0.0F, checkLocation
+                    LocationManager.GPS_PROVIDER, 3000, 0.0F, checkLocation
                 )
             }
             else{

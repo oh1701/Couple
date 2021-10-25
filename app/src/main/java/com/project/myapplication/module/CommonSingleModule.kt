@@ -1,5 +1,6 @@
 package com.project.myapplication.module
 
+import com.project.myapplication.common.MapSetting
 import com.project.myapplication.common.PhotoFilePath
 import org.koin.dsl.module
 
