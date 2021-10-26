@@ -11,35 +11,28 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.views.start.StartFragment
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
+abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment() {
     abstract val layoutResourceId:Int
     abstract val thisViewModel:V
-    private var _binding:T? = null
-    protected val binding get() = _binding!! // Fragment에서 뷰바인딩 사용시 View보다 오래 남아있을 수 있는 문제가 있어, 이렇게 사용해야함.
 
+    private var _binding:T? = null
     private var toast:Toast? = null
     private lateinit var backPressedCallback: OnBackPressedCallback
+
+    protected val binding get() = _binding!! // Fragment에서 뷰바인딩 사용시 View보다 오래 남아있을 수 있는 문제가 있어, 이렇게 사용해야함.
     protected val compositeDisposable = CompositeDisposable()
+    protected lateinit var supportFragmentManager: FragmentManager
+
 
     override fun onAttach(context: Context) { // startFragment가 아닌 곳에서 뒤로가기 누를 시, Fragment는 start로 되돌아간다.
         super.onAttach(context)
 
-        backPressedCallback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if(this::class.simpleName == "StartFragment"){
-                    log("정상", "정상")
-                }
-                else{
-                    requireActivity().supportFragmentManager.popBackStack()
-                    log("뒤로가기", "뒤로가기")
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        supportFragmentManager = requireActivity().supportFragmentManager
     }
 
     override fun onCreateView(
@@ -82,4 +75,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
         log("Fragment:${this::class.simpleName}", "onDestroyView")
     }
 
+    override fun onDetach() {
+        super.onDetach()
+    }
 }

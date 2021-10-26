@@ -9,6 +9,7 @@ import com.project.myapplication.common.PermissionCheck
 import com.project.myapplication.databinding.ActivityMainBinding
 import com.project.myapplication.views.start.StartFragment
 import com.project.myapplication.views.travel.view.TravelActivity
+import com.project.myapplication.views.travel.view.TravelMapFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {

@@ -3,18 +3,16 @@ package com.project.myapplication.views.travel
 import android.content.Context
 import android.location.Geocoder
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.databinding.ActivityTravelBinding
+import com.project.myapplication.databinding.FragmentTravelMapBinding
 import java.util.*
 
-class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap, val binding: ActivityTravelBinding ) {
+class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap, val binding: FragmentTravelMapBinding ) {
     private lateinit var marker:Marker
     private var cameraMoving = true
 
