@@ -1,10 +1,11 @@
-package com.project.myapplication.views.travel
+package com.project.myapplication.views.travel.view
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -12,8 +13,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
-import com.project.myapplication.common.MapSetting
 import com.project.myapplication.databinding.ActivityTravelBinding
+import com.project.myapplication.views.travel.GoogleMapSetting
+import com.project.myapplication.views.travel.viewmodel.TravelViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnMapReadyCallback {
@@ -21,7 +23,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
         get() = R.layout.activity_travel
     override val thisViewModel: TravelViewModel by viewModel()
     private lateinit var googleMap: GoogleMap
-    private lateinit var mapSetting: MapSetting
+    private lateinit var mapSetting: GoogleMapSetting
     private val checkLocation = LocationListener { location ->
         location.let{
             thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
@@ -33,6 +35,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
 
         val map = supportFragmentManager.findFragmentById(R.id.myMap) as SupportMapFragment
         map.getMapAsync(this)
+        getLocation()
     }
 
     override fun initView() {
@@ -48,7 +51,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
     override fun initObserve() {
         thisViewModel.myLocationLatLng.observe(this, { latlng ->
             mapSetting.repeatFunction(latlng)
-            log("생성")
+            log("latlng 생성")
         })
     }
 
@@ -56,9 +59,22 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), OnM
         googleMap = map
 
         if(!::mapSetting.isInitialized){ // lateinit 할당되지 않았을 때만 실행
-            mapSetting = MapSetting(googleMap)
+            mapSetting = GoogleMapSetting(this, googleMap, binding)
             mapSetting.mapSetting()
-            getLocation()
+        }
+
+        googleMap.setOnMarkerClickListener {
+            supportFragmentManager.beginTransaction().setCustomAnimations(
+                R.anim.slide_in_bottom,
+                0,
+                0,
+                R.anim.slide_out_bottom,
+            ).add(
+                R.id.myMap,
+                TravelDiaryFragment()
+            ).commit()
+
+            return@setOnMarkerClickListener true
         }
     }
 

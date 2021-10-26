@@ -34,7 +34,8 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel>: Fragment() {
                     log("정상", "정상")
                 }
                 else{
-                    MoveFragment().moveFragment(requireActivity().supportFragmentManager, StartFragment())
+                    requireActivity().supportFragmentManager.popBackStack()
+                    log("뒤로가기", "뒤로가기")
                 }
             }
         }

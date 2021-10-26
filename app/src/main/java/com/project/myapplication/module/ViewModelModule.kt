@@ -5,7 +5,8 @@ import com.project.myapplication.views.MainViewModel
 import com.project.myapplication.views.intro.viewmodel.IntroViewModel
 import com.project.myapplication.views.start.StartRepository
 import com.project.myapplication.views.start.StartViewModel
-import com.project.myapplication.views.travel.TravelViewModel
+import com.project.myapplication.views.travel.viewmodel.TravelDiaryViewModel
+import com.project.myapplication.views.travel.viewmodel.TravelViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,4 +18,5 @@ val viewModelModule = module {
     viewModel { IntroViewModel() }
     viewModel { StartViewModel(StartRepository()) }
     viewModel { TravelViewModel() }
+    viewModel { TravelDiaryViewModel() }
 }

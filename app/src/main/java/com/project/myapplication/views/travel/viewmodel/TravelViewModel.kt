@@ -1,4 +1,4 @@
-package com.project.myapplication.views.travel
+package com.project.myapplication.views.travel.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
