@@ -1,13 +1,9 @@
-package com.project.myapplication.views.travel.viewmodel
+package com.project.myapplication.ui.intro.viewmodel
 
 import com.project.myapplication.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 
-class TravelDiaryViewModel:BaseViewModel() {
+class IntroViewModel():BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

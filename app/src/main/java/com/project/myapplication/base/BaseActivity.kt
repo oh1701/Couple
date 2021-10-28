@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.project.myapplication.views.intro.activity.IntroActivity
+import com.project.myapplication.ui.intro.activity.IntroActivity
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel?>:AppCompatActivity() {

@@ -1,9 +1,9 @@
-package com.project.myapplication.views.travel.view
+package com.project.myapplication.ui.travel.view
 
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityTravelBinding
-import com.project.myapplication.views.travel.viewmodel.TravelViewModel
+import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {

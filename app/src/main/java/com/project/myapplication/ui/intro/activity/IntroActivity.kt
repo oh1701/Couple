@@ -1,11 +1,11 @@
-package com.project.myapplication.views.intro.activity
+package com.project.myapplication.ui.intro.activity
 
 import android.os.Bundle
-import com.project.myapplication.views.MainActivity
+import com.project.myapplication.ui.MainActivity
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding
-import com.project.myapplication.views.intro.viewmodel.IntroViewModel
+import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.project.myapplication.views
+package com.project.myapplication.ui
 
 import android.os.Bundle
 import androidx.core.view.GravityCompat
@@ -7,9 +7,8 @@ import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.common.PermissionCheck
 import com.project.myapplication.databinding.ActivityMainBinding
-import com.project.myapplication.views.start.StartFragment
-import com.project.myapplication.views.travel.view.TravelActivity
-import com.project.myapplication.views.travel.view.TravelMapFragment
+import com.project.myapplication.ui.start.StartFragment
+import com.project.myapplication.ui.travel.view.TravelActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {

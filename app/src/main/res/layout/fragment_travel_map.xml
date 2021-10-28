@@ -2,6 +2,12 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="travelMap"
+            type="com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel" />
+
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -34,14 +40,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
 
-
+            android:text="@{travelMap.geoCoderToLocation}"
             android:textColor="#14142A"
             android:textSize="20dp"
             android:typeface="serif"
             android:textStyle="bold"
             android:gravity="center"
 
-            android:text="위치\n날짜"
             />
         <!-- 2번째 줄, 날짜쪽은 spannable 이용해서 크기 줄이기.
          조금 흐리게도 포함-->
@@ -50,6 +55,7 @@
             android:id="@+id/backPressed"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:onClickListener="@{() -> travelMap.aa()}"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
+        android:onClickListener="@{() -> travelMap.aaaa()}"
         android:layout_margin="20dp"
         android:src="@drawable/heart1"/>
 

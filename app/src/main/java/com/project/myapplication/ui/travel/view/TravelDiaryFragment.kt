@@ -1,12 +1,11 @@
-package com.project.myapplication.views.travel.view
+package com.project.myapplication.ui.travel.view
 
 import android.os.Bundle
 import android.view.View
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
-import com.project.myapplication.views.travel.viewmodel.TravelViewModel
+import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TravelDiaryFragment: BaseFragment<FragmentTravelDiaryBinding, TravelViewModel>() {

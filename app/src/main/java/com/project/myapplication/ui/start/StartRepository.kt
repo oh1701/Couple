@@ -1,4 +1,4 @@
-package com.project.myapplication.views.start
+package com.project.myapplication.ui.start
 
 import android.text.SpannableStringBuilder
 import android.text.Spanned

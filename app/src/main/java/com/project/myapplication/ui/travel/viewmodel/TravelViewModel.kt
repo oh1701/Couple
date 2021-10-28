@@ -1,4 +1,4 @@
-package com.project.myapplication.views.travel.viewmodel
+package com.project.myapplication.ui.travel.viewmodel
 
 import com.project.myapplication.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable

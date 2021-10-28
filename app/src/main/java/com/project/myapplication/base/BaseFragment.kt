@@ -12,21 +12,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.project.myapplication.common.MoveFragment
-import com.project.myapplication.views.start.StartFragment
+import com.project.myapplication.common.CheckSelfPermission
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment() {
+abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), CheckSelfPermission {
     abstract val layoutResourceId:Int
     abstract val thisViewModel:V
 
     private var _binding:T? = null
     private var toast:Toast? = null
-    private lateinit var backPressedCallback: OnBackPressedCallback
 
     protected val binding get() = _binding!! // Fragment에서 뷰바인딩 사용시 View보다 오래 남아있을 수 있는 문제가 있어, 이렇게 사용해야함.
     protected val compositeDisposable = CompositeDisposable()
     protected lateinit var supportFragmentManager: FragmentManager
+    private lateinit var backPressedCallback: OnBackPressedCallback
 
 
     override fun onAttach(context: Context) { // startFragment가 아닌 곳에서 뒤로가기 누를 시, Fragment는 start로 되돌아간다.
@@ -75,7 +74,5 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment() {
         log("Fragment:${this::class.simpleName}", "onDestroyView")
     }
 
-    override fun onDetach() {
-        super.onDetach()
-    }
+
 }
