@@ -2,6 +2,7 @@ package com.project.myapplication.ui.travel.view
 
 import android.os.Bundle
 import android.view.View
+import com.bumptech.glide.Glide
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
@@ -17,7 +18,7 @@ class TravelDiaryFragment: BaseFragment<FragmentTravelDiaryBinding, TravelViewMo
     }
 
     override fun initView() {
-
+        Glide.with(this).load(R.drawable.natur).circleCrop().into(binding.diaryImage)
     }
 
     override fun initObserve() {

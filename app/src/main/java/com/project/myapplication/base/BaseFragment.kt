@@ -46,6 +46,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        log("Fragment:${this::class.simpleName}", "onViewCreated")
         binding.lifecycleOwner = viewLifecycleOwner // Fragment에서는 this 말고 뷰 라이프사이클 오너로 설정해주기.
         initView()
         initObserve()

@@ -20,15 +20,16 @@ class TravelMapViewModel():BaseViewModel() {
         _myLocationLatLng.value = latLng
     }
 
-    fun aa(){
-        _onBackPressed.value = true
-    }
 
     fun aaa(location:String){
         _geoCoderToLocation.value = location
     }
 
-    fun aaaa(){
+    fun onBackPressedButton(){
+        _onBackPressed.value = true
+    }
+
+    fun createDiaryButton(){
         if(_myLocationLatLng.value != null){
             _createTravelDiary.value = _myLocationLatLng.value
         }

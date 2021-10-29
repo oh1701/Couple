@@ -55,7 +55,7 @@
             android:id="@+id/backPressed"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:onClickListener="@{() -> travelMap.aa()}"
+            android:onClickListener="@{() -> travelMap.onBackPressedButton()}"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:onClickListener="@{() -> travelMap.aaaa()}"
+        android:onClickListener="@{() -> travelMap.createDiaryButton()}"
         android:layout_margin="20dp"
         android:src="@drawable/heart1"/>
 

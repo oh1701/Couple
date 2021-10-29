@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
@@ -23,6 +24,8 @@ import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
+
+/** 나중에 getLocation, getGecoder 분리하기 */
 
 class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewModel>(), OnMapReadyCallback {
     override val layoutResourceId: Int
@@ -69,15 +72,17 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         }
 
         googleMap.setOnMarkerClickListener {
-            supportFragmentManager.beginTransaction().setCustomAnimations(
-                R.anim.slide_in_bottom,
-                0,
-                0,
-                R.anim.slide_out_bottom
-            ).add(
-                R.id.fragment_layout,
-                TravelDiaryFragment()
-            ).addToBackStack("Map").commit()
+            if(it.title != "user") {
+                supportFragmentManager.beginTransaction().setCustomAnimations(
+                    R.anim.slide_in_bottom,
+                    0,
+                    0,
+                    R.anim.slide_out_bottom
+                ).add(
+                    R.id.fragment_layout,
+                    TravelDiaryFragment()
+                ).addToBackStack("Map").commit()
+            }
 
             return@setOnMarkerClickListener true
         }
@@ -94,7 +99,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         else{
             if(isGpsEnabled && isNetworkEnabled) {
                 lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 3000, 0.0F, checkLocation
+                    LocationManager.NETWORK_PROVIDER, 3000, 0.0F, checkLocation
                 )
             }
             else{

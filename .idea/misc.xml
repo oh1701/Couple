@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/gradient_user_profile.xml" value="0.30625" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/circle_.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/circle_white.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_baseline_face_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.30625" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_launcher_background.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/picture_circle_background_none.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/round_layout.xml" value="0.30625" />
@@ -23,6 +25,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_start.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_map.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/marker_diaryview.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/round_layout.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/menu/menu_main.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16979166666666667" />
