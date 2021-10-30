@@ -3,6 +3,7 @@ package com.project.myapplication.ui.travel.viewmodel
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -14,7 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 class TravelDiaryViewModel:BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    private val _diaryImageUri = MutableLiveData<Uri>()
+    private val _diaryImageUri = MutableLiveData<Uri>(null)
     val diaryImageUri : LiveData<Uri> = _diaryImageUri
     private val _imageClick = MutableLiveData<Boolean>()
     val imageClick:LiveData<Boolean> = _imageClick
@@ -24,6 +25,7 @@ class TravelDiaryViewModel:BaseViewModel() {
     }
 
     fun setDiaryImage(){
+        Log.e("실행333", "3333")
         _imageClick.value = true
     }
 

@@ -2,14 +2,17 @@ package com.project.myapplication.common
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import java.net.URI
 
 object ImageViewBind {
-    @BindingAdapter(value = ["imageFromUri"])
-    fun ImageView.setImageUri(uri: Uri, context: Context){
-        Glide.with(context).load(uri).circleCrop().into(this)
+    @JvmStatic
+    @BindingAdapter("imageFromUri")
+    fun setImageUri(view: ImageView, uri: Uri?){
+        Glide.with(view).load(uri).circleCrop().into(view)
+        Log.e("확인", uri.toString())
     }
 }
