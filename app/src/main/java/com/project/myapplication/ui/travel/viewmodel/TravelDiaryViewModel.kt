@@ -1,13 +1,33 @@
 package com.project.myapplication.ui.travel.viewmodel
 
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
 import com.project.myapplication.base.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 class TravelDiaryViewModel:BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
+    private val _diaryImageUri = MutableLiveData<Uri>()
+    val diaryImageUri : LiveData<Uri> = _diaryImageUri
+    private val _imageClick = MutableLiveData<Boolean>()
+    val imageClick:LiveData<Boolean> = _imageClick
 
     override fun onCleared() {
         super.onCleared()
+    }
+
+    fun setDiaryImage(){
+        _imageClick.value = true
+    }
+
+    fun getUri(uri: Uri){
+        _diaryImageUri.value = uri
     }
 }

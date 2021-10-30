@@ -55,7 +55,16 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         })
 
         thisViewModel.createTravelDiary.observe(this, { LatLng ->
-            googleMapSetting.addDiaryMarker(LatLng)
+//            googleMapSetting.addDiaryMarker(LatLng)
+            supportFragmentManager.beginTransaction().setCustomAnimations(
+                R.anim.slide_in_bottom,
+                0,
+                0,
+                R.anim.slide_out_bottom
+            ).add(
+                R.id.fragment_layout,
+                TravelDiaryFragment()
+            ).addToBackStack("Map").commit()
         })
 
         thisViewModel.onBackPressed.observe(this, {
