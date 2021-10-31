@@ -11,8 +11,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
+import com.project.myapplication.base.BaseRepository
 import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
+import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.ext.android.inject

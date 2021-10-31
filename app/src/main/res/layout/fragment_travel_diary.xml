@@ -108,12 +108,6 @@
         app:layout_constraintTop_toTopOf="@id/diary_write_day"
         app:layout_constraintBottom_toBottomOf="@id/diary_location"/>
 
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

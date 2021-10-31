@@ -39,7 +39,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
@@ -88,9 +88,17 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     /** GoogleMap API */
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     /** lottie Animation 사용 */
     implementation 'com.airbnb.android:lottie:3.0.7'
+
+    /** Room DB 사용 */
+    implementation "androidx.room:room-runtime:2.4.0-beta01"
+    testImplementation "androidx.room:room-testing:2.4.0-beta01"
+    kapt "androidx.room:room-compiler:2.4.0-beta01"
+    annotationProcessor "androidx.room:room-compiler:2.4.0-beta01"
+    implementation "androidx.room:room-rxjava2:2.4.0-beta01"
+    implementation "androidx.room:room-guava:2.4.0-beta01"
 }

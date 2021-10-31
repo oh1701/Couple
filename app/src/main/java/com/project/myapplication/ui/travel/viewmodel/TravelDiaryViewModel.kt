@@ -10,9 +10,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.project.myapplication.base.BaseViewModel
+import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import io.reactivex.disposables.CompositeDisposable
 
-class TravelDiaryViewModel:BaseViewModel() {
+class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
     private val _diaryImageUri = MutableLiveData<Uri>(null)
@@ -25,11 +26,12 @@ class TravelDiaryViewModel:BaseViewModel() {
     }
 
     fun setDiaryImage(){
-        Log.e("실행333", "3333")
         _imageClick.value = true
     }
 
     fun getUri(uri: Uri){
         _diaryImageUri.value = uri
+        Log.e("위치는", "$uri")
+        repository.insertDB()
     }
 }
