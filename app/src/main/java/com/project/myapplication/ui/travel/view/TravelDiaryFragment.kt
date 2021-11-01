@@ -35,7 +35,9 @@ class TravelDiaryFragment: BaseFragment<FragmentTravelDiaryBinding, TravelDiaryV
     }
 
     override fun initView() {
-
+        binding.diaryCoupleDay.setOnClickListener {
+            thisViewModel.getImage()
+        }
     }
 
     override fun initObserve() {

@@ -10,8 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.project.myapplication.base.BaseViewModel
+import com.project.myapplication.data.entity.RoomEntityImage
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
@@ -25,13 +28,27 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         super.onCleared()
     }
 
+    fun getImage(){
+        compositeDisposable.add(repository.selectDB("14")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess { _diaryImageUri.value = Uri.parse(it.imageUri) }
+            .doOnError { Log.e("실패하였음", "실패") }
+            .subscribe())
+    }
+
     fun setDiaryImage(){
         _imageClick.value = true
     }
 
     fun getUri(uri: Uri){
         _diaryImageUri.value = uri
-        Log.e("위치는", "$uri")
-        repository.insertDB()
+
+        compositeDisposable.add(repository.insertDB(RoomEntityImage(0, uri.toString(), "14", 1414))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete { Log.e("성공하였음", "성공") }
+            .doOnError {  Log.e("실패하였음", "실패")  }
+            .subscribe())
     }
 }
