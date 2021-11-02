@@ -6,6 +6,7 @@ import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import com.project.myapplication.ui.start.StartRepository
 import com.project.myapplication.ui.start.StartViewModel
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
+import com.project.myapplication.ui.travel.repository.TravelMapRepository
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
@@ -19,7 +20,7 @@ val viewModelModule = module {
     viewModel { MainViewModel(MainRepository()) }
     viewModel { IntroViewModel() }
     viewModel { StartViewModel(StartRepository()) }
-    viewModel { TravelMapViewModel()}
+    viewModel { TravelMapViewModel(TravelMapRepository())}
     viewModel { TravelDiaryViewModel(TravelDiaryRepository()) }
     viewModel { TravelViewModel()}
 }

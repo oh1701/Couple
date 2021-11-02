@@ -1,6 +1,8 @@
 package com.project.myapplication.common
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView

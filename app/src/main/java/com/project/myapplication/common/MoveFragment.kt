@@ -3,7 +3,9 @@ package com.project.myapplication.common
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.project.myapplication.R
+import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 
 class MoveFragment {
     private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
@@ -33,5 +35,17 @@ class MoveFragment {
             Log.e("현재 프래그먼트는", checkNowFragment(fragmentManager)!!::class.simpleName.toString())
             Log.e("바뀔 프래그먼트는", fragmentName::class.simpleName.toString())
         }
+    }
+
+    fun addMapFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
+        return fragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in_bottom,
+            0,
+            0,
+            R.anim.slide_out_bottom
+        ).add(
+            R.id.fragment_layout,
+            fragmentName
+        )
     }
 }

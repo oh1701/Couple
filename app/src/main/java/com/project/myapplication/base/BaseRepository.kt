@@ -1,9 +1,9 @@
 package com.project.myapplication.base
 
-import com.project.myapplication.data.db.RoomImageDB
+import com.project.myapplication.data.db.RoomDiaryDB
 
 open class BaseRepository{
-    protected open val roomDao = RoomImageDB.INSTANCE!!.roomDaoImage()
+    protected open val roomDao = RoomDiaryDB.INSTANCE!!.roomDaoImage()
 
 
 }

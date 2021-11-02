@@ -27,7 +27,7 @@
 
         android:typeface="monospace"
         android:textSize="13dp"
-        android:text="0000년 00월 00일"/>
+        android:text="@{travelDiary.createDay}"/>
 
     <TextView
         android:id="@+id/diary_location"

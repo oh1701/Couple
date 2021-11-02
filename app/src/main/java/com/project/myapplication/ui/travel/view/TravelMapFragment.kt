@@ -1,9 +1,11 @@
 package com.project.myapplication.ui.travel.view
 
 import android.Manifest
+import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -18,7 +20,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.common.CheckSelfPermission
+import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
+import com.project.myapplication.ui.diary.DiaryFragment
 import com.project.myapplication.ui.travel.GoogleMapSetting
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import org.koin.android.ext.android.inject
@@ -26,6 +30,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 /** 나중에 getLocation, getGecoder 분리하기 */
+/** LocationListener가 나갔다가 들어오면 오랫동안 작동이 안된다. */
 
 class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewModel>(), OnMapReadyCallback {
     override val layoutResourceId: Int
@@ -37,16 +42,23 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     private val checkLocation = LocationListener { location ->
         location.let{
             thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
-            thisViewModel.aaa(getGeoCoder(LatLng(it.latitude, it.longitude)))
+            thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
+            toast("실행")
         }
     }
 
-    override fun initView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.travelMap = thisViewModel
 
         val map = childFragmentManager.findFragmentById(R.id.myMap) as SupportMapFragment
         map.getMapAsync(this)
         getLocation()
+    }
+
+    override fun initView() {
+        thisViewModel.getAllDiary()
     }
 
     override fun initObserve() {
@@ -55,20 +67,20 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         })
 
         thisViewModel.createTravelDiary.observe(this, { LatLng ->
-//            googleMapSetting.addDiaryMarker(LatLng)
-            supportFragmentManager.beginTransaction().setCustomAnimations(
-                R.anim.slide_in_bottom,
-                0,
-                0,
-                R.anim.slide_out_bottom
-            ).add(
-                R.id.fragment_layout,
-                TravelDiaryFragment()
-            ).addToBackStack("Map").commit()
+            MoveFragment()
+                .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
+                .addToBackStack("Map")
+                .commit()
         })
 
         thisViewModel.onBackPressed.observe(this, {
             requireActivity().onBackPressed()
+        })
+
+        thisViewModel.googleMapDiaryMarker.observe(this, {
+            it.map { diary -> 
+                Log.e("설정", "설정")
+                googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble())) }
         })
     }
 
@@ -82,15 +94,10 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
-                supportFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.slide_in_bottom,
-                    0,
-                    0,
-                    R.anim.slide_out_bottom
-                ).add(
-                    R.id.fragment_layout,
-                    TravelDiaryFragment()
-                ).addToBackStack("Map").commit()
+                MoveFragment()
+                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
+                    .addToBackStack("Map")
+                    .commit()
             }
 
             return@setOnMarkerClickListener true
@@ -108,7 +115,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         else{
             if(isGpsEnabled && isNetworkEnabled) {
                 lm.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 3000, 0.0F, checkLocation
+                    LocationManager.NETWORK_PROVIDER, 1000, 0.0F, checkLocation
                 )
             }
             else{
@@ -118,12 +125,29 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     }
 
     private fun getGeoCoder(latlng: LatLng):String{
-        val geoCoder = Geocoder(context, Locale.KOREA)
+        val geoCoder = geocoder!!
         val location = geoCoder.getFromLocation(latlng.latitude, latlng.longitude, 2)
 
         val contryName = location[0].countryName
         val localityName = location[0].locality
 
         return "$contryName\n $localityName"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        googleMap.clear()
+    }
+
+    companion object{
+        private var geocoder:Geocoder? = null
+
+        fun geoCoder(context: Context):Geocoder?{
+            if(geocoder == null) {
+                geocoder = Geocoder(context, Locale.KOREA)
+            }
+            return geocoder
+        }
     }
 }

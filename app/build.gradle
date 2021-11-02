@@ -101,4 +101,5 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.4.0-beta01"
     implementation "androidx.room:room-rxjava2:2.4.0-beta01"
     implementation "androidx.room:room-guava:2.4.0-beta01"
+
 }
