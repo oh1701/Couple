@@ -59,7 +59,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
             toast!!.cancel()
         }
 
-        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+        toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
         toast!!.show()
     }
 

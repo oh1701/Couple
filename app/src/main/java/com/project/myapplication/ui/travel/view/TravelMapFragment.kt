@@ -68,7 +68,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
         thisViewModel.createTravelDiary.observe(this, { LatLng ->
             MoveFragment()
-                .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
+                .createDiary(supportFragmentManager, TravelDiaryFragment(getGeoCoder(LatLng)))
                 .addToBackStack("Map")
                 .commit()
         })
@@ -78,8 +78,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         })
 
         thisViewModel.googleMapDiaryMarker.observe(this, {
-            it.map { diary -> 
-                Log.e("설정", "설정")
+            it.map { diary ->
                 googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble())) }
         })
     }
@@ -95,7 +94,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
                 MoveFragment()
-                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
+                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment(null))
                     .addToBackStack("Map")
                     .commit()
             }

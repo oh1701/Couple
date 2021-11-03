@@ -17,4 +17,8 @@ class TravelDiaryRepository:BaseRepository() {
     fun selectDB(id:Int): Single<RoomDiaryEntity> {
         return roomDao.selectIdDao(id)
     }
+
+    fun getDateday():String{
+        return "+ 164"
+    }
 }

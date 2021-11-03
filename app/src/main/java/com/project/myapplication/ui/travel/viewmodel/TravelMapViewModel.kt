@@ -54,4 +54,5 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
             }
             .subscribe())
     }
+
 }

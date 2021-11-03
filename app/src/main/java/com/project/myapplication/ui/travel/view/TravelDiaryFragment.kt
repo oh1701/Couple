@@ -20,7 +20,7 @@ import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TravelDiaryFragment: BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
+class TravelDiaryFragment(private val location: String?): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
     override val layoutResourceId: Int = R.layout.fragment_travel_diary
     override val thisViewModel: TravelDiaryViewModel by viewModel()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
@@ -37,6 +37,10 @@ class TravelDiaryFragment: BaseFragment<FragmentTravelDiaryBinding, TravelDiaryV
     override fun initView() {
         binding.diaryCoupleDay.setOnClickListener {
             thisViewModel.getImage()
+        }
+
+        if(this.tag == "create"){
+            thisViewModel.createDiary(location)
         }
     }
 

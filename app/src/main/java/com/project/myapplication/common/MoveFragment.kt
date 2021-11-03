@@ -37,6 +37,19 @@ class MoveFragment {
         }
     }
 
+    fun createDiary(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
+        return fragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in_bottom,
+            0,
+            0,
+            R.anim.slide_out_bottom
+        ).add(
+            R.id.fragment_layout,
+            fragmentName,
+            "create"
+        )
+    }
+
     fun addMapFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
         return fragmentManager.beginTransaction().setCustomAnimations(
             R.anim.slide_in_bottom,

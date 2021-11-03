@@ -1,7 +1,9 @@
 package com.project.myapplication.ui.travel.viewmodel
 
 import android.net.Uri
+import android.opengl.Visibility
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
@@ -24,6 +26,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val imageClick:LiveData<Boolean> = _imageClick
     private val _createDay = MutableLiveData<String>()
     val createDay:LiveData<String> = _createDay
+    private val _createDiaryLocation = MutableLiveData<String>()
+    val createDiaryLocation:LiveData<String> = _createDiaryLocation
+    private val _createDiaryCoupleDay = MutableLiveData<String>()
+    val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
+    private val _diaryViewVisibility = MutableLiveData<Int>()
+    val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
 
     fun getImage(){
         compositeDisposable.add(repository.selectDB(1)
@@ -47,11 +55,17 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .doOnComplete { Log.e("성공하였음", "성공") }
             .doOnError {  Log.e("실패하였음", "실패")  }
             .subscribe())
+    }
 
+    fun createDiary(location: String?){
         val now = System.currentTimeMillis()
         val date = Date(now)
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
         _createDay.value = sdf.toString()
+        _createDiaryLocation.value = location
+        _createDiaryCoupleDay.value = repository.getDateday()
+
+        _diaryViewVisibility.value = View.INVISIBLE
     }
 }
