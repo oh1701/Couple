@@ -25,7 +25,9 @@ import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.ui.diary.DiaryFragment
 import com.project.myapplication.ui.travel.GoogleMapSetting
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
+import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -36,46 +38,37 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     override val layoutResourceId: Int
         get() = R.layout.fragment_travel_map
     override val thisViewModel: TravelMapViewModel by viewModel()
+    private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
     private lateinit var googleMap: GoogleMap
     private lateinit var googleMapSetting: GoogleMapSetting
     private val checkSelfPermission:CheckSelfPermission by inject()
-    private val checkLocation = LocationListener { location ->
-        location.let{
-            thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
-            thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
-            toast("실행")
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.travelMap = thisViewModel
-
         val map = childFragmentManager.findFragmentById(R.id.myMap) as SupportMapFragment
         map.getMapAsync(this)
-        getLocation()
     }
 
     override fun initView() {
+        binding.travelMapViewModel = thisViewModel
+        binding.travelMainViewModel = sharedActivityViewModel
+        binding.travelMapFrgament = this
+
         thisViewModel.getAllDiary()
     }
 
     override fun initObserve() {
-        thisViewModel.myLocationLatLng.observe(this, { LatLng ->
+        sharedActivityViewModel.myLocationLatLng.observe(this) { LatLng ->
             googleMapSetting.repeatFunction(LatLng)
-        })
+        }
 
-        thisViewModel.createTravelDiary.observe(this, { LatLng ->
+        sharedActivityViewModel.createTravelDiary.observe(this){
             MoveFragment()
-                .createDiary(supportFragmentManager, TravelDiaryFragment(getGeoCoder(LatLng)))
+                .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
                 .addToBackStack("Map")
                 .commit()
-        })
-
-        thisViewModel.onBackPressed.observe(this, {
-            requireActivity().onBackPressed()
-        })
+        }
 
         thisViewModel.googleMapDiaryMarker.observe(this, {
             it.map { diary ->
@@ -94,7 +87,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
                 MoveFragment()
-                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment(null))
+                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
                     .addToBackStack("Map")
                     .commit()
             }
@@ -103,50 +96,10 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         }
     }
 
-    private fun getLocation(){
-        val lm = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
-        val isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        val isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-        if(checkSelfPermission(requireContext())){
-            return
-        }
-        else{
-            if(isGpsEnabled && isNetworkEnabled) {
-                lm.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 1000, 0.0F, checkLocation
-                )
-            }
-            else{
-                toast("GPS 나 데이터 사용이 꺼져있음.")
-            }
-        }
-    }
-
-    private fun getGeoCoder(latlng: LatLng):String{
-        val geoCoder = geocoder!!
-        val location = geoCoder.getFromLocation(latlng.latitude, latlng.longitude, 2)
-
-        val contryName = location[0].countryName
-        val localityName = location[0].locality
-
-        return "$contryName\n $localityName"
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         googleMap.clear()
-    }
-
-    companion object{
-        private var geocoder:Geocoder? = null
-
-        fun geoCoder(context: Context):Geocoder?{
-            if(geocoder == null) {
-                geocoder = Geocoder(context, Locale.KOREA)
-            }
-            return geocoder
-        }
     }
 }

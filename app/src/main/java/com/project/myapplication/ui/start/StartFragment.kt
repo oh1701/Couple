@@ -1,6 +1,8 @@
 package com.project.myapplication.ui.start
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -42,6 +44,9 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     override fun initView() {
         thisViewModel.getmyDatetime()
+
+        val dialog = AlertDialog.Builder(requireContext())
+        dialog.setView()
 
         binding.coupleImage1.setOnClickListener { // 카메라 권한 확인하기.
             cameraFileUri = photoFilePath.getImage()

@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 
 interface CheckSelfPermission {
-     fun checkSelfPermission(context: Context): Boolean{ // 퍼미션 확인.
+     fun checkMyPermission(context: Context): Boolean{ // 퍼미션 확인.
         return (ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION

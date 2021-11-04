@@ -13,34 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewModel() {
-    private val _myLocationLatLng = MutableLiveData<LatLng>()
-    val myLocationLatLng:LiveData<LatLng> = _myLocationLatLng
-    private val _onBackPressed = MutableLiveData<Boolean>()
-    val onBackPressed:LiveData<Boolean> = _onBackPressed
-    private val _geoCoderToLocation = MutableLiveData<String>()
-    val geoCoderToLocation:LiveData<String> = _geoCoderToLocation
-    private val _createTravelDiary = MutableLiveData<LatLng>()
-    val createTravelDiary:LiveData<LatLng> = _createTravelDiary
     private val _googleMapDiaryMarker = MutableLiveData<List<RoomDiaryEntity>>()
     val googleMapDiaryMarker:LiveData<List<RoomDiaryEntity>> = _googleMapDiaryMarker
-
-    fun getMyLatLng(latLng: LatLng){
-        _myLocationLatLng.value = latLng
-    }
-
-    fun geoCoderToLocation(location:String){
-        _geoCoderToLocation.value = location
-    }
-
-    fun onBackPressedButton(){
-        _onBackPressed.value = true
-    }
-
-    fun createDiaryButton(){
-        if(_myLocationLatLng.value != null){
-            _createTravelDiary.value = _myLocationLatLng.value
-        }
-    }
 
     fun getAllDiary(){
         compositeDisposable.add(repository.getAllDiary()

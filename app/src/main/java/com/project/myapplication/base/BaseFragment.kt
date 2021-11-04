@@ -74,6 +74,4 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
         _binding = null
         log("Fragment:${this::class.simpleName}", "onDestroyView")
     }
-
-
 }

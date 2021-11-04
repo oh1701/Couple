@@ -19,6 +19,6 @@ class TravelDiaryRepository:BaseRepository() {
     }
 
     fun getDateday():String{
-        return "+ 164"
+        return "+ 164일"
     }
 }

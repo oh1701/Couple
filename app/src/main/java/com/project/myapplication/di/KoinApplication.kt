@@ -21,7 +21,6 @@ class KoinApplication:Application() {
 
         RxJavaPlugins.setErrorHandler { Log.e("RX JAVA Error::", it.toString()) }
         RoomDiaryDB.getInstance(applicationContext)
-        TravelMapFragment.geoCoder(applicationContext)
 
     }
 }

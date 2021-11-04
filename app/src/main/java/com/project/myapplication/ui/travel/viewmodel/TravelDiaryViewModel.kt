@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /** insertDB는 작성완료했을때 RoomDiaryEntity를 파라미터값으로 받는다.*/
+
 class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
@@ -57,15 +58,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribe())
     }
 
-    fun createDiary(location: String?){
+    fun createDiary(){
         val now = System.currentTimeMillis()
         val date = Date(now)
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
         _createDay.value = sdf.toString()
-        _createDiaryLocation.value = location
         _createDiaryCoupleDay.value = repository.getDateday()
-
-        _diaryViewVisibility.value = View.INVISIBLE
     }
 }

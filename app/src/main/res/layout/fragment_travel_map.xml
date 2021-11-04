@@ -4,8 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="travelMap"
+            name="travelMapViewModel"
             type="com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel" />
+
+        <variable
+            name="travelMainViewModel"
+            type="com.project.myapplication.ui.travel.viewmodel.TravelViewModel" />
+
+        <variable
+            name="travelMapFrgament"
+            type="com.project.myapplication.ui.travel.view.TravelMapFragment" />
 
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
 
-            android:text="@{travelMap.geoCoderToLocation}"
+            android:text="@{travelMainViewModel.geoCoderToLocation}"
             android:textColor="#14142A"
             android:textSize="20dp"
             android:typeface="serif"
@@ -55,7 +63,7 @@
             android:id="@+id/backPressed"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:onClickListener="@{() -> travelMap.onBackPressedButton()}"
+            android:onClickListener="@{() -> travelMapFrgament.requireActivity().onBackPressed()}"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:onClickListener="@{() -> travelMap.createDiaryButton()}"
+        android:onClickListener="@{() -> travelMainViewModel.createDiaryButton()}"
         android:layout_margin="20dp"
         android:src="@drawable/heart1"/>
 
