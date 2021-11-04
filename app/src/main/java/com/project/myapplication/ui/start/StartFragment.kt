@@ -46,7 +46,6 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
         thisViewModel.getmyDatetime()
 
         val dialog = AlertDialog.Builder(requireContext())
-        dialog.setView()
 
         binding.coupleImage1.setOnClickListener { // 카메라 권한 확인하기.
             cameraFileUri = photoFilePath.getImage()
