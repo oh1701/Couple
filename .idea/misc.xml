@@ -9,6 +9,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/circle_.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/circle_white.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/coupleday_layout.xml" value="0.30625" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/dialog_allconner_round_layout.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/dialog_top_grey_layout.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_baseline_face_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.30625" />
@@ -24,13 +25,13 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_include_start.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_intro.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_lover_intro.xml" value="0.29010416666666666" />
-        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_main.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_map.xml" value="0.15" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/activity_travel.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/afsf.xml" value="0.29010416666666666" />
-        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/dialog_select_picture_album.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/dialog_select_picture_album.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_map.xml" value="0.29010416666666666" />
-        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_start.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_start.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_map.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/marker_diaryview.xml" value="0.29010416666666666" />

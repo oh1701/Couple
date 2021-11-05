@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.project.myapplication.common.CheckSelfPermission
+import com.project.myapplication.common.MoveFragment
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), CheckSelfPermission {
@@ -24,6 +25,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
 
     protected val binding get() = _binding!! // Fragment에서 뷰바인딩 사용시 View보다 오래 남아있을 수 있는 문제가 있어, 이렇게 사용해야함.
     protected val compositeDisposable = CompositeDisposable()
+    protected val moveFragment = MoveFragment()
     protected lateinit var supportFragmentManager: FragmentManager
     private lateinit var backPressedCallback: OnBackPressedCallback
 

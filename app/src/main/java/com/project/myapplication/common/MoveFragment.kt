@@ -8,7 +8,7 @@ import com.project.myapplication.R
 import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 
 class MoveFragment {
-    private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
+    fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
         return if(fragmentManager.fragments.size > 0){
             fragmentManager.fragments[0]
         }
@@ -50,14 +50,35 @@ class MoveFragment {
         )
     }
 
-    fun addMapFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
+    fun addFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment, moveLayout:Int): FragmentTransaction {
         return fragmentManager.beginTransaction().setCustomAnimations(
             R.anim.slide_in_bottom,
             0,
             0,
             R.anim.slide_out_bottom
         ).add(
-            R.id.fragment_layout,
+            moveLayout,
+            fragmentName
+        )
+    }
+
+    fun addFragmentIn(fragmentManager: FragmentManager, fragmentName:Fragment, moveLayout:Int): FragmentTransaction {
+        return fragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left,
+            R.anim.slide_in_left,
+            R.anim.slide_out_right
+        ).add(
+            moveLayout,
+            fragmentName
+        )
+    }
+
+    fun addNoAnimationFragment(fragmentManager: FragmentManager, fragmentName:Fragment, moveLayout:Int): FragmentTransaction {
+        return fragmentManager
+            .beginTransaction()
+            .add(
+            moveLayout,
             fragmentName
         )
     }

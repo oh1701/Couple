@@ -4,6 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="mainViewModel"
+            type="com.project.myapplication.ui.MainViewModel" />
+    </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/main_drawer"
@@ -13,81 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:background="@drawable/couple4"
->
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/top_guide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="60dp" />
-
-            <Button
-                android:id="@+id/main"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="시작"
-                android:layout_marginStart="15dp"
-
-                android:textColor="#C6C6C6"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:typeface="serif"
-                app:layout_constraintBottom_toBottomOf="@id/top_guide"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/travel"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="여행"
-
-                android:textColor="#C6C6C6"
-                android:textSize="18dp"
-                android:textStyle="bold"
-
-                android:typeface="serif"
-                app:layout_constraintBottom_toBottomOf="@id/top_guide"
-                app:layout_constraintStart_toEndOf="@id/main" />
-
-            <Button
-                android:id="@+id/diary"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="일기"
-
-                android:textColor="#C6C6C6"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:typeface="serif"
-                app:layout_constraintBottom_toBottomOf="@id/top_guide"
-                app:layout_constraintStart_toEndOf="@id/travel" />
-
-            <ImageButton
-                android:id="@+id/menu"
-
-                android:layout_width="36dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="15dp"
-
-                android:src="@drawable/ic_baseline_menu_24"
-                app:layout_constraintBottom_toBottomOf="@id/diary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/diary" />
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/inside_fragment"
@@ -97,7 +28,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/top_guide">
+                app:layout_constraintTop_toTopOf="parent">
 
 
             </FrameLayout>

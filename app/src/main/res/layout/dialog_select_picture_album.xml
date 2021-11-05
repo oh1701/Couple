@@ -1,37 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C8000000"
+    android:clickable="true"
+    android:focusable="true">
 
-    android:background="@drawable/dialog_allconner_round_layout">
+    <ImageButton
+        android:layout_width="350dp"
+        android:layout_height="200dp"
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-
-        app:layout_constraintHeight_percent="0.75"
-
-        android:padding="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/dialog_top_grey_layout">
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="대상의 이름"
-            android:textColor="@color/black"
-            android:textSize="20dp"
+        android:layout_marginTop="40dp"
 
-            android:layout_marginBottom="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        android:background="@drawable/dialog_allconner_round_layout"
+        android:src="@drawable/ic_baseline_photo_camera_24"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="이름을 입력하세요"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <EditText
+        android:id="@+id/name_insert"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+
+        android:textSize="20dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/purple_200"
+        android:gravity="center"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name"
+
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/dialog_allconner_round_layout"/>
 
 
+    <TextView
+        android:id="@+id/birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    
+        android:text="생년월일을 입력하세요"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_insert"/>
+
+    <EditText
+        android:id="@+id/birth_year_insert"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+        android:textSize="20dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/purple_200"
+        android:gravity="center"
+
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/birth"
+
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/dialog_allconner_round_layout"/>
+
+    <TextView
+        android:id="@+id/birth_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="년"
+        android:textColor="#D115BE"
+        android:textSize="20dp"
+        android:gravity="center"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/birth_year_insert"
+        app:layout_constraintTop_toTopOf="@id/birth_year_insert"
+        app:layout_constraintBottom_toBottomOf="@id/birth_year_insert"/>
+
+    <EditText
+        android:id="@+id/birth_month_insert"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+
+        android:textSize="20dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/purple_200"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+
+        app:layout_constraintStart_toEndOf="@id/birth_year"
+        app:layout_constraintTop_toBottomOf="@id/birth"
+
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/dialog_allconner_round_layout"/>
+
+    <TextView
+        android:id="@+id/birth_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="월"
+        android:textColor="#D115BE"
+        android:textSize="20dp"
+        android:gravity="center"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/birth_month_insert"
+        app:layout_constraintTop_toTopOf="@id/birth_month_insert"
+        app:layout_constraintBottom_toBottomOf="@id/birth_month_insert"/>
+
+
+    <EditText
+        android:id="@+id/birth_day_insert"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+
+        android:textSize="20dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/purple_200"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+
+        app:layout_constraintStart_toEndOf="@id/birth_month"
+        app:layout_constraintTop_toBottomOf="@id/birth"
+
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/dialog_allconner_round_layout"/>
+
+    <TextView
+        android:id="@+id/birth_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="일"
+        android:textColor="#D115BE"
+        android:textSize="20dp"
+        android:gravity="center"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/birth_day_insert"
+        app:layout_constraintTop_toTopOf="@id/birth_day_insert"
+        app:layout_constraintBottom_toBottomOf="@id/birth_day_insert"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#D61296"
+
+        android:textColor="@color/white"
+        android:text="저장"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:gravity="center"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 다 끝나기 전에는 투명도 설정하기. -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

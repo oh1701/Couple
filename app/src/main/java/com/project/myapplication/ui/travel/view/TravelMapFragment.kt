@@ -86,8 +86,8 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
-                MoveFragment()
-                    .addMapFragmentUp(supportFragmentManager, TravelDiaryFragment())
+                moveFragment
+                    .addFragmentUp(supportFragmentManager, TravelDiaryFragment(), R.id.fragment_layout)
                     .addToBackStack("Map")
                     .commit()
             }

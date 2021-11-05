@@ -1,15 +1,18 @@
 package com.project.myapplication.ui
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.common.PermissionCheck
 import com.project.myapplication.databinding.ActivityMainBinding
-import com.project.myapplication.ui.start.StartFragment
+import com.project.myapplication.ui.start.view.StartFragment
 import com.project.myapplication.ui.travel.view.TravelActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.system.exitProcess
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutResourceId: Int
@@ -25,23 +28,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun initView() {
-        binding.main.setOnClickListener {
-            MoveFragment().moveFragment(this.supportFragmentManager, StartFragment())
-        }
-
-        binding.travel.setOnClickListener {
-            moveActivity(TravelActivity::class.java)
-        }
-
-        binding.menu.setOnClickListener {
-            binding.mainDrawer.openDrawer(GravityCompat.END)
-        }
-
-        binding.diary.setOnClickListener {
-        }
     }
 
     override fun initObserve() {
+    }
+
+    fun openDrawer(){
+        binding.mainDrawer.openDrawer(GravityCompat.END)
+    }
+
+    override fun onBackPressed() {
+        if(binding.mainDrawer.isDrawerOpen(GravityCompat.END)){
+            binding.mainDrawer.closeDrawers()
+        }
+        else{
+            toast("종료함")
+            super.onBackPressed()
+        }
     }
 
     private fun startFragment(){

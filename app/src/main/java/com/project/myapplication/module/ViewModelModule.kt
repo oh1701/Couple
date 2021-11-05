@@ -3,8 +3,8 @@ package com.project.myapplication.module
 import com.project.myapplication.ui.MainRepository
 import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
-import com.project.myapplication.ui.start.StartRepository
-import com.project.myapplication.ui.start.StartViewModel
+import com.project.myapplication.ui.start.repository.StartRepository
+import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.ui.travel.repository.TravelMapRepository
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
