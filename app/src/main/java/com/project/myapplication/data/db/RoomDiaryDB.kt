@@ -6,12 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.project.myapplication.data.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.dao.RoomDiaryDao
+import com.project.myapplication.data.entity.RoomCoupleSettingEntity
 import com.project.myapplication.data.entity.RoomDiaryEntity
 
-@Database(entities = [RoomDiaryEntity::class], version = 2)
+@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class], version = 3)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
+    abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao
 
     companion object{
         private val MIGRATION_1_2 = object : Migration(1,2){

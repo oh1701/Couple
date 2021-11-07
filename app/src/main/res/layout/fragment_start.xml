@@ -8,6 +8,10 @@
         <variable
             name="startFragemnt"
             type="com.project.myapplication.ui.start.view.StartFragment" />
+
+        <variable
+            name="startViewModel"
+            type="com.project.myapplication.ui.start.viewmodel.StartViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,8 +119,10 @@
         android:background="@drawable/circle_white"
         android:scaleType="centerInside"
         android:onClickListener="@{() -> startFragemnt.settingCouple()}"
-
         android:src="@drawable/ic_baseline_face_24"
+
+        app:coupleImage="@{startViewModel.coupleImage1}"
+
         app:layout_constraintBottom_toTopOf="@id/couple_name_1"
         app:layout_constraintEnd_toEndOf="@id/couple_heart"
         app:layout_constraintStart_toStartOf="parent" />
@@ -132,6 +138,7 @@
         android:textColor="@color/white"
         android:onClickListener="@{() -> startFragemnt.settingCouple()}"
 
+        app:coupleNameText="@{startViewModel.userName1}"
         app:layout_constraintBottom_toTopOf="@id/end_guide"
         app:layout_constraintEnd_toEndOf="@id/couple_heart"
         app:layout_constraintStart_toStartOf="parent" />

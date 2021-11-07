@@ -1,7 +1,10 @@
 package com.project.myapplication.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.project.myapplication.R

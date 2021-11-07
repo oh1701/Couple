@@ -21,11 +21,12 @@ import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.view.TravelActivity
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_start
-    override val thisViewModel: StartViewModel by inject()
+    override val thisViewModel: StartViewModel by viewModel()
     private val photoFilePath: PhotoFilePath by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
@@ -44,8 +45,10 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     override fun initView() {
         binding.startFragemnt = this
+        binding.startViewModel = thisViewModel
 
         thisViewModel.getmyDatetime()
+        thisViewModel.getCoupleSetting()
 
         binding.coupleImage1.setOnClickListener { // 카메라 권한 확인하기.
 //            cameraFileUri = photoFilePath.getImage()

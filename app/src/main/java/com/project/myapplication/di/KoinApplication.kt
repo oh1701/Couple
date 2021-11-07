@@ -1,7 +1,10 @@
 package com.project.myapplication.di
 
 import android.app.Application
+import android.net.Uri
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.data.db.RoomDiaryDB
 import com.project.myapplication.module.commonSingleModule
 import com.project.myapplication.module.viewModelModule
@@ -21,6 +24,5 @@ class KoinApplication:Application() {
 
         RxJavaPlugins.setErrorHandler { Log.e("RX JAVA Error::", it.toString()) }
         RoomDiaryDB.getInstance(applicationContext)
-
     }
 }

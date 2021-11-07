@@ -3,7 +3,9 @@ package com.project.myapplication.module
 import com.project.myapplication.ui.MainRepository
 import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
+import com.project.myapplication.ui.start.repository.SetCoupleRepository
 import com.project.myapplication.ui.start.repository.StartRepository
+import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
 import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.ui.travel.repository.TravelMapRepository
@@ -23,4 +25,5 @@ val viewModelModule = module {
     viewModel { TravelMapViewModel(TravelMapRepository())}
     viewModel { TravelDiaryViewModel(TravelDiaryRepository()) }
     viewModel { TravelViewModel()}
+    viewModel { SetCoupleViewModel(SetCoupleRepository()) }
 }
