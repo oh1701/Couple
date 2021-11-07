@@ -118,7 +118,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/circle_white"
         android:scaleType="centerInside"
-        android:onClickListener="@{() -> startFragemnt.settingCouple()}"
+        android:onClickListener="@{() -> startFragemnt.settingCouple(1)}"
         android:src="@drawable/ic_baseline_face_24"
 
         app:coupleImage="@{startViewModel.coupleImage1}"
@@ -136,7 +136,7 @@
         android:gravity="center"
         android:text="이름 1"
         android:textColor="@color/white"
-        android:onClickListener="@{() -> startFragemnt.settingCouple()}"
+        android:onClickListener="@{() -> startFragemnt.settingCouple(1)}"
 
         app:coupleNameText="@{startViewModel.userName1}"
         app:layout_constraintBottom_toTopOf="@id/end_guide"
@@ -153,8 +153,12 @@
         android:background="@drawable/circle_white"
         android:scaleType="centerInside"
 
-        android:onClickListener="@{() -> startFragemnt.settingCouple()}"
+        android:onClickListener="@{() -> startFragemnt.settingCouple(2)}"
         android:src="@drawable/ic_baseline_face_24"
+
+        app:coupleImage="@{startViewModel.coupleImage2}"
+
+
         app:layout_constraintBottom_toTopOf="@id/couple_name_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/couple_heart" />
@@ -167,7 +171,8 @@
         android:gravity="center"
         android:text="이름 2"
         android:textColor="@color/white"
-        android:onClickListener="@{() -> startFragemnt.settingCouple()}"
+        android:onClickListener="@{() -> startFragemnt.settingCouple(2)}"
+        app:coupleNameText="@{startViewModel.userName2}"
 
         app:layout_constraintBottom_toTopOf="@id/end_guide"
         app:layout_constraintEnd_toEndOf="parent"

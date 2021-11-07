@@ -35,14 +35,20 @@ class StartViewModel(private val repository: StartRepository):BaseViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { room ->
+                Log.e("getCoupleSetting", room.toString())
                 room.mapIndexed { index, it ->
                     if(index == 0){
                         _coupleImage1.value = Uri.parse(it.uri)
                         _userName1.value = it.name
+                        Log.e("실행대대대", "실행")
                     }
-                    else{
+                    else if(index == 1){
                         _coupleImage2.value = Uri.parse(it.uri)
                         _userName2.value = it.name
+                        Log.e("실행대대대", "실행22")
+                    }
+                    else{
+                        false
                     }
                 }
             }

@@ -21,6 +21,16 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
         get() = super.compositeDisposable
     private val _photoUri = MutableLiveData<Uri>()
     val photoUri:LiveData<Uri> = _photoUri
+    private val _completeButtonAlpha = MutableLiveData<Float>()
+    val completeButtonAlpha:LiveData<Float> = _completeButtonAlpha
+    private val _complete = MutableLiveData<Boolean>()
+    val complete:LiveData<Boolean> = _complete
+    private val _settingExist = MutableLiveData<Boolean>()
+    val settingExist:LiveData<Boolean> = _settingExist
+
+    init {
+        _settingExist.value = false
+    }
 
     val userName = MutableLiveData<String>()
     val birthdayYear = MutableLiveData<String>()
@@ -37,14 +47,58 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
         birthdayDay.value = day.toString()
     }
 
-    fun completeSetting(){
-        val completeSetting = RoomCoupleSettingEntity(1, _photoUri.value.toString(), userName.value, birthdayYear.value, birthdayMonth.value, birthdayDay.value, "!4")
+    fun completeSetting(id:Int){ // 버튼 완료 버튼 클릭 시 실행
+        val completeSetting = RoomCoupleSettingEntity(id, _photoUri.value.toString(), userName.value, birthdayYear.value, birthdayMonth.value, birthdayDay.value, "!4")
 
-        repository.insertCoupleSetting(completeSetting)
+        if(settingExist.value == true){
+            updateCoupleSetting(id, completeSetting)
+        }
+        else{
+            insertCoupleSetting(id, completeSetting)
+        }
+    }
+
+    fun getCoupleSetting(id:Int){ // 프래그먼트 열리면 데이터들을 라이브데이터 (xml 뷰) 에 전달.
+        repository.getCoupleSetting(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { Log.e("성공", "성공") }
-            .doOnError{ Log.e("실패", "실패") }
+            .doOnSuccess { room ->
+                birthdayYear.value = room.birthYear
+                birthdayMonth.value = room.birthMonth
+                birthdayDay.value = room.birthDay
+                userName.value = room.name
+                _photoUri.value = Uri.parse(room.uri)
+                _settingExist.value = true
+                Log.e("Room ::", "getCoupleSetting success")
+            }
+            .doOnError {
+                _settingExist.value = false
+                Log.e("Room ::", "getCoupleSetting failed")
+            }
+            .subscribe()
+    }
+
+    private fun updateCoupleSetting(id:Int, update:RoomCoupleSettingEntity){
+        repository.updateCoupleSetting(update)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                Log.e("Room ::", "CoupleSetting Update Success")
+                _complete.value = true
+            }
+            .doOnError{ Log.e("Room ::", "CoupleSetting Update Failed") }
+            .subscribe()
+    }
+
+    private fun insertCoupleSetting(id:Int, insert:RoomCoupleSettingEntity){
+        repository.insertCoupleSetting(insert)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                Log.e("Room ::", "CoupleSetting insert Success")
+                _complete.value = true
+            }
+            .doOnError{ Log.e("Room ::", "CoupleSetting insert Failed") }
             .subscribe()
     }
 }

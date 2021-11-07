@@ -11,6 +11,10 @@
         <variable
             name="setcoupleFragment"
             type="com.project.myapplication.ui.start.view.SetCoupleFragment" />
+
+        <variable
+            name="mainActivityViewModel"
+            type="com.project.myapplication.ui.MainViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -230,7 +234,8 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:onClickListener="@{() -> setcoupleViewModel.completeSetting()}"
+        android:onClickListener="@{() -> setcoupleViewModel.completeSetting(mainActivityViewModel.onClickView)}"
+        android:alpha="0.6"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

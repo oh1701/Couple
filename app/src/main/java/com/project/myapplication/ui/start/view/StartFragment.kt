@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,12 +22,14 @@ import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.view.TravelActivity
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_start
     override val thisViewModel: StartViewModel by viewModel()
+    private val sharedActivityViewModel: MainViewModel by sharedViewModel()
     private val photoFilePath: PhotoFilePath by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
@@ -41,6 +44,10 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
         thisViewModel.myDatetime.observe(viewLifecycleOwner, {
             binding.coupleText.text = it
         })
+
+        sharedActivityViewModel.settingUpdate.observe(this){
+            thisViewModel.getCoupleSetting()
+        }
     }
 
     override fun initView() {
@@ -72,7 +79,9 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
         startActivity(intent)
     }
 
-    fun settingCouple(){
+    fun settingCouple(number : Int){
+        sharedActivityViewModel.settingClickView(number)
+
         moveFragment
             .addFragmentUp(supportFragmentManager, SetCoupleFragment(), R.id.inside_fragment)
             .addToBackStack("start")
