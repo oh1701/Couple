@@ -1,8 +1,10 @@
 package com.project.myapplication.bind
 
+import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -34,13 +36,6 @@ object EditTextBind {
             }
 
             override fun afterTextChanged(text: Editable?) {
-                when(this@inputEditTextContentTextWatcher.tag){
-                    "insert_day" -> {
-                        if(text.toString().toInt() < 1 || text.toString().toInt() > 31){
-                            //옳지 않은 생년월일. TextView 설정해줘야함.
-                        }
-                    }
-                }
                 listener?.onChange()
             }
         }
