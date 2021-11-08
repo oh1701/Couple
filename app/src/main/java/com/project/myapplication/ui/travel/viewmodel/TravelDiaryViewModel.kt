@@ -21,8 +21,8 @@ import java.util.*
 class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    private val _diaryImageUri = MutableLiveData<Uri>(null)
-    val diaryImageUri : LiveData<Uri> = _diaryImageUri
+    private val _diaryImageUri = MutableLiveData<String>(null)
+    val diaryImageUri : LiveData<String> = _diaryImageUri
     private val _imageClick = MutableLiveData<Boolean>()
     val imageClick:LiveData<Boolean> = _imageClick
     private val _createDay = MutableLiveData<String>()
@@ -38,7 +38,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         compositeDisposable.add(repository.selectDB(1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { _diaryImageUri.value = Uri.parse(it.imageUri) }
+            .doOnSuccess { _diaryImageUri.value = it.imageUri }
             .doOnError { Log.e("실패하였음", "실패") }
             .subscribe())
     }
@@ -48,9 +48,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     fun getUri(uri: Uri){
-        _diaryImageUri.value = uri
+        _diaryImageUri.value = uri.toString()
 
-        compositeDisposable.add(repository.insertDB(RoomDiaryEntity(0, uri.toString(), "15", 1414, 14, 14, "!515"))
+        compositeDisposable.add(repository.insertDB(RoomDiaryEntity(0, uri.toString(), "15", 1414, 14, 14))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { Log.e("성공하였음", "성공") }

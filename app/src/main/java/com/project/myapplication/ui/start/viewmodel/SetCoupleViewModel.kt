@@ -19,14 +19,14 @@ import io.reactivex.schedulers.Schedulers
 class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    private val _photoUri = MutableLiveData<Uri>()
-    val photoUri:LiveData<Uri> = _photoUri
+    private val _photoUri = MutableLiveData<String>()
+    val photoUri:LiveData<String> = _photoUri
     private val _completeButtonAlpha = MutableLiveData<Float>()
     val completeButtonAlpha:LiveData<Float> = _completeButtonAlpha
     private val _complete = MutableLiveData<Boolean>()
     val complete:LiveData<Boolean> = _complete
-    private val _settingExist = MutableLiveData<Boolean>()
-    val settingExist:LiveData<Boolean> = _settingExist
+    private val _settingExist = MutableLiveData<Boolean>() // 이전에 설정한 정보가 존재하는지 확인
+    private val settingExist:LiveData<Boolean> = _settingExist
 
     init {
         _settingExist.value = false
@@ -38,7 +38,7 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
     val birthdayDay = MutableLiveData<String>()
 
     fun getUri(uri: Uri) {
-        _photoUri.value = uri
+        _photoUri.value = uri.toString()
     }
 
     fun setBirthDay(year: Int, month: Int, day: Int){
@@ -67,7 +67,7 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
                 birthdayMonth.value = room.birthMonth
                 birthdayDay.value = room.birthDay
                 userName.value = room.name
-                _photoUri.value = Uri.parse(room.uri)
+                _photoUri.value = room.uri
                 _settingExist.value = true
                 Log.e("Room ::", "getCoupleSetting success")
             }

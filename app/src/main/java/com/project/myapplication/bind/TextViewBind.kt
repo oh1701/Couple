@@ -7,8 +7,11 @@ object TextViewBind {
     @JvmStatic
     @BindingAdapter("coupleNameText")
     fun TextView.coupleNameText(text:String?){
-        if(text != null){
+        if(text != null && text.isNotEmpty()){
             this.text = text
+        }
+        else {
+            this.text = "연인"
         }
     }
 }

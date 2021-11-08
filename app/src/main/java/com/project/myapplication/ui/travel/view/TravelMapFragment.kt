@@ -95,8 +95,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             return@setOnMarkerClickListener true
         }
     }
-
-
+    
     override fun onDestroyView() {
         super.onDestroyView()
 

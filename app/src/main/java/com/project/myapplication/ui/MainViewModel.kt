@@ -15,7 +15,7 @@ class MainViewModel(private val repository: MainRepository):BaseViewModel() {
     private val _settingUpdate = MutableLiveData<Boolean>()
     val settingUpdate:LiveData<Boolean> = _settingUpdate
 
-    fun settingClickView(number: Int){
+    fun coupleImageClick(number: Int){
         _onClickView.value = number
     }
 

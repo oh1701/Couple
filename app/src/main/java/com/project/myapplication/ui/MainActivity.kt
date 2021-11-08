@@ -45,7 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             binding.mainDrawer.closeDrawers()
         }
         else{
-            toast("종료함")
             super.onBackPressed()
         }
     }

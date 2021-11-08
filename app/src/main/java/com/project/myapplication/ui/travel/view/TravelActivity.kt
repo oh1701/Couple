@@ -23,7 +23,6 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), Che
         location.let{
             thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
             thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
-            toast("실행")
         }
     }
 

@@ -33,6 +33,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun initView() {
         binding.travelDiaryViewModel = thisViewModel
         binding.travelMainViewModel = sharedActivityViewModel
+        binding.travelDiaryFragment = this
+
         thisViewModel.createDiary()
     }
 

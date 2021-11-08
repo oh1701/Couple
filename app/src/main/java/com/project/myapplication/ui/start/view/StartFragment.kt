@@ -37,7 +37,7 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startActivityForResult() // oncreate 선언.
+//        startActivityForResult() // oncreate 선언.
     }
 
     override fun initObserve() {
@@ -56,18 +56,6 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
         thisViewModel.getmyDatetime()
         thisViewModel.getCoupleSetting()
-
-        binding.coupleImage1.setOnClickListener { // 카메라 권한 확인하기.
-//            cameraFileUri = photoFilePath.getImage()
-//            startForResultCamera.launch(cameraFileUri)
-        }
-
-        binding.coupleImage2.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//            intent.type = "image/*"
-//            startForResultAlbum.launch(intent)
-        }
     }
 
     fun openMaindrawer(){
@@ -80,7 +68,7 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     }
 
     fun settingCouple(number : Int){
-        sharedActivityViewModel.settingClickView(number)
+        sharedActivityViewModel.coupleImageClick(number)
 
         moveFragment
             .addFragmentUp(supportFragmentManager, SetCoupleFragment(), R.id.inside_fragment)
@@ -88,18 +76,18 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
             .commit()
     }
 
-    private fun startActivityForResult(){
-        //해당 함수는 oncreate에서 선언해줘야함.
-        startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if(result.resultCode == Activity.RESULT_OK) {
-                Glide.with(this).load(result.data?.data).circleCrop().into(binding.coupleImage2)
-            }
-        }
-
-        startForResultCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){ check ->
-            if(check) {
-                Glide.with(this).load(cameraFileUri).circleCrop().into(binding.coupleImage1)
-            }
-        }
-    }
+//    private fun startActivityForResult(){
+//        //해당 함수는 oncreate에서 선언해줘야함.
+//        startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+//            if(result.resultCode == Activity.RESULT_OK) {
+//                Glide.with(this).load(result.data?.data).circleCrop().into(binding.coupleImage2)
+//            }
+//        }
+//
+//        startForResultCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){ check ->
+//            if(check) {
+//                Glide.with(this).load(cameraFileUri).circleCrop().into(binding.coupleImage1)
+//            }
+//        }
+//    }
 }

@@ -21,11 +21,18 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.travel.view.TravelActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.intro.view.FirstAccessSettingActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -42,8 +49,9 @@
             android:value="AIzaSyBKbbVXDjzHoIDp8sE3c8e-RoS_sMnyDfg" />
 
         <activity
-            android:name="com.project.myapplication.ui.intro.activity.IntroActivity"
-            android:exported="true">
+            android:name="com.project.myapplication.ui.intro.view.IntroActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -54,7 +54,7 @@
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/setImage"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:background="@drawable/dialog_allconner_round_layout"/>
 
@@ -124,7 +124,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/birth"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:background="@drawable/dialog_allconner_round_layout"/>
 
@@ -163,7 +163,7 @@
         app:layout_constraintStart_toEndOf="@id/birth_year"
         app:layout_constraintTop_toBottomOf="@id/birth"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:background="@drawable/dialog_allconner_round_layout"/>
 
@@ -203,7 +203,7 @@
         app:layout_constraintStart_toEndOf="@id/birth_month"
         app:layout_constraintTop_toBottomOf="@id/birth"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:padding="10dp"
         android:background="@drawable/dialog_allconner_round_layout"/>
 
@@ -235,7 +235,6 @@
         android:textStyle="bold"
         android:gravity="center"
         android:onClickListener="@{() -> setcoupleViewModel.completeSetting(mainActivityViewModel.onClickView)}"
-        android:alpha="0.6"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

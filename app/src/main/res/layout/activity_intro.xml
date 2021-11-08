@@ -7,7 +7,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.intro.activity.IntroActivity">
+    tools:context=".ui.intro.view.IntroActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Intro_Basic_layout"

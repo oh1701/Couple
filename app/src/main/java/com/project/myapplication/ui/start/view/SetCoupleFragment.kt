@@ -47,7 +47,10 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
     override fun initObserve() {
         thisViewModel.complete.observe(this){
             sharedActivityViewModel.settingUpdate()
+            requireActivity().onBackPressed()
         }
+
+
     }
 
     fun setImageClick(){

@@ -17,12 +17,12 @@ class StartViewModel(private val repository: StartRepository):BaseViewModel() {
 
     private val _myDatetime = MutableLiveData<SpannableStringBuilder>()
     val myDatetime: LiveData<SpannableStringBuilder> = _myDatetime
-    private val _coupleImage1 = MutableLiveData<Uri>()
-    val coupleImage1:LiveData<Uri> = _coupleImage1
+    private val _coupleImage1 = MutableLiveData<String>()
+    val coupleImage1:LiveData<String> = _coupleImage1
     private val _userName1 = MutableLiveData<String>()
     val userName1:LiveData<String> = _userName1
-    private val _coupleImage2 = MutableLiveData<Uri>()
-    val coupleImage2:LiveData<Uri> = _coupleImage2
+    private val _coupleImage2 = MutableLiveData<String>()
+    val coupleImage2:LiveData<String> = _coupleImage2
     private val _userName2 = MutableLiveData<String>()
     val userName2:LiveData<String> = _userName2
 
@@ -35,24 +35,21 @@ class StartViewModel(private val repository: StartRepository):BaseViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { room ->
-                Log.e("getCoupleSetting", room.toString())
+                Log.e("Room ::", "getCoupleSetting -> $room")
                 room.mapIndexed { index, it ->
                     if(index == 0){
-                        _coupleImage1.value = Uri.parse(it.uri)
+                        _coupleImage1.value = it.uri
                         _userName1.value = it.name
-                        Log.e("실행대대대", "실행")
-                    }
-                    else if(index == 1){
-                        _coupleImage2.value = Uri.parse(it.uri)
-                        _userName2.value = it.name
-                        Log.e("실행대대대", "실행22")
                     }
                     else{
-                        false
+                        _coupleImage2.value = it.uri
+                        _userName2.value = it.name
                     }
                 }
             }
-            .doOnError {  }
+            .doOnError {
+                Log.e("Room ::", "getCoupleSetting failed")
+            }
             .subscribe()
     }
 }
