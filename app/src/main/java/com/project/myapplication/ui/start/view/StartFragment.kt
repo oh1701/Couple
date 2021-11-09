@@ -37,13 +37,12 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        startActivityForResult() // oncreate 선언.
     }
 
     override fun initObserve() {
-        thisViewModel.myDatetime.observe(viewLifecycleOwner, {
-            binding.coupleText.text = it
-        })
+//        thisViewModel.myDatetime.observe(viewLifecycleOwner, {
+//            binding.coupleText.text = it
+//        })
 
         sharedActivityViewModel.settingUpdate.observe(this){
             thisViewModel.getCoupleSetting()
@@ -69,7 +68,6 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     fun settingCouple(number : Int){
         sharedActivityViewModel.coupleImageClick(number)
-
         moveFragment
             .addFragmentUp(supportFragmentManager, SetCoupleFragment(), R.id.inside_fragment)
             .addToBackStack("start")

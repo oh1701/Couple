@@ -11,6 +11,5 @@ data class RoomCoupleSettingEntity(
     @ColumnInfo(name = "userName") val name:String?,
     @ColumnInfo(name = "birthYear") val birthYear:String?,
     @ColumnInfo(name = "birthMonth") val birthMonth:String?,
-    @ColumnInfo(name = "birthDay") val birthDay:String?,
-    @ColumnInfo(name = "coupleDay") val coupleDay:String?
+    @ColumnInfo(name = "birthDay") val birthDay:String?
 )

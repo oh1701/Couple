@@ -2,6 +2,7 @@ package com.project.myapplication.module
 
 import com.project.myapplication.ui.MainRepository
 import com.project.myapplication.ui.MainViewModel
+import com.project.myapplication.ui.intro.viewmodel.FirstAccessSettingViewModel
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import com.project.myapplication.ui.start.repository.SetCoupleRepository
 import com.project.myapplication.ui.start.repository.StartRepository
@@ -26,4 +27,5 @@ val viewModelModule = module {
     viewModel { TravelDiaryViewModel(TravelDiaryRepository()) }
     viewModel { TravelViewModel()}
     viewModel { SetCoupleViewModel(SetCoupleRepository()) }
+    viewModel { FirstAccessSettingViewModel() }
 }

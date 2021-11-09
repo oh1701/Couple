@@ -71,7 +71,7 @@
                 android:layout_height="250dp"
 
                 android:background="@drawable/notsetting_image_background"
-                android:onClickListener="@{() -> travelDiaryViewModel.setDiaryImage()}"
+                android:onClickListener="@{() -> travelDiaryFragment.cameraOpen()}"
                 android:scaleType="centerInside"
 
                 android:src="@drawable/ic_baseline_photo_camera_24"

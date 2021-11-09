@@ -39,10 +39,11 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     }
 
     override fun initObserve() {
-        thisViewModel.imageClick.observe(this, {
-            cameraFileUri = photoFilePath.getImage()
-            startForResultCamera.launch(cameraFileUri)
-        })
+    }
+
+    fun cameraOpen(){
+        cameraFileUri = photoFilePath.getImage()
+        startForResultCamera.launch(cameraFileUri)
     }
 
     private fun startActivityForResult(){

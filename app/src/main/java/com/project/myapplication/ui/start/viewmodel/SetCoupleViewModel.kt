@@ -48,7 +48,7 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
     }
 
     fun completeSetting(id:Int){ // 버튼 완료 버튼 클릭 시 실행
-        val completeSetting = RoomCoupleSettingEntity(id, _photoUri.value.toString(), userName.value, birthdayYear.value, birthdayMonth.value, birthdayDay.value, "!4")
+        val completeSetting = RoomCoupleSettingEntity(id, _photoUri.value.toString(), userName.value, birthdayYear.value, birthdayMonth.value, birthdayDay.value)
 
         if(settingExist.value == true){
             updateCoupleSetting(id, completeSetting)

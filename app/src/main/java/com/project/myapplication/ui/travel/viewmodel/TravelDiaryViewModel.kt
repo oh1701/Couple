@@ -23,8 +23,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         get() = super.compositeDisposable
     private val _diaryImageUri = MutableLiveData<String>(null)
     val diaryImageUri : LiveData<String> = _diaryImageUri
-    private val _imageClick = MutableLiveData<Boolean>()
-    val imageClick:LiveData<Boolean> = _imageClick
     private val _createDay = MutableLiveData<String>()
     val createDay:LiveData<String> = _createDay
     private val _createDiaryLocation = MutableLiveData<String>()
@@ -41,10 +39,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .doOnSuccess { _diaryImageUri.value = it.imageUri }
             .doOnError { Log.e("실패하였음", "실패") }
             .subscribe())
-    }
-
-    fun setDiaryImage(){
-        _imageClick.value = true
     }
 
     fun getUri(uri: Uri){

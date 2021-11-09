@@ -49,8 +49,6 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
             sharedActivityViewModel.settingUpdate()
             requireActivity().onBackPressed()
         }
-
-
     }
 
     fun setImageClick(){
@@ -60,17 +58,13 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
 
     fun datePicker(){
         val today = GregorianCalendar()
-        val year = today.get(Calendar.YEAR)
-        val month = today.get(Calendar.MONTH)
-        val day = today.get(Calendar.DATE)
+        val todayYear = today.get(Calendar.YEAR)
+        val todayMonth = today.get(Calendar.MONTH)
+        val todayDay = today.get(Calendar.DATE)
 
-        DatePickerDialog(requireContext(), { _, p1, p2, p3 ->
-                val year = p1
-                val month = p2 + 1
-                val day = p3
-
-                thisViewModel.setBirthDay(year, month, day)
-            },year,month,day)
+        DatePickerDialog(requireContext(), { _, year, month, day ->
+                thisViewModel.setBirthDay(year, month + 1, day)
+            },todayYear,todayMonth,todayDay)
             .apply{
                 datePicker.maxDate = Calendar.getInstance().timeInMillis
             }

@@ -7,6 +7,10 @@
         <variable
             name="firstAccessActivity"
             type="com.project.myapplication.ui.intro.view.FirstAccessSettingActivity" />
+
+        <variable
+            name="firstAccessViewModel"
+            type="com.project.myapplication.ui.intro.viewmodel.FirstAccessSettingViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,12 +40,17 @@
         android:textSize="18dp"/>
 
     <DatePicker
-        android:id="@+id/yearPicker"
+        android:id="@+id/datePicker"
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
+
+        android:year="@={firstAccessViewModel.coupleDateYear}"
+        android:month="@={firstAccessViewModel.coupleDateMonth}"
+        android:day="@={firstAccessViewModel.coupleDateDay}"
+        android:maxDate="@{firstAccessViewModel.maxDate}"
 
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
@@ -54,7 +63,7 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yearPicker"
+        app:layout_constraintTop_toBottomOf="@id/datePicker"
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:text="저장"
@@ -62,6 +71,8 @@
         android:textStyle="bold"
         android:textSize="16dp"
         android:fontFamily="@font/cafe24ohsquareair"
+
+        android:onClickListener="@{() -> firstAccessViewModel.saveButton()}"
         android:background="@drawable/dialog_allconner_round_layout"/>
 
 
