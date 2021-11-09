@@ -7,6 +7,7 @@ import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import com.project.myapplication.databinding.ActivityFirstaccessSettingBinding
+import com.project.myapplication.di.KoinApplication.Companion.sharedPreference
 import com.project.myapplication.ui.MainActivity
 import com.project.myapplication.ui.intro.viewmodel.FirstAccessSettingViewModel
 import org.koin.android.ext.android.inject
@@ -18,7 +19,6 @@ import java.util.*
 class FirstAccessSettingActivity:BaseActivity<ActivityFirstaccessSettingBinding, FirstAccessSettingViewModel>() {
     override val layoutResourceId: Int = R.layout.activity_firstaccess_setting
     override val thisViewModel: FirstAccessSettingViewModel by viewModel()
-    private val sharedPreference:IntroSettingShared by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +33,6 @@ class FirstAccessSettingActivity:BaseActivity<ActivityFirstaccessSettingBinding,
         thisViewModel.saveCoupleDateButton.observe(this){
             sharedPreference.setIntroCoupleDateSetting(true) // 재설정시 메뉴 창에서 설정해달라는 말하기.
             sharedPreference.setCoupleDate(thisViewModel.saveCoupleDate.value!!)
-
-            Log.e("setCoupleDate::", sharedPreference.getCoupleDate().toString())
             moveActivity(MainActivity::class.java)
         }
     }

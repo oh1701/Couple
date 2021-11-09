@@ -11,7 +11,7 @@ object TextViewBind {
             this.text = text
         }
         else {
-            this.text = "연인"
+            this.text = "이름"
         }
     }
 }

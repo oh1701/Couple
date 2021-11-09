@@ -20,6 +20,8 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
+/** 커플 정보를 입력하는 프래그먼트 */
+
 class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_setcouple
@@ -66,7 +68,7 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
                 thisViewModel.setBirthDay(year, month + 1, day)
             },todayYear,todayMonth,todayDay)
             .apply{
-                datePicker.maxDate = Calendar.getInstance().timeInMillis
+                this.datePicker.maxDate = Calendar.getInstance().timeInMillis
             }
             .show()
     }
