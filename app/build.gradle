@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
-    /** DI 해결 (KOIN) **/
+    /** DI 주입 (KOIN) **/
     // Koin for Kotlin
     implementation "org.koin:koin-core:$koin_version"
     // Koin extended & experimental features
@@ -74,15 +74,11 @@ dependencies {
     implementation "org.koin:koin-android-scope:$koin_version"
     // Koin Android ViewModel features
     implementation "org.koin:koin-android-viewmodel:$koin_version"
-    // Koin Android Experimental features
-    implementation "org.koin:koin-android-ext:$koin_version"
 
     // Koin AndroidX Scope features
     implementation "org.koin:koin-androidx-scope:$koin_version"
     // Koin AndroidX ViewModel features
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    // Koin AndroidX Experimental features
-    implementation "org.koin:koin-androidx-ext:$koin_version"
 
     /** LifeCyclerObserve (앱 라이프사이클 상태 확인용) **/
     implementation 'android.arch.lifecycle:extensions:1.1.1'
@@ -102,4 +98,7 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.4.0-beta01"
     implementation "androidx.room:room-guava:2.4.0-beta01"
 
+    /** Diary 사용 */
+    implementation 'com.google.android:flexbox:2.0.1' // Flex Box Layout
+    implementation 'com.github.dhaval2404:colorpicker:2.0' // Color Picker
 }

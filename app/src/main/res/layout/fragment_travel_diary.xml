@@ -54,21 +54,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/backPressed" />
 
+        <ScrollView
+            android:id="@+id/content_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/content_view2"
+            app:layout_constraintTop_toBottomOf="@id/backPressed"
+            android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:padding="14dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/backPressed">
+            android:padding="14dp">
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
 
                 android:background="@drawable/notsetting_image_background"
                 android:onClickListener="@{() -> travelDiaryFragment.cameraOpen()}"
@@ -98,25 +105,31 @@
                 android:background="@drawable/coupleday_layout"
                 android:layout_margin="10dp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="앱 제작 시험 - 1일차"
+
+                android:hint="제목을 입력해주세요."
+                android:background="@android:color/transparent"
                 android:gravity="start"
+                android:ellipsize="end"
+                android:inputType="text"
 
                 android:textColor="@color/black"
 
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:typeface="serif"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/diary_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:text="@{travelDiaryViewModel.createDay}"
@@ -124,22 +137,93 @@
                 android:textSize="11dp"
                 android:gravity="start"
 
+                android:layout_marginTop="3dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <EditText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
+                android:background="@android:color/transparent"
 
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
 
-                android:text="내용내용내용내용내용내용내용내용내용내용내용내용"
+                android:textSize="14sp"
+                android:hint="내용을 입력해주세요."
                 android:textColor="@color/black"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/diary_date"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <View
+            android:id="@+id/content_view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/textButton_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="14dp"/>
+
+        <LinearLayout
+            android:id="@+id/textButton_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+            android:layout_marginStart="14dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/btn_select"
+                android:src="@drawable/ic_baseline_text_fields_24_black"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+
+                android:tag="touch"
+                android:background="@drawable/btn_select"
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTouchBtnCheck}"
+                android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_baseline_pan_tool_24"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+
+                android:tag="tag"
+                android:background="@drawable/btn_select"
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck}"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_baseline_tag_24"
+                android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+
+                android:tag="trash"
+                android:background="@drawable/btn_select"
+                android:src="@drawable/ic_baseline_restore_from_trash_24"
+
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTrashBtnCheck}"
+                android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

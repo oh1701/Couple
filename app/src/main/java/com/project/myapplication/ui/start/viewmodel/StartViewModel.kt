@@ -36,8 +36,8 @@ class StartViewModel(private val repository: StartRepository):BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { room ->
                 Log.e("Room ::", "getCoupleSetting -> $room")
-                room.mapIndexed { index, it ->
-                    if(index == 0){
+                room.map {
+                    if(it.id == 1){
                         _coupleImage1.value = it.uri
                         _userName1.value = it.name
                     }

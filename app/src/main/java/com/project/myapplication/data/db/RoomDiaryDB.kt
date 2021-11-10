@@ -11,7 +11,7 @@ import com.project.myapplication.data.dao.RoomDiaryDao
 import com.project.myapplication.data.entity.RoomCoupleSettingEntity
 import com.project.myapplication.data.entity.RoomDiaryEntity
 
-@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class], version = 2)
+@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class], version = 1)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao

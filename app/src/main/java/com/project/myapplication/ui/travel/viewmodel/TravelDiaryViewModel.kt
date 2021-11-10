@@ -31,6 +31,18 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _diaryViewVisibility = MutableLiveData<Int>()
     val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
+    private val _diaryTrashBtnCheck = MutableLiveData<Boolean>()
+    val diaryTrashBtnCheck:LiveData<Boolean> = _diaryTrashBtnCheck
+    private val _diaryTouchBtnCheck = MutableLiveData<Boolean>()
+    val diaryTouchBtnCheck:LiveData<Boolean> = _diaryTouchBtnCheck
+    private val _diaryTagBtnCheck = MutableLiveData<Boolean>()
+    val diaryTagBtnCheck:LiveData<Boolean> = _diaryTagBtnCheck
+
+    init{
+        _diaryTrashBtnCheck.value = false
+        _diaryTouchBtnCheck.value = false
+        _diaryTagBtnCheck.value = false
+    }
 
     fun getImage(){
         compositeDisposable.add(repository.selectDB(1)
@@ -59,5 +71,13 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
         _createDay.value = sdf.toString()
         _createDiaryCoupleDay.value = repository.getDateday()
+    }
+
+    fun changedButtonCheck(view: View){
+        when(view.tag){
+            "touch" -> { _diaryTouchBtnCheck.value = _diaryTouchBtnCheck.value?.not() }
+            "tag" -> { _diaryTagBtnCheck.value = _diaryTagBtnCheck.value?.not() }
+            "trash" -> { _diaryTrashBtnCheck.value = _diaryTrashBtnCheck.value?.not() }
+        }
     }
 }
