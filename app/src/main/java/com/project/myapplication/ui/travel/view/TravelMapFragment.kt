@@ -26,6 +26,7 @@ import com.project.myapplication.ui.diary.DiaryFragment
 import com.project.myapplication.ui.travel.GoogleMapSetting
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import io.reactivex.Observable
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -84,6 +85,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             googleMapSetting.mapSetting()
         }
 
+
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
                 moveFragment
@@ -95,7 +97,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             return@setOnMarkerClickListener true
         }
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
 
