@@ -12,7 +12,8 @@ data class RoomDiaryEntity (
     @PrimaryKey(autoGenerate = true) val id:Int,
     @ColumnInfo(name = "imageUri") val imageUri: String,
     @ColumnInfo(name = "title") val title:String,
-    @ColumnInfo(name = "date") val date:Long,
+    @ColumnInfo(name = "content") val content:String,
+    @ColumnInfo(name = "date") val date:String,
     @ColumnInfo(name = "longitude") val longitude:Long,
-    @ColumnInfo(name = "latitude") val latitude:Long
+    @ColumnInfo(name = "latitude") val latitude:Long,
     )

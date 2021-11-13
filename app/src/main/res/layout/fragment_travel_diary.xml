@@ -113,6 +113,7 @@
                 android:layout_marginTop="20dp"
 
                 android:hint="제목을 입력해주세요."
+                android:text="@={travelDiaryViewModel.diaryTitle}"
                 android:background="@android:color/transparent"
                 android:gravity="start"
                 android:ellipsize="end"
@@ -152,6 +153,7 @@
 
                 android:textSize="14sp"
                 android:hint="내용을 입력해주세요."
+                android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textColor="@color/black"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -226,14 +228,21 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/save_diary"
             android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_height="80dp"
 
-            android:text="저장"
-            android:backgroundTint="#FF30CC"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="14dp"/>
+            app:layout_constraintEnd_toEndOf="@id/content_scrollView"
+            app:layout_constraintBottom_toBottomOf="@id/content_scrollView"
+            android:layout_margin="15dp"
+
+            android:background="@drawable/circle_black"
+            android:onClickListener="@{() -> travelDiaryFragment.completeDiarycreate()}"
+            />
+
+
+        <!-- onclick 시 저장 및 뒤로가기. (뒤로가기에서 내용이 존재하면 Dialog)-->
+        <!-- 이미 올라간 다이얼로그면 수정하는 그림, 수정하는 상태 or 작성 중이면 저장 그림-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

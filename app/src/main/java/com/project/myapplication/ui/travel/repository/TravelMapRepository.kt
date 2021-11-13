@@ -7,12 +7,12 @@ import com.project.myapplication.data.entity.RoomDiaryEntity
 import io.reactivex.Single
 
 class TravelMapRepository:BaseRepository() {
-    override val roomDaoImage: RoomDiaryDao
-        get() = super.roomDaoImage
+    override val roomDiaryDao: RoomDiaryDao
+        get() = super.roomDiaryDao
     override val roomDaoCoupleSetting: RoomCoupleSettingDao
         get() = super.roomDaoCoupleSetting
 
     fun getAllDiary(): Single<List<RoomDiaryEntity>> {
-        return roomDaoImage.selectAllDao()
+        return roomDiaryDao.selectAllDao()
     }
 }

@@ -4,10 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
+import com.project.myapplication.common.Event
+import com.project.myapplication.common.EventObserver
 import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
@@ -35,15 +38,22 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
-        thisViewModel.createDiary()
+        thisViewModel.createDiarysetting()
     }
 
     override fun initObserve() {
+        thisViewModel.toastLiveData.observe(this, {event : Event<String> ->
+            Toast.makeText(requireContext(), event.peekContent(), Toast.LENGTH_SHORT).show()
+        })
     }
 
     fun cameraOpen(){
         cameraFileUri = photoFilePath.getImage()
         startForResultCamera.launch(cameraFileUri)
+    }
+
+    fun completeDiarycreate(){
+        sharedActivityViewModel.myLocationLatLng.value?.let { thisViewModel.createDiary(it) }
     }
 
     private fun startActivityForResult(){

@@ -16,7 +16,7 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     private val _googleMapDiaryMarker = MutableLiveData<List<RoomDiaryEntity>>()
     val googleMapDiaryMarker:LiveData<List<RoomDiaryEntity>> = _googleMapDiaryMarker
 
-    fun getAllDiary(){
+    fun getAllDiary(){ // 저장된 다이어리들 가져오기.
         compositeDisposable.add(repository.getAllDiary()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

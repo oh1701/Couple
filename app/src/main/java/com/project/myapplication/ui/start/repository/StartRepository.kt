@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StartRepository:BaseRepository() {
-    override val roomDaoImage: RoomDiaryDao
-        get() = super.roomDaoImage
+    override val roomDiaryDao: RoomDiaryDao
+        get() = super.roomDiaryDao
     override val roomDaoCoupleSetting: RoomCoupleSettingDao
         get() = super.roomDaoCoupleSetting
 

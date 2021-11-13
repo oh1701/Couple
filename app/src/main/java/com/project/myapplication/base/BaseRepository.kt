@@ -7,6 +7,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 open class BaseRepository:KoinComponent{
-    protected open val roomDaoImage:RoomDiaryDao by inject()
+    protected open val roomDiaryDao:RoomDiaryDao by inject()
     protected open val roomDaoCoupleSetting:RoomCoupleSettingDao by inject()
 }

@@ -32,7 +32,7 @@ class FirstAccessSettingActivity:BaseActivity<ActivityFirstaccessSettingBinding,
     override fun initObserve() {
         thisViewModel.saveCoupleDateButton.observe(this){
             sharedPreference.setIntroCoupleDateSetting(true) // 재설정시 메뉴 창에서 설정해달라는 말하기.
-            sharedPreference.setCoupleDate(thisViewModel.saveCoupleDate.value!!)
+            sharedPreference.setCoupleDate(thisViewModel.saveCoupleDate.value!!)  // 커플 된 기간 넣어주기.
             moveActivity(MainActivity::class.java)
         }
     }
