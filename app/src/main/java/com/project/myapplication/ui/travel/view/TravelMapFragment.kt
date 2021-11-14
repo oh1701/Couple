@@ -85,7 +85,6 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             googleMapSetting.mapSetting()
         }
 
-
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
                 moveFragment

@@ -6,6 +6,7 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import com.project.myapplication.databinding.ActivityIntroBinding
+import com.project.myapplication.di.KoinApplication.Companion.sharedPreference
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +21,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, IntroViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_intro
     override val thisViewModel: IntroViewModel by viewModel()
-    private val sharedPreference: IntroSettingShared by inject()
 
     override fun initView() {
         thisViewModel.timer()

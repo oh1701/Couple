@@ -1,8 +1,8 @@
 package com.project.myapplication.ui.travel.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Geocoder
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
@@ -10,13 +10,12 @@ import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
-import com.project.myapplication.common.CheckSelfPermission
 import com.project.myapplication.databinding.ActivityTravelBinding
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), CheckSelfPermission {
+class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_travel
     override val thisViewModel: TravelViewModel by viewModel()
@@ -54,13 +53,15 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), Che
 
     }
 
+    @SuppressLint("MissingPermission")
     private fun getLocation(){
         lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        if(checkMyPermission(this)){
-            return
+        if(!locationCheck(this)){ //
+            toast("위치 권한이 설정되어 있지 않습니다. 설정 후 다시 접속해주세요.")
+            onBackPressed()
         }
         else{
             if(isGpsEnabled && isNetworkEnabled) {
@@ -77,7 +78,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>(), Che
         }
     }
 
-    fun getGeoCoder(latlng: LatLng):String{
+    private fun getGeoCoder(latlng: LatLng):String{
         geoCoder = Geocoder(this, Locale.KOREA)
         val location = geoCoder!!.getFromLocation(latlng.latitude, latlng.longitude, 2)
 

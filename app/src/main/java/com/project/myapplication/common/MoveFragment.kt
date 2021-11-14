@@ -8,7 +8,7 @@ import com.project.myapplication.R
 import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 
 class MoveFragment {
-    fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
+    private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
         return if(fragmentManager.fragments.size > 0){
             fragmentManager.fragments[0]
         }

@@ -16,9 +16,6 @@ import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-class ViewModelModule {
-}
-
 val viewModelModule = module {
     viewModel { MainViewModel(MainRepository()) }
     viewModel { IntroViewModel() }

@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import java.io.File
 
+/** 저장할 이미지 파일 경로 */
+
 class PhotoFilePath(private val context: Context) {
     fun getImage(): Uri {
         val photoFile = File.createTempFile("IMG_",".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES))
