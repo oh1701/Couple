@@ -2,11 +2,9 @@ package com.project.myapplication.ui.travel.repository
 
 import android.util.Log
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.data.dao.RoomCoupleSettingDao
-import com.project.myapplication.data.dao.RoomDiaryDao
-import com.project.myapplication.data.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import io.reactivex.Completable
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -14,6 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class TravelDiaryRepository:BaseRepository() {
     override val roomDiaryDao: RoomDiaryDao
         get() = super.roomDiaryDao
+
 
     fun insertDB(entity: RoomDiaryEntity): Completable {
         return roomDiaryDao.insertDao(entity)
@@ -24,7 +23,7 @@ class TravelDiaryRepository:BaseRepository() {
     }
 
     fun getDateday():String{
-        return "+ 164일"
+        return "+ ${getCoupleDate()}일"
     }
 
     fun getDBsize(): Int{

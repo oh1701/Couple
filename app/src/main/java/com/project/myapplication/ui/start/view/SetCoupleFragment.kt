@@ -1,18 +1,15 @@
 package com.project.myapplication.ui.start.view
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.common.CustomDialog
+import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentSetcoupleBinding
 import com.project.myapplication.ui.MainViewModel
@@ -30,7 +27,7 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
     override val thisViewModel: SetCoupleViewModel by viewModel()
     private val sharedActivityViewModel: MainViewModel by sharedViewModel()
     private val photoFilePath: PhotoFilePath by inject()
-    private val customDialog:CustomDialog by inject()
+    private val customDialog: WarningDialogFragment by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
@@ -54,19 +51,31 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
             sharedActivityViewModel.settingUpdate()
             requireActivity().onBackPressed()
         }
+
+        thisViewModel.setImageClick.observe(this){
+            it.getContentIfNotHandled()?.let {
+                setImageClick()
+            }
+        }
+
+        thisViewModel.setBirthClick.observe(this){
+            it.getContentIfNotHandled()?.let{
+                datePicker()
+            }
+        }
     }
 
-    fun setImageClick(){
+    private fun setImageClick(){
         if(!cameraCheck(requireContext())){
             cameraFileUri = photoFilePath.getImage()
             startForResultCamera.launch(cameraFileUri)
         }
         else{ // 설정창 이동하는 다이얼로그 클래스 불러오기
-            customDialog.warningDialog("permissionCheck")
+            WarningDialogFragment().show(supportFragmentManager, "Permission")
         }
     }
 
-    fun datePicker(){
+    private fun datePicker(){
         val today = GregorianCalendar()
         val todayYear = today.get(Calendar.YEAR)
         val todayMonth = today.get(Calendar.MONTH)

@@ -1,7 +1,7 @@
-package com.project.myapplication.data.dao
+package com.project.myapplication.data.room.dao
 
 import androidx.room.*
-import com.project.myapplication.data.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

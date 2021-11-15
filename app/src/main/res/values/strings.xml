@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyDate</string>
+    <string name="dialog_diary">현재 기록된 내용이 존재합니다. 저장하시겠습니까?</string>
+    <string name="dialog_permission">정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요.</string>
 </resources>

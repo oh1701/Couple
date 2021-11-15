@@ -1,16 +1,14 @@
 package com.project.myapplication.ui.travel.viewmodel
 
 import android.net.Uri
-import android.opengl.Visibility
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.data.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -22,8 +20,6 @@ import java.util.*
 class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    private val _diaryImageUri = MutableLiveData<String>(null)
-    val diaryImageUri : LiveData<String> = _diaryImageUri
     
     // 초기 세팅
     private val _createDay = MutableLiveData<String>()
@@ -31,7 +27,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _createDiaryID = MutableLiveData<Int>() // 다이어리 생성 버튼 클릭 후 진입 시 생성되는 ID. List 사이즈 + 1
     val createDiaryID:LiveData<Int> = _createDiaryID
     
-    // 다이어리 작성
+    // 다이어리 기본
     private val _createDiaryCoupleDay = MutableLiveData<String>()
     val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _diaryViewVisibility = MutableLiveData<Int>()
@@ -43,7 +39,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _diaryTagBtnCheck = MutableLiveData<Boolean>()
     val diaryTagBtnCheck:LiveData<Boolean> = _diaryTagBtnCheck
 
-    // two-way binding
+    // 다이어리 입력
+    private val _diaryImageUri = MutableLiveData<String>(null)
+    val diaryImageUri : LiveData<String> = _diaryImageUri
     val diaryTitle = MutableLiveData<String>()
     val diaryContent = MutableLiveData<String>()
 
@@ -120,5 +118,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         else if(diaryContent.value == null){
             toast("내용을 입력해주세요.")
         }
+    }
+
+    fun closeDiary():Boolean{
+        return diaryImageUri.value == null && diaryTitle.value == null && diaryContent.value == null
     }
 }

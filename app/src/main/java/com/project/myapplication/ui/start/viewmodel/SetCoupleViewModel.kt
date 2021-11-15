@@ -1,16 +1,13 @@
 package com.project.myapplication.ui.start.viewmodel
 
-import android.app.DatePickerDialog
 import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.data.entity.RoomCoupleSettingEntity
+import com.project.myapplication.common.Event
+import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import com.project.myapplication.ui.start.repository.SetCoupleRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -27,6 +24,10 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
     val complete:LiveData<Boolean> = _complete
     private val _settingExist = MutableLiveData<Boolean>() // 이전에 설정한 정보가 존재하는지 확인
     private val settingExist:LiveData<Boolean> = _settingExist
+    private val _setImageClick = MutableLiveData<Event<Boolean>>()
+    val setImageClick:LiveData<Event<Boolean>> = _setImageClick
+    private val _setBirthClick = MutableLiveData<Event<Boolean>>()
+    val setBirthClick:LiveData<Event<Boolean>> = _setBirthClick
 
     init {
         _settingExist.value = false
@@ -100,5 +101,12 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
             }
             .doOnError{ Log.e("Room ::", "CoupleSetting insert Failed") }
             .subscribe()
+    }
+
+    fun onClick(v:View){
+        when(v.tag){
+            "setImage" -> _setImageClick.value = Event(true)
+            "birth" -> _setBirthClick.value = Event(true)
+        }
     }
 }

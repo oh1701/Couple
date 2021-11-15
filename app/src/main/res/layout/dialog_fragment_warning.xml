@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="dialogViewModel"
+            type="com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/warning_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_baseline_warning_amber_24"
+
+        app:layout_constraintBottom_toTopOf="@id/warnig_text"
+        app:layout_constraintHeight_percent="0.2"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/warnig_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:gravity="center"
+        android:text="정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
+
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@id/warning_negative"
+
+        app:layout_constraintHeight_percent="0.2"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warning_image"
+        app:layout_constraintWidth_percent="0.8" />
+
+
+    <Button
+        android:id="@+id/warning_positive"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#323131"
+        android:text="@{dialogViewModel.positiveButtonTag}"
+        android:textColor="@color/white"
+
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+
+        app:layout_constraintLeft_toRightOf="@id/warning_negative"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.4"
+
+        android:tag="@{dialogViewModel.positiveButtonTag}"
+        android:onClickListener="@{(v) -> dialogViewModel.selectButton(v)}"/>
+
+    <Button
+        android:id="@+id/warning_negative"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:backgroundTint="#323131"
+
+        android:text="@{dialogViewModel.negativeButtonTag}"
+        android:textColor="@color/white"
+
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/warning_positive"
+        app:layout_constraintWidth_percent="0.4"
+
+        android:tag="@{dialogViewModel.negativeButtonTag}"
+        android:onClickListener="@{(v) -> dialogViewModel.selectButton(v)}"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

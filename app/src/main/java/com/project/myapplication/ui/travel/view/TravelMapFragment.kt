@@ -42,7 +42,6 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
     private lateinit var googleMap: GoogleMap
     private lateinit var googleMapSetting: GoogleMapSetting
-    private val checkSelfPermission:CheckSelfPermission by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +60,13 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
     override fun initObserve() {
         sharedActivityViewModel.myLocationLatLng.observe(this) { LatLng ->
-            googleMapSetting.repeatFunction(LatLng)
+            if(LatLng != null) {
+                googleMapSetting.repeatFunction(LatLng)
+            }
+            else{
+                toast("위치 정보가 받아와지지 않습니다. 잠시 후 다시 실행해주세요.")
+                requireActivity().onBackPressed()
+            }
         }
 
         sharedActivityViewModel.createTravelDiary.observe(this){

@@ -96,10 +96,10 @@
                 app:layout_constraintBottom_toBottomOf="@id/image"
 
                 android:text="@{travelDiaryViewModel.createDiaryCoupleDay}"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
                 android:textColor="@color/white"
 
                 android:background="@drawable/coupleday_layout"

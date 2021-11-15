@@ -1,13 +1,9 @@
 package com.project.myapplication.ui.travel.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.data.entity.RoomDiaryEntity
-import com.project.myapplication.ui.travel.GoogleMapSetting
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.ui.travel.repository.TravelMapRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

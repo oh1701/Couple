@@ -1,11 +1,8 @@
-package com.project.myapplication.data.entity
+package com.project.myapplication.data.room.entity
 
-import android.net.Uri
 import androidx.room.ColumnInfo
-import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.android.gms.maps.model.LatLng
 
 @Entity
 data class RoomDiaryEntity (

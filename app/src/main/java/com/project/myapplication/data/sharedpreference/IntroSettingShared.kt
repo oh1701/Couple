@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
 class IntroSettingShared(context: Context) {
-
     private var prefs: SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
     private val editor = prefs.edit()
     private val makeGson = GsonBuilder().create()

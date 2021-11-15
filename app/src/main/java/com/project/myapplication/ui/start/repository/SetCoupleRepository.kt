@@ -1,10 +1,8 @@
 package com.project.myapplication.ui.start.repository
 
-import android.widget.Toast
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.data.dao.RoomCoupleSettingDao
-import com.project.myapplication.data.dao.RoomDiaryDao
-import com.project.myapplication.data.entity.RoomCoupleSettingEntity
+import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

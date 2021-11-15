@@ -36,11 +36,12 @@
 
         android:layout_marginTop="40dp"
 
+        android:tag="setImage"
         android:background="@drawable/dialog_allconner_round_layout"
         android:src="@drawable/ic_baseline_photo_camera_24"
         app:imageFromUri="@{setcoupleViewModel.photoUri}"
         android:scaleType="centerInside"
-        android:onClickListener="@{() -> setcoupleFragment.setImageClick()}"/>
+        android:onClickListener="@{(v) -> setcoupleViewModel.onClick(v)}"/>
 
     <TextView
         android:id="@+id/name"
@@ -115,9 +116,9 @@
         android:gravity="center"
         android:maxLength="4"
         android:inputType="number"
-        android:tag="insert_year"
+        android:tag="birth"
         android:text="@={setcoupleViewModel.birthdayYear}"
-        android:onClickListener="@{() -> setcoupleFragment.datePicker()}"
+        android:onClickListener="@{(v) -> setcoupleViewModel.onClick(v)}"
 
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,10 +157,10 @@
         android:gravity="center"
         android:maxLength="2"
         android:inputType="number"
-        android:tag="insert_month"
+        android:tag="birth"
         android:text="@={setcoupleViewModel.birthdayMonth}"
-        android:onClickListener="@{() -> setcoupleFragment.datePicker()}"
 
+        android:onClickListener="@{(v) -> setcoupleViewModel.onClick(v)}"
         app:layout_constraintStart_toEndOf="@id/birth_year"
         app:layout_constraintTop_toBottomOf="@id/birth"
 
@@ -196,10 +197,10 @@
         android:gravity="center"
         android:maxLength="2"
         android:inputType="number"
-        android:tag="insert_day"
+        android:tag="birth"
         android:text="@={setcoupleViewModel.birthdayDay}"
-        android:onClickListener="@{() -> setcoupleFragment.datePicker()}"
 
+        android:onClickListener="@{(v) -> setcoupleViewModel.onClick(v)}"
         app:layout_constraintStart_toEndOf="@id/birth_month"
         app:layout_constraintTop_toBottomOf="@id/birth"
 

@@ -1,7 +1,11 @@
-package com.project.myapplication.module
+package com.project.myapplication.di
 
 import com.project.myapplication.ui.MainRepository
 import com.project.myapplication.ui.MainViewModel
+import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
+import com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel
+import com.project.myapplication.ui.intro.repository.FirstAccessSettingRepository
+import com.project.myapplication.ui.intro.repository.IntroRepository
 import com.project.myapplication.ui.intro.viewmodel.FirstAccessSettingViewModel
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import com.project.myapplication.ui.start.repository.SetCoupleRepository
@@ -18,11 +22,12 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { MainViewModel(MainRepository()) }
-    viewModel { IntroViewModel() }
+    viewModel { IntroViewModel(IntroRepository()) }
     viewModel { StartViewModel(StartRepository()) }
     viewModel { TravelMapViewModel(TravelMapRepository())}
     viewModel { TravelDiaryViewModel(TravelDiaryRepository()) }
     viewModel { TravelViewModel()}
     viewModel { SetCoupleViewModel(SetCoupleRepository()) }
-    viewModel { FirstAccessSettingViewModel() }
+    viewModel { FirstAccessSettingViewModel(FirstAccessSettingRepository()) }
+    viewModel { WarningDialogViewModel(WarningDialogRepository()) }
 }

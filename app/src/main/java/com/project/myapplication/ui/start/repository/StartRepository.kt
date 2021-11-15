@@ -4,10 +4,10 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.data.dao.RoomCoupleSettingDao
-import com.project.myapplication.data.dao.RoomDiaryDao
-import com.project.myapplication.data.entity.RoomCoupleSettingEntity
-import com.project.myapplication.di.KoinApplication.Companion.sharedPreference
+import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import io.reactivex.Single
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,16 +17,11 @@ class StartRepository:BaseRepository() {
         get() = super.roomDiaryDao
     override val roomDaoCoupleSetting: RoomCoupleSettingDao
         get() = super.roomDaoCoupleSetting
+    override val sharedPreferences: IntroSettingShared
+        get() = super.sharedPreferences
 
-    private fun getCoupleDate(): Long {
-        val coupleDate = sharedPreference.getCoupleDate()
-        val simpleDate = "${coupleDate[0]}-${coupleDate[1]}-${coupleDate[2]} 00:00:00"
-        val sf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val parseDate = sf.parse(simpleDate)
-
-        val today = Calendar.getInstance()
-
-        return (today.time.time - parseDate.time) / (60 * 60 * 24 * 1000)
+    override fun getCoupleDate(): Long {
+        return super.getCoupleDate()
     }
 
     fun getDateTime(): SpannableStringBuilder {
