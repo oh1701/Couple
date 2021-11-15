@@ -40,11 +40,12 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     }
 
     override fun initObserve() {
-//        thisViewModel.myDatetime.observe(viewLifecycleOwner, {
-//            binding.coupleText.text = it
-//        })
+    }
 
-        sharedActivityViewModel.settingUpdate.observe(this){
+    override fun sharedObserve() {
+        super.sharedObserve()
+
+        sharedActivityViewModel.settingUpdate.observe(viewLifecycleOwner){
             thisViewModel.getCoupleSetting()
         }
     }
@@ -69,7 +70,7 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
     fun settingCouple(number : Int){
         sharedActivityViewModel.coupleImageClick(number)
         moveFragment
-            .addFragmentUp(supportFragmentManager, SetCoupleFragment(), R.id.inside_fragment)
+            .addFragmentUp(supportFragmentManager, SetCoupleFragment(), R.id.inside_fragment, null)
             .addToBackStack("start")
             .commit()
     }

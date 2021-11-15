@@ -26,19 +26,11 @@ class TravelDiaryRepository:BaseRepository() {
         return "+ ${getCoupleDate()}일"
     }
 
-    fun getDBsize(): Int{
-        var dbSize = 0
+    fun getDiaryDB(): Single<List<RoomDiaryEntity>>{
+        return roomDiaryDao.selectAllDao()
+    }
 
-        roomDiaryDao
-            .selectAllDao()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { dbSize = it.size
-                Log.e("getDBsize ::", "사이즈는 ${it.size + 1},\n 내용물은 $it")
-            }
-            .doOnError { Log.e("실패", "실패") }
-            .subscribe()
-
-        return dbSize + 1
+    fun getDiaryID(id:Int):Single<RoomDiaryEntity>{
+        return roomDiaryDao.selectIdDao(id)
     }
 }

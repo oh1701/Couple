@@ -20,7 +20,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.project.myapplication.R
 import com.project.myapplication.common.CheckSelfPermission
+import com.project.myapplication.common.CommonIntent
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 
 abstract class BaseDialogFragment<T: ViewDataBinding, V:BaseViewModel?>: DialogFragment(), CheckSelfPermission {
     abstract val layoutResourceId:Int
@@ -31,6 +33,7 @@ abstract class BaseDialogFragment<T: ViewDataBinding, V:BaseViewModel?>: DialogF
     protected lateinit var metrics:DisplayMetrics
     protected val binding get() = _binding!! // Fragment에서 뷰바인딩 사용시 View보다 오래 남아있을 수 있는 문제가 있어, 이렇게 사용해야함.
     protected val compositeDisposable = CompositeDisposable()
+    protected lateinit var commonIntent: CommonIntent
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +50,7 @@ abstract class BaseDialogFragment<T: ViewDataBinding, V:BaseViewModel?>: DialogF
         log("DialogFragment:${this::class.simpleName}", "onViewCreated")
         binding.lifecycleOwner = viewLifecycleOwner // Fragment에서는 this 말고 뷰 라이프사이클 오너로 설정해주기.
         metrics = resources.displayMetrics
+        commonIntent = CommonIntent(requireActivity())
         initView()
         initObserve()
     }

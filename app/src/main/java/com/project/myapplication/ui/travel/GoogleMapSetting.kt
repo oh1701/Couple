@@ -22,7 +22,6 @@ import com.project.myapplication.R
 /** 맵 패키지 안에 마커 , 카메라 부분 등등으로 나누기*/
 class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     private lateinit var userMarker:Marker
-    private lateinit var marker:Marker
     private lateinit var userMarkerImage:BitmapDescriptor
     private lateinit var markerView:View
     private var cameraMoving = true
@@ -37,6 +36,10 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     fun repeatFunction(latlng: LatLng){
         animateCamera(latlng)
         userCreateMarker(latlng)
+    }
+
+    fun settingCamera(set:Boolean){
+        cameraMoving = set
     }
 
     private fun animateCamera(latlng: LatLng){
@@ -59,7 +62,6 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     private fun userCreateMarker(latlng: LatLng){
         if(::userMarker.isInitialized){
 //            마커가 존재할 시, addMarker말고 움직임으로 표현하기.
-            Log.e("마커 존재함", "마커 존재함")
         }
         else{
             val view = getMarkerView()
@@ -96,11 +98,12 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
         }
     }
 
-    fun addDiaryMarker(latlng: LatLng){
-        marker = googleMap.addMarker(MarkerOptions()
+    fun addDiaryMarker(latlng: LatLng, id:Int){
+        googleMap.addMarker(MarkerOptions()
             .position(latlng)
-            .zIndex(1.0f))!!
-        Log.e("마커 생성", "생성하였음.")
+            .zIndex(1.0f)
+            .title(id.toString()))!!
+        Log.e("마커 생성", "id는 $id")
     }
 
     private fun createDrawableFromView(v: View): Bitmap { // 뷰를 마커로 출력해주기 위한 함수

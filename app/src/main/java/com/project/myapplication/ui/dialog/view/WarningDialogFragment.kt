@@ -12,7 +12,6 @@ class WarningDialogFragment:BaseDialogFragment<DialogFragmentWarningBinding, War
     override val layoutResourceId: Int
         get() = R.layout.dialog_fragment_warning
     override val thisViewModel: WarningDialogViewModel by viewModel()
-    private val commonIntent:CommonIntent by inject()
 
     override fun initView() {
         binding.dialogViewModel = thisViewModel

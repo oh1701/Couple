@@ -13,10 +13,10 @@ class TravelViewModel:BaseViewModel() {
         get() = super.compositeDisposable
     private val _myLocationLatLng = MutableLiveData<LatLng>()
     val myLocationLatLng: LiveData<LatLng> = _myLocationLatLng
-    private val _createTravelDiary = MutableLiveData<Event<Boolean>>()
-    val createTravelDiary:LiveData<Event<Boolean>> = _createTravelDiary
     private val _geoCoderToLocation = MutableLiveData<String>()
     val geoCoderToLocation:LiveData<String> = _geoCoderToLocation
+    private val _newCreateMarker = MutableLiveData<Event<Int>>()
+    val newCreateMarker:LiveData<Event<Int>> = _newCreateMarker
 
     init{
         _geoCoderToLocation.value = "현재 위치를 찾고 있습니다 ..."
@@ -30,8 +30,8 @@ class TravelViewModel:BaseViewModel() {
         _geoCoderToLocation.value = location
     }
 
-    fun createDiaryButton(){
-        _createTravelDiary.value = Event(true)
-    }
 
+    fun newCreateMarker(id:Int){ // 다이어리 저장 버튼 누를시 맵 마커 create
+        _newCreateMarker.value = Event(id)
+    }
 }

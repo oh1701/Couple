@@ -29,7 +29,6 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
     protected lateinit var supportFragmentManager: FragmentManager
     private lateinit var backPressedCallback: OnBackPressedCallback
 
-
     override fun onAttach(context: Context) { // startFragment가 아닌 곳에서 뒤로가기 누를 시, Fragment는 start로 되돌아간다.
         super.onAttach(context)
 
@@ -52,10 +51,13 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
         binding.lifecycleOwner = viewLifecycleOwner // Fragment에서는 this 말고 뷰 라이프사이클 오너로 설정해주기.
         initView()
         initObserve()
+        sharedObserve()
     }
 
     abstract fun initView()
     abstract fun initObserve()
+    open fun sharedObserve(){}
+
     protected fun toast(msg:String){ // 토스트 메세지 설정.
         if(toast != null){
             toast!!.cancel()

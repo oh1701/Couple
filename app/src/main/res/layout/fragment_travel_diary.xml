@@ -237,7 +237,7 @@
             android:layout_margin="15dp"
 
             android:background="@drawable/circle_black"
-            android:onClickListener="@{() -> travelDiaryFragment.completeDiarycreate()}"
+            android:onClickListener="@{() -> travelDiaryViewModel.createDiary()}"
             />
 
 

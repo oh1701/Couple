@@ -27,11 +27,9 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
             if (location.provider == LocationManager.GPS_PROVIDER) {
                 thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
                 thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
-                Log.e("실행중", "${int++}")
             } else {
                 thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
                 thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
-                Log.e("실행중", "${int++}")
             }
         }
     }

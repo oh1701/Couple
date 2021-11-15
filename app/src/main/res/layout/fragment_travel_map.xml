@@ -81,9 +81,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        android:onClickListener="@{() -> travelMainViewModel.createDiaryButton()}"
+        android:onClickListener="@{() -> travelMapViewModel.createDiaryButton()}"
         android:layout_margin="20dp"
         android:src="@drawable/heart1"/>
+
+    <ImageButton
+        android:id="@+id/CameraAutoSet"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:onClickListener="@{() -> travelMapViewModel.cameraAutoSet()}"
+        android:layout_margin="20dp"
+        android:src="@drawable/heart1"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

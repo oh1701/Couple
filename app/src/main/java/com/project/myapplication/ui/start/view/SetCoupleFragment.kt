@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
+import com.project.myapplication.common.EventObserver
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentSetcoupleBinding
@@ -47,22 +48,18 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
     }
 
     override fun initObserve() {
-        thisViewModel.complete.observe(this){
+        thisViewModel.complete.observe(viewLifecycleOwner){
             sharedActivityViewModel.settingUpdate()
             requireActivity().onBackPressed()
         }
 
-        thisViewModel.setImageClick.observe(this){
-            it.getContentIfNotHandled()?.let {
+        thisViewModel.setImageClick.observe(viewLifecycleOwner, EventObserver{
                 setImageClick()
-            }
-        }
+        })
 
-        thisViewModel.setBirthClick.observe(this){
-            it.getContentIfNotHandled()?.let{
+        thisViewModel.setBirthClick.observe(viewLifecycleOwner, EventObserver{
                 datePicker()
-            }
-        }
+        })
     }
 
     private fun setImageClick(){

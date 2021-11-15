@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -12,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.common.Event
+import com.project.myapplication.common.EventObserver
 import com.project.myapplication.common.PhotoFilePath
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
@@ -65,24 +67,24 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
-        thisViewModel.createDiarysetting()
+        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)
+        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) }
     }
 
     override fun initObserve() {
-        thisViewModel.toastLiveData.observe(this, {event : Event<String> -> // 완료 시 에러용 토스트
-            event.getContentIfNotHandled()?.let{
-                Toast.makeText(requireContext(), event.peekContent(), Toast.LENGTH_SHORT).show()
-            }
+        thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{ event -> // 완료 시 에러용 토스트
+            Toast.makeText(requireContext(), event, Toast.LENGTH_SHORT).show()
+            supportFragmentManager.popBackStack()
+        })
+
+        thisViewModel.diarySaveID.observe(viewLifecycleOwner, EventObserver{ id ->
+            sharedActivityViewModel.newCreateMarker(id)
         })
     }
 
     fun cameraOpen(){
         cameraFileUri = photoFilePath.getImage()
         startForResultCamera.launch(cameraFileUri)
-    }
-
-    fun completeDiarycreate(){
-        sharedActivityViewModel.myLocationLatLng.value?.let { thisViewModel.createDiary(it) }
     }
 
     private fun startActivityForResult(){

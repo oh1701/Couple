@@ -6,5 +6,4 @@ import org.koin.dsl.module
 
 val commonFactoryModule = module{
     factory { WarningDialogFragment() }
-    factory { CommonIntent(get()) }
 }

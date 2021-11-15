@@ -50,7 +50,7 @@ class MoveFragment {
         )
     }
 
-    fun addFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment, moveLayout:Int): FragmentTransaction {
+    fun addFragmentUp(fragmentManager: FragmentManager, fragmentName:Fragment, moveLayout:Int, tag:String?): FragmentTransaction {
         return fragmentManager.beginTransaction().setCustomAnimations(
             R.anim.slide_in_bottom,
             0,
@@ -58,7 +58,8 @@ class MoveFragment {
             R.anim.slide_out_bottom
         ).add(
             moveLayout,
-            fragmentName
+            fragmentName,
+            tag
         )
     }
 

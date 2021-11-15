@@ -10,7 +10,9 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.common.CheckSelfPermission
+import com.project.myapplication.common.EventObserver
 import com.project.myapplication.common.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.ui.diary.DiaryFragment
@@ -59,7 +62,33 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     }
 
     override fun initObserve() {
-        sharedActivityViewModel.myLocationLatLng.observe(this) { LatLng ->
+        thisViewModel.googleMapAllDiaryMarker.observe(viewLifecycleOwner, EventObserver{
+            it.map { diary ->
+                googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()), diary.id) }
+        })
+
+        thisViewModel.googleMapCreateNewMarker.observe(viewLifecycleOwner, EventObserver{ diary ->
+            googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()), diary.id)
+        })
+
+        thisViewModel.createTravelDiary.observe(viewLifecycleOwner, EventObserver{ // 다이어리 버튼 눌리면.
+            MoveFragment()
+                .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
+                .addToBackStack("Map")
+                .commit()
+        })
+
+        thisViewModel.cameraAutoSetting.observe(viewLifecycleOwner){
+            if(::googleMapSetting.isInitialized) {
+                googleMapSetting.settingCamera(it)
+            }
+        }
+    }
+
+    override fun sharedObserve() {
+        super.sharedObserve()
+
+        sharedActivityViewModel.myLocationLatLng.observe(viewLifecycleOwner) { LatLng ->
             if(LatLng != null) {
                 googleMapSetting.repeatFunction(LatLng)
             }
@@ -69,16 +98,8 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             }
         }
 
-        sharedActivityViewModel.createTravelDiary.observe(this){
-            MoveFragment()
-                .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
-                .addToBackStack("Map")
-                .commit()
-        }
-
-        thisViewModel.googleMapDiaryMarker.observe(this, {
-            it.map { diary ->
-                googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble())) }
+        sharedActivityViewModel.newCreateMarker.observe(viewLifecycleOwner, EventObserver{ Diaryid ->
+            thisViewModel.newCreateMapMarker(Diaryid)
         })
     }
 
@@ -92,19 +113,14 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
         googleMap.setOnMarkerClickListener {
             if(it.title != "user") {
+                Log.e("현재 마커의 id는", it.title.toString())
                 moveFragment
-                    .addFragmentUp(supportFragmentManager, TravelDiaryFragment(), R.id.fragment_layout)
+                    .addFragmentUp(supportFragmentManager, TravelDiaryFragment(), R.id.fragment_layout, it.title)
                     .addToBackStack("Map")
                     .commit()
             }
 
             return@setOnMarkerClickListener true
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        googleMap.clear()
     }
 }
