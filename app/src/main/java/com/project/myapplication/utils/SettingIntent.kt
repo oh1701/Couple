@@ -1,13 +1,11 @@
-package com.project.myapplication.common
+package com.project.myapplication.utils
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 
-class CommonIntent(private val activity: Activity) {
+class SettingIntent(private val activity: Activity) {
     fun dialogIntentSetting() {
         val intent = Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(

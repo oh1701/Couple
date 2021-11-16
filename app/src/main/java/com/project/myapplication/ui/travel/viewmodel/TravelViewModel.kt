@@ -1,11 +1,10 @@
 package com.project.myapplication.ui.travel.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.Event
+import com.project.myapplication.utils.Event
 import io.reactivex.disposables.CompositeDisposable
 
 class TravelViewModel:BaseViewModel() {

@@ -3,8 +3,7 @@ package com.project.myapplication.ui.intro.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.Event
-import com.project.myapplication.ui.MainActivity
+import com.project.myapplication.utils.Event
 import com.project.myapplication.ui.intro.repository.IntroRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +19,7 @@ class IntroViewModel(private val repository: IntroRepository):BaseViewModel() {
     val checkCoupleDateSetting:LiveData<Event<Boolean>> = _checkCoupleDateSetting
 
     fun timer(){
-        val timer = Observable.timer(3000L, TimeUnit.MILLISECONDS)
+        val timer = Observable.timer(2000L, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(){

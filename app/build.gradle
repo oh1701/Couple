@@ -101,4 +101,8 @@ dependencies {
     /** Diary 사용 */
     implementation 'com.google.android:flexbox:2.0.1' // Flex Box Layout
     implementation 'com.github.dhaval2404:colorpicker:2.0' // Color Picker
+
+    /** google Map */
+    implementation 'com.google.maps.android:maps-utils-ktx:2.4.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
 }

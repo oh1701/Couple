@@ -7,8 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.project.myapplication.common.CheckSelfPermission
-import com.project.myapplication.data.sharedpreference.IntroSettingShared
+import com.project.myapplication.utils.CheckSelfPermission
 import com.project.myapplication.ui.intro.view.FirstAccessSettingActivity
 import com.project.myapplication.ui.intro.view.IntroActivity
 import io.reactivex.disposables.CompositeDisposable

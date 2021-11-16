@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.project.myapplication.common.CheckSelfPermission
-import com.project.myapplication.common.MoveFragment
+import com.project.myapplication.utils.CheckSelfPermission
+import com.project.myapplication.utils.MoveFragment
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), CheckSelfPermission {

@@ -15,7 +15,16 @@ class TravelDiaryRepository:BaseRepository() {
 
 
     fun insertDB(entity: RoomDiaryEntity): Completable {
-        return if(entity.latitude != 0.0.toLong() && entity.longitude != 0.0.toLong()) {
+        return if(entity.latitude != 0.0 && entity.longitude != 0.0) {
+            roomDiaryDao.insertDao(entity)
+        }
+        else {
+            Completable.error(Throwable("LatLng Null"))
+        }
+    }
+
+    fun updateDB(entity: RoomDiaryEntity): Completable {
+        return if(entity.latitude != 0.0 && entity.longitude != 0.0) {
             roomDiaryDao.insertDao(entity)
         }
         else {

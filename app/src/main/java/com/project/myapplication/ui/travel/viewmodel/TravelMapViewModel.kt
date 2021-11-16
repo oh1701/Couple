@@ -3,7 +3,7 @@ package com.project.myapplication.ui.travel.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.Event
+import com.project.myapplication.utils.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.ui.travel.repository.TravelMapRepository
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,18 +1,11 @@
 package com.project.myapplication.bind
 
-import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.databinding.adapters.TextViewBindingAdapter
-import com.project.myapplication.common.RegaxCheck
-import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
-import java.util.*
 
 object EditTextBind {
     @JvmStatic

@@ -1,4 +1,4 @@
-package com.project.myapplication.ui.travel
+package com.project.myapplication.googlemap
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -26,6 +26,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     private lateinit var markerView:View
     private var cameraMoving = true
 
+    // Setting
 
     fun mapSetting(){
         googleMap.uiSettings.isTiltGesturesEnabled = false
@@ -33,6 +34,8 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
         googleMap.uiSettings.isMyLocationButtonEnabled = false
         googleMap.isBuildingsEnabled = false
     }
+
+    // Camera
 
     fun repeatFunction(latlng: LatLng){
         animateCamera(latlng)
@@ -56,11 +59,10 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
         }
     }
 
-    private fun onOffCameraAnimate(){ // 마커 따라가는 카메라 움직임을 onOff하는 함수.
-        cameraMoving = !cameraMoving
-    }
+    // Marker
 
     private fun userCreateMarker(latlng: LatLng){
+        Log.e("유저마커", latlng.toString())
         if(::userMarker.isInitialized){
 //            마커가 존재할 시, addMarker말고 움직임으로 표현하기.
         }
@@ -100,6 +102,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     }
 
     fun addDiaryMarker(latlng: LatLng, id:Int){
+        Log.e("그냥마커", latlng.toString())
         googleMap.addMarker(MarkerOptions()
             .position(latlng)
             .zIndex(1.0f)

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -12,9 +11,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.common.Event
-import com.project.myapplication.common.EventObserver
-import com.project.myapplication.common.PhotoFilePath
+import com.project.myapplication.utils.EventObserver
+import com.project.myapplication.utils.PhotoFilePath
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
@@ -67,8 +65,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
+        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
         thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)
-        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) }
     }
 
     override fun initObserve() {
@@ -77,8 +75,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             supportFragmentManager.popBackStack()
         })
 
-        thisViewModel.diarySaveID.observe(viewLifecycleOwner, EventObserver{ id ->
-            sharedActivityViewModel.newCreateMarker(id)
+        thisViewModel.createMarkerEvent.observe(viewLifecycleOwner, EventObserver{
+            sharedActivityViewModel.newCreateMarker(thisViewModel.createDiaryID.value!!)
         })
     }
 

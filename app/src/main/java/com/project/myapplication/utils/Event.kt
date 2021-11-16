@@ -1,8 +1,6 @@
-package com.project.myapplication.common
+package com.project.myapplication.utils
 
-import android.util.Log
 import androidx.lifecycle.Observer
-import java.util.*
 
 open class Event<out T>(private val content: T) {
     private var hasBeenHandled = false

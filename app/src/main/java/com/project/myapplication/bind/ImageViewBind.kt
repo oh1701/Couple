@@ -1,20 +1,13 @@
 package com.project.myapplication.bind
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.project.myapplication.common.CheckSelfPermission
+import com.project.myapplication.utils.CheckSelfPermission
 
 object ImageViewBind:CheckSelfPermission {
     @JvmStatic

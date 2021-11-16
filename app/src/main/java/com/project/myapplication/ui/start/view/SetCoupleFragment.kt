@@ -9,9 +9,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.common.EventObserver
+import com.project.myapplication.utils.EventObserver
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
-import com.project.myapplication.common.PhotoFilePath
+import com.project.myapplication.utils.PhotoFilePath
 import com.project.myapplication.databinding.FragmentSetcoupleBinding
 import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
@@ -63,7 +63,7 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
     }
 
     private fun setImageClick(){
-        if(!cameraCheck(requireContext())){
+        if(cameraCheck(requireContext())){
             cameraFileUri = photoFilePath.getImage()
             startForResultCamera.launch(cameraFileUri)
         }

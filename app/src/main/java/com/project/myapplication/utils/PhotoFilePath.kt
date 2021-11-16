@@ -1,4 +1,4 @@
-package com.project.myapplication.common
+package com.project.myapplication.utils
 
 import android.content.Context
 import android.net.Uri

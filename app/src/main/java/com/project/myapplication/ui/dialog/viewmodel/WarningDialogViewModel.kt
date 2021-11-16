@@ -1,15 +1,11 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
-import android.app.Application
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.project.myapplication.R
-import com.project.myapplication.application.ApplicationViewModel
 import com.project.myapplication.application.KoinApplication
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.Event
+import com.project.myapplication.utils.Event
 import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
 import io.reactivex.disposables.CompositeDisposable
 

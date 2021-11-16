@@ -6,10 +6,9 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.common.Event
+import com.project.myapplication.utils.Event
 import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import com.project.myapplication.ui.start.repository.SetCoupleRepository
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

@@ -1,6 +1,6 @@
 package com.project.myapplication.di
 
-import com.project.myapplication.common.PhotoFilePath
+import com.project.myapplication.utils.PhotoFilePath
 import com.project.myapplication.data.room.db.RoomDiaryDB
 import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import org.koin.dsl.module

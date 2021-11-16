@@ -2,10 +2,8 @@ package com.project.myapplication.ui.dialog.view
 
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseDialogFragment
-import com.project.myapplication.common.CommonIntent
 import com.project.myapplication.databinding.DialogFragmentWarningBinding
 import com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class WarningDialogFragment:BaseDialogFragment<DialogFragmentWarningBinding, WarningDialogViewModel>() {

@@ -1,11 +1,10 @@
-package com.project.myapplication.common
+package com.project.myapplication.utils
 
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.project.myapplication.R
-import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 
 class MoveFragment {
     private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {

@@ -1,6 +1,5 @@
-package com.project.myapplication.common
+package com.project.myapplication.utils
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager

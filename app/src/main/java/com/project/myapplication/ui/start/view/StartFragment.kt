@@ -1,23 +1,15 @@
 package com.project.myapplication.ui.start.view
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.GravityCompat
-import com.bumptech.glide.Glide
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.common.MoveFragment
-import com.project.myapplication.common.PhotoFilePath
+import com.project.myapplication.utils.PhotoFilePath
 import com.project.myapplication.databinding.FragmentStartBinding
 import com.project.myapplication.ui.MainActivity
-import com.project.myapplication.ui.MainRepository
 import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.view.TravelActivity

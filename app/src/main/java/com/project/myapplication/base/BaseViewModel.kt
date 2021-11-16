@@ -1,13 +1,11 @@
 package com.project.myapplication.base
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.myapplication.common.Event
+import com.project.myapplication.utils.Event
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 open class BaseViewModel: ViewModel(), KoinComponent{
     open val compositeDisposable = CompositeDisposable()
