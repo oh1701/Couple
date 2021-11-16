@@ -1,6 +1,8 @@
 package com.project.myapplication.ui.intro.view
 
+import android.animation.Animator
 import android.os.Bundle
+import android.util.Log
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding

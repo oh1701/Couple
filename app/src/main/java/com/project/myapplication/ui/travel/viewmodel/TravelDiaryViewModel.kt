@@ -70,7 +70,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 diaryTitle.value = it.title
                 diaryContent.value = it.content
             }
-            .doOnError { Log.e("getDiary ::", "실패") }
+            .doOnError { 
+                Log.e("getDiary ::", "실패")
+                toast("올바른 초기 값을 가져오지 못하였습니다. \n Error : $it")
+            }
             .subscribe()
         )
     }
@@ -116,7 +119,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             _diarySaveID.value = Event(createDiaryID.value!!)
                             Log.e("createDiary ::", "성공 ${createDiaryID.value}")
                         }
-                        .doOnError { Log.e("createDiary ::", "실패") }
+                        .doOnError {
+                            Log.e("createDiary ::", "실패")
+                            toast("일기 저장에 실패하였습니다. \n Error : $it")
+                        }
                         .subscribe())
         }
         else if(diaryTitle.value == null){
@@ -139,7 +145,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 _createDiaryID.value = it.size + 1
                 Log.e("getDBsize ::", "사이즈는 ${it.size + 1},\n 내용물은 $it")
             }
-            .doOnError { Log.e("실패", "실패") }
+            .doOnError {
+                Log.e("실패", "실패")
+                toast("올바른 ID 값을 가져오지 못하였습니다. \n Error : $it")
+            }
             .subscribe())
     }
 
