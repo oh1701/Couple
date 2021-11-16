@@ -26,6 +26,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     private lateinit var markerView:View
     private var cameraMoving = true
 
+
     fun mapSetting(){
         googleMap.uiSettings.isTiltGesturesEnabled = false
         googleMap.uiSettings.isRotateGesturesEnabled = false

@@ -23,8 +23,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         get() = super.compositeDisposable
     
     // 초기 세팅
-    private val _createDay = MutableLiveData<String>()
-    val createDay:LiveData<String> = _createDay
+    private val _createDiaryDay = MutableLiveData<String>()
+    val createDiaryDay:LiveData<String> = _createDiaryDay
     private val _createDiaryID = MutableLiveData<Int>() // 다이어리 생성 버튼 클릭 후 진입 시 생성되는 ID. List 사이즈 + 1
     val createDiaryID:LiveData<Int> = _createDiaryID
     private val _createDiaryLatLng = MutableLiveData<LatLng>()
@@ -104,7 +104,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             diaryImageUri.value,
                             diaryTitle.value!!,
                             diaryContent.value!!,
-                            createDay.value!!,
+                            createDiaryDay.value!!,
                             createDiaryLatLng.value?.longitude?.toLong() ?: 0.0.toLong(), // 서울 위경도로 바꾸기.
                             createDiaryLatLng.value?.latitude?.toLong() ?: 0.0.toLong()
                         )
@@ -148,6 +148,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         val date = Date(now)
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
 
-        _createDay.value = sdf
+        _createDiaryDay.value = sdf
     }
 }

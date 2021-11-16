@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:text="@{travelDiaryViewModel.createDay}"
+                android:text="@{travelDiaryViewModel.createDiaryDay}"
                 android:textColor="#737272"
                 android:textSize="11dp"
                 android:gravity="start"
