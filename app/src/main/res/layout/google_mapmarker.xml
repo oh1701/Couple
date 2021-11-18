@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="9dp"
+            android:src="@drawable/content_bottom_new"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom|center"/>
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_content_clustercount22"
+            >
+
+            <ImageView
+                android:id="@+id/marker_image"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_white"/>
+
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/cluster_layout"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/circle_content_clustercount">
+
+            <TextView
+                android:id="@+id/cluster_count"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="#595776"
+                android:text="1"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+    </FrameLayout>
+</LinearLayout>

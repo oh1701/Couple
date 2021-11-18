@@ -12,7 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.EventObserver
-import com.project.myapplication.utils.PhotoFilePath
+import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
@@ -26,7 +26,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override val thisViewModel: TravelDiaryViewModel by viewModel()
     private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
     private val warningDialogFragment: WarningDialogFragment by inject()
-    private val photoFilePath: PhotoFilePath by inject()
+    private val photoClass: PhotoClass by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
@@ -81,8 +81,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     }
 
     fun cameraOpen(){
-        cameraFileUri = photoFilePath.getImage()
+        // 카메라면 이거.
+        cameraFileUri = photoClass.getImage()
         startForResultCamera.launch(cameraFileUri)
+
+        // 앨범이면 이거
+//        startForResultAlbum.launch(photoClass.albumPictureIntent())
     }
 
     private fun startActivityForResult(){
@@ -91,6 +95,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             if(check) {
                 thisViewModel.getUri(cameraFileUri)
             }
+        }
+
+        startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            photoClass.albumPictureResult(result, thisViewModel)
         }
     }
 

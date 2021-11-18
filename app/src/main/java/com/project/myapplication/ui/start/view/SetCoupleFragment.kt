@@ -1,20 +1,24 @@
 package com.project.myapplication.ui.start.view
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.DatePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.EventObserver
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
-import com.project.myapplication.utils.PhotoFilePath
+import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentSetcoupleBinding
 import com.project.myapplication.ui.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
+import com.project.myapplication.utils.Datepicker
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -27,11 +31,9 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
         get() = R.layout.fragment_setcouple
     override val thisViewModel: SetCoupleViewModel by viewModel()
     private val sharedActivityViewModel: MainViewModel by sharedViewModel()
-    private val photoFilePath: PhotoFilePath by inject()
+    private val photoClass: PhotoClass by inject()
     private val customDialog: WarningDialogFragment by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
-    private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
-    private lateinit var cameraFileUri: Uri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,50 +50,31 @@ class SetCoupleFragment:BaseFragment<FragmentSetcoupleBinding, SetCoupleViewMode
     }
 
     override fun initObserve() {
-        thisViewModel.complete.observe(viewLifecycleOwner){
+        thisViewModel.complete.observe(viewLifecycleOwner) {
             sharedActivityViewModel.settingUpdate()
             requireActivity().onBackPressed()
         }
 
-        thisViewModel.setImageClick.observe(viewLifecycleOwner, EventObserver{
-                setImageClick()
+        thisViewModel.setImageClick.observe(viewLifecycleOwner, EventObserver {
+            setImageClick()
         })
 
-        thisViewModel.setBirthClick.observe(viewLifecycleOwner, EventObserver{
-                datePicker()
+        thisViewModel.setBirthClick.observe(viewLifecycleOwner, EventObserver {
+            Datepicker(requireContext()).datePicker(thisViewModel)
         })
     }
 
-    private fun setImageClick(){
-        if(cameraCheck(requireContext())){
-            cameraFileUri = photoFilePath.getImage()
-            startForResultCamera.launch(cameraFileUri)
-        }
-        else{ // 설정창 이동하는 다이얼로그 클래스 불러오기
+    private fun setImageClick() {
+        if (cameraCheck(requireContext())) { // 퍼미션 체크
+            startForResultAlbum.launch(photoClass.albumPictureIntent())
+        } else { // 설정창 이동하는 다이얼로그 클래스 불러오기
             WarningDialogFragment().show(supportFragmentManager, "Permission")
         }
     }
 
-    private fun datePicker(){
-        val today = GregorianCalendar()
-        val todayYear = today.get(Calendar.YEAR)
-        val todayMonth = today.get(Calendar.MONTH)
-        val todayDay = today.get(Calendar.DATE)
-
-        DatePickerDialog(requireContext(), { _, year, month, day ->
-                thisViewModel.setBirthDay(year, month + 1, day)
-            },todayYear,todayMonth,todayDay)
-            .apply{
-                this.datePicker.maxDate = Calendar.getInstance().timeInMillis
-            }
-            .show()
-    }
-
-    private fun startActivityForResult(){
-        startForResultCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){
-            if(it){
-                thisViewModel.getUri(cameraFileUri)
-            }
+    private fun startActivityForResult() {
+        startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            photoClass.albumPictureResult(result, thisViewModel)
         }
     }
 }

@@ -19,7 +19,7 @@ class IntroViewModel(private val repository: IntroRepository):BaseViewModel() {
     val checkCoupleDateSetting:LiveData<Event<Boolean>> = _checkCoupleDateSetting
 
     fun timer(){
-        val timer = Observable.timer(2000L, TimeUnit.MILLISECONDS)
+        val timer = Observable.timer(2500L, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(){

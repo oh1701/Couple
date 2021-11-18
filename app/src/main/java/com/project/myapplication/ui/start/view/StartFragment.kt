@@ -7,7 +7,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.PhotoFilePath
+import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentStartBinding
 import com.project.myapplication.ui.MainActivity
 import com.project.myapplication.ui.MainViewModel
@@ -22,7 +22,7 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
         get() = R.layout.fragment_start
     override val thisViewModel: StartViewModel by viewModel()
     private val sharedActivityViewModel: MainViewModel by sharedViewModel()
-    private val photoFilePath: PhotoFilePath by inject()
+    private val photoFilePath: PhotoClass by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
@@ -66,19 +66,4 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
             .addToBackStack("start")
             .commit()
     }
-
-//    private fun startActivityForResult(){
-//        //해당 함수는 oncreate에서 선언해줘야함.
-//        startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-//            if(result.resultCode == Activity.RESULT_OK) {
-//                Glide.with(this).load(result.data?.data).circleCrop().into(binding.coupleImage2)
-//            }
-//        }
-//
-//        startForResultCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){ check ->
-//            if(check) {
-//                Glide.with(this).load(cameraFileUri).circleCrop().into(binding.coupleImage1)
-//            }
-//        }
-//    }
 }

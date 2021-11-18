@@ -2,7 +2,7 @@ package com.project.myapplication.googlemap
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
-import com.project.myapplication.model.ClusterMarkerData
+import com.project.myapplication.googlemap.model.ClusterMarkerData
 
 class MarkerClusterItem(
     latLng : LatLng,
@@ -29,5 +29,9 @@ class MarkerClusterItem(
 
     fun latLng():LatLng{
         return position
+    }
+
+    fun diaryData():ClusterMarkerData{
+        return data
     }
 }

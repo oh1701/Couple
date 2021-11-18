@@ -105,4 +105,7 @@ dependencies {
     /** google Map */
     implementation 'com.google.maps.android:maps-utils-ktx:2.4.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
+
+    /** View Pager2 */
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }

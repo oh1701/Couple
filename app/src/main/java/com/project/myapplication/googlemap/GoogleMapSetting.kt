@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 
 
@@ -29,10 +30,10 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     // Setting
 
     fun mapSetting(){
-        googleMap.uiSettings.isTiltGesturesEnabled = false
-        googleMap.uiSettings.isRotateGesturesEnabled = false
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-        googleMap.isBuildingsEnabled = false
+        googleMap.uiSettings.isTiltGesturesEnabled = false // 카메리 각도 조절하는 설정 끄기
+        googleMap.uiSettings.isRotateGesturesEnabled = false // 제스쳐로 회전 시키는 설정 끄기
+        googleMap.uiSettings.isMyLocationButtonEnabled = false // 내 위치 버튼 나오게하는 설정 끄기
+        googleMap.uiSettings.isMapToolbarEnabled = false // Toolbar 나오게 하는 설정 끄기
     }
 
     // Camera
@@ -62,42 +63,41 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap) {
     // Marker
 
     private fun userCreateMarker(latlng: LatLng){
-        Log.e("유저마커", latlng.toString())
         if(::userMarker.isInitialized){
 //            마커가 존재할 시, addMarker말고 움직임으로 표현하기.
         }
         else{
-            val view = getMarkerView()
-
-            Glide.with(context).load(R.drawable.natur).circleCrop().listener(object : RequestListener<Drawable>{
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    val image = view!!.findViewById<ImageView>(R.id.profile_image)
-                    image.setImageDrawable(resource)
-                    userMarkerImage = BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view))
-                    userMarker = googleMap.addMarker(
-                        MarkerOptions()
-                            .position(latlng)
-                            .title("user")
-                            .zIndex(5.0f)
-                            .icon(userMarkerImage)
-                    )!!
-                    return true
-                }
-            }).into(view!!.findViewById(R.id.profile_image))
+//            val view = getMarkerView()
+//
+//            Glide.with(context).load(R.drawable.natur).circleCrop().listener(object : RequestListener<Drawable>{
+//                override fun onLoadFailed(
+//                    e: GlideException?,
+//                    model: Any?,
+//                    target: Target<Drawable>?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    return false
+//                }
+//                override fun onResourceReady(
+//                    resource: Drawable?,
+//                    model: Any?,
+//                    target: Target<Drawable>?,
+//                    dataSource: DataSource?,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    val image = view!!.findViewById<ImageView>(R.id.profile_image)
+//                    image.setImageDrawable(resource)
+//                    userMarkerImage = BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view))
+//                    userMarker = googleMap.addMarker(
+//                        MarkerOptions()
+//                            .position(latlng)
+//                            .title("user")
+//                            .zIndex(5.0f)
+//                            .icon(userMarkerImage)
+//                    )!!
+//                    return true
+//                }
+//            }).into(view!!.findViewById(R.id.profile_image))
         }
     }
 

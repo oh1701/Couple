@@ -7,12 +7,16 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.EventObserver
 import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.GoogleMapSetting
+import com.project.myapplication.googlemap.MarkerClusterItem
+import com.project.myapplication.googlemap.MarkerClusterRenderer
+import com.project.myapplication.googlemap.model.ClusterMarkerData
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -29,6 +33,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
     private lateinit var googleMap: GoogleMap
     private lateinit var googleMapSetting: GoogleMapSetting
+    private lateinit var cluster : ClusterManager<MarkerClusterItem>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,14 +46,30 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         binding.travelMapViewModel = thisViewModel
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelMapFrgament = this
-
-        thisViewModel.getAllDiary()
     }
 
     override fun initObserve() {
-        thisViewModel.googleMapAllDiaryMarker.observe(viewLifecycleOwner, EventObserver{
-            it.map { diary ->
-                googleMapSetting.addDiaryMarker(LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()), diary.id) }
+        thisViewModel.googleMapAllDiaryMarker.observe(viewLifecycleOwner, EventObserver{ diary ->
+                aa()
+            var size = 1
+            diary.map{ diary ->
+                Log.e("불러옴", "$size")
+                size++
+            cluster.addItem(
+                MarkerClusterItem(
+                    LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
+                    diary.id.toString(),
+                    null,
+                    ClusterMarkerData(
+                        diary.imageUri,
+                        diary.title,
+                        diary.content,
+                        diary.date,
+                        null
+                    )
+                )
+            )}
+                cluster.cluster()
         })
 
         thisViewModel.googleMapCreateNewMarker.observe(viewLifecycleOwner, EventObserver{ diary ->
@@ -95,21 +116,48 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         if(!googleMapSettingCheck()){ // lateinit 할당되지 않았을 때만 실행
             googleMapSetting = GoogleMapSetting(requireContext(), googleMap)
             googleMapSetting.mapSetting()
+            thisViewModel.getAllDiary()
         }
 
-        googleMap.setOnMarkerClickListener {
-            if(it.title != "user") {
-                Log.e("현재 마커의 id는", it.title.toString())
-                moveFragment
-                    .addFragmentUp(supportFragmentManager, TravelDiaryFragment(), R.id.fragment_layout, it.title)
-                    .addToBackStack("Map")
-                    .commit()
-            }
-
-            return@setOnMarkerClickListener true
-        }
+//        googleMap.setOnMarkerClickListener {
+//            if(it.title != "user") {
+//                Log.e("현재 마커의 id는", it.title.toString())
+//                moveFragment
+//                    .addFragmentUp(supportFragmentManager, TravelDiaryFragment(), R.id.fragment_layout, it.title)
+//                    .addToBackStack("Map")
+//                    .commit()
+//            }
+//
+//            return@setOnMarkerClickListener true
+//        }
     }
 
+    fun aa(){
+        cluster = ClusterManager<MarkerClusterItem>(requireContext(), googleMap)
+        val render = MarkerClusterRenderer(
+            context = requireContext(),
+            map = googleMap,
+            clusterManager = cluster
+        )
+        cluster.renderer = render
+        googleMap.setOnCameraIdleListener(cluster) // 지도 화면의 움직임 감시
+        googleMap.setOnMarkerClickListener(cluster) // 마커 클릭시 실행하는 함수
+
+        cluster.setOnClusterItemClickListener {
+            Log.e("123", "setOnClusterItemClickListener")
+            return@setOnClusterItemClickListener true
+        }
+
+        cluster.setOnClusterClickListener {
+            it.apply {
+                it.items.map {
+                    Log.e("132213", it.title.toString())
+                }
+            }
+            Log.e("123", "${it.items.size}, ${it.position}")
+            return@setOnClusterClickListener true
+        }
+    }
     private fun googleMapSettingCheck():Boolean{
         return ::googleMapSetting.isInitialized
     }
