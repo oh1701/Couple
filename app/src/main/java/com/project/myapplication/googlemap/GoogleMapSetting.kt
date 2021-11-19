@@ -81,22 +81,4 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
             Log.e("userMarker.isInitialized ::","userMarker.isInitialized")
         }
     }
-
-    fun addDiaryMarker(latlng: LatLng, id:Int){
-        Log.e("그냥마커", latlng.toString())
-        googleMap?.addMarker(MarkerOptions()
-            .position(latlng)
-            .zIndex(1.0f)
-            .title(id.toString()))!!
-        Log.e("마커 생성", "id는 $id")
-    }
-
-    private fun createDrawableFromView(v: View): Bitmap { // 뷰를 마커로 출력해주기 위한 함수
-        v.measure(v.width, v.height)
-        val b = Bitmap.createBitmap(v.measuredWidth, v.measuredHeight, Bitmap.Config.ARGB_8888)
-        val c = Canvas(b)
-        v.layout(0, 0, v.measuredWidth, v.measuredHeight)
-        v.draw(c)
-        return b
-    }
 }

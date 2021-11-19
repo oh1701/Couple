@@ -34,6 +34,23 @@ class GlideUtils(private val context: Context){
                     isFirstResource: Boolean
                 ): Boolean {
                     Log.e("onLoadFailed", "onLoadFailed")
+
+                    getmarker?.let{ mymarker -> // 마커가 Null이 아니면 설정해줌.
+                        if(mymarker is Marker){
+                            mymarker
+                                .setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+                            when(tag){
+                                "user" -> mymarker.zIndex = 1.5f
+                                "cluster" -> mymarker.zIndex = 1.0f
+                            }
+                        }
+                        else if(mymarker is MarkerOptions){ // Cluster로 온것들
+                            Log.e("123", "optionsdf")
+                            mymarker
+                                .zIndex(1.0f)
+                                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+                        }
+                    }
                     return false
                 }
                 override fun onResourceReady(

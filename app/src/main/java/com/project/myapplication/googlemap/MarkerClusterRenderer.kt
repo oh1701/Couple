@@ -35,7 +35,16 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
     private val glideUtils = GlideUtils(context)
 
     private fun getObservableMarker(cluster: Cluster<MarkerClusterItem>):String?{
-        return cluster.items.toMutableList()[cluster.size - 1].diaryData().imageUri
+        val reverseCluster = cluster.items.toMutableList().reversed()
+        var uri = ""
+        
+        reverseCluster.map {
+            if(it.diaryData().imageUri != null){
+                uri = it.diaryData().imageUri!!
+            }
+        }
+
+        return uri
     }
 
     override fun onBeforeClusterItemRendered(item: MarkerClusterItem, markerOptions: MarkerOptions) {
@@ -91,29 +100,3 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
         glideUtils.glideListener(targetview, getObservableMarker(cluster), imageview, marker, "cluster")
     }
 }
-
-//Glide.with(targetview)
-//.load(imageview)
-//.circleCrop()
-//.listener(object : RequestListener<Drawable> {
-//    override fun onLoadFailed(
-//        e: GlideException?,
-//        model: Any?,
-//        target: Target<Drawable>?,
-//        isFirstResource: Boolean
-//    ): Boolean {
-//        return false
-//    }
-//
-//    override fun onResourceReady(
-//        resource: Drawable?,
-//        model: Any?,
-//        target: Target<Drawable>?,
-//        dataSource: DataSource?,
-//        isFirstResource: Boolean
-//    ): Boolean {
-//        BitmapDescriptorFactory.fromBitmap(createDrawableFromView(targetview))
-//        return false
-//    }
-//})
-//.into(imageview)
