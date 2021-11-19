@@ -28,6 +28,8 @@ import com.project.myapplication.R
 import com.project.myapplication.utils.GlideUtils
 import io.reactivex.Observable
 
+// 왜인지는 모르겠으나, targetView를 전역으로 설정하면 뷰가 안입혀진다.
+
 class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, private val clusterManager: ClusterManager<MarkerClusterItem>):
     DefaultClusterRenderer<MarkerClusterItem>(context, map, clusterManager)  {
     private val glideUtils = GlideUtils(context)
@@ -37,74 +39,56 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
     }
 
     override fun onBeforeClusterItemRendered(item: MarkerClusterItem, markerOptions: MarkerOptions) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-        glideUtils.glideListener(targetview, item.diaryData().imageUri, imageview, markerOptions, "cluster")
+        itemGlide(item, markerOptions)
     }
 
     override fun onBeforeClusterRendered(cluster: Cluster<MarkerClusterItem>, markerOptions: MarkerOptions) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-        targetview.findViewById<TextView>(R.id.cluster_count).apply{
-            text = if(cluster.size > 9){
-                "10+"
-            } else{
-                cluster.size.toString()
-            }
-        }
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-        glideUtils.glideListener(targetview, getObservableMarker(cluster), imageview, markerOptions, "cluster")
+        clusterGlide(cluster, markerOptions)
     }
 
     override fun onClusterItemRendered(clusterItem: MarkerClusterItem, marker: Marker) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-        glideUtils.glideListener(targetview, clusterItem.diaryData().imageUri, imageview, marker, "cluster")
+        itemGlide(clusterItem, marker)
     }
 
     override fun onClusterRendered(cluster: Cluster<MarkerClusterItem>, marker: Marker) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-        targetview.findViewById<TextView>(R.id.cluster_count).apply{
-            text = if(cluster.size > 9){
-                "10+"
-            } else{
-                cluster.size.toString()
-            }
-        }
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-        glideUtils.glideListener(targetview, getObservableMarker(cluster), imageview, marker, "cluster")
+        clusterGlide(cluster, marker)
     }
 
     override fun onClusterItemUpdated(item: MarkerClusterItem, marker: Marker) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-        glideUtils.glideListener(targetview, item.diaryData().imageUri, imageview, marker, "cluster")
+        itemGlide(item, marker)
     }
 
     override fun onClusterUpdated(cluster: Cluster<MarkerClusterItem>, marker: Marker) {
-         val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
-        targetview.findViewById<TextView>(R.id.cluster_count).apply{
-            text = if(cluster.size > 9){
-                "10+"
-            } else{
-                cluster.size.toString()
-            }
-        }
-         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
-
-        glideUtils.glideListener(targetview, getObservableMarker(cluster), imageview, marker, "cluster")
-    }
-
-    private fun createDrawableFromView(v: View): Bitmap { // 뷰를 마커로 출력해주기 위한 함수
-        v.measure(v.width, v.height)
-        val b = Bitmap.createBitmap(v.measuredWidth, v.measuredHeight, Bitmap.Config.ARGB_8888)
-        val c = Canvas(b)
-        v.layout(0, 0, v.measuredWidth, v.measuredHeight)
-        v.draw(c)
-        return b
+        clusterGlide(cluster, marker)
     }
 
     override fun shouldRenderAsCluster(cluster: Cluster<MarkerClusterItem>): Boolean {
         return cluster.size > 1 // 클러스터 될 콘텐츠가 1개 초과시
+    }
+
+    private fun setTextView(v:View, cluster:Cluster<MarkerClusterItem>){
+        v.findViewById<TextView>(R.id.cluster_count).apply{
+            text = if(cluster.size > 9){
+                "10+"
+            } else{
+                cluster.size.toString()
+            }
+        }
+    }
+
+    private fun <mapMarker>itemGlide(cluster: MarkerClusterItem, marker:mapMarker){
+        val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
+        val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
+
+        glideUtils.glideListener(targetview, cluster.diaryData().imageUri, imageview, marker, "cluster")
+    }
+
+    private fun <mapMarker>clusterGlide(cluster: Cluster<MarkerClusterItem>, marker:mapMarker){
+        val targetview: View = LayoutInflater.from(context).inflate(R.layout.google_mapmarker, null)
+        val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
+        setTextView(targetview, cluster)
+
+        glideUtils.glideListener(targetview, getObservableMarker(cluster), imageview, marker, "cluster")
     }
 }
 
