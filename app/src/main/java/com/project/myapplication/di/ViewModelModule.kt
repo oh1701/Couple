@@ -1,7 +1,7 @@
 package com.project.myapplication.di
 
-import com.project.myapplication.ui.MainRepository
-import com.project.myapplication.ui.MainViewModel
+import com.project.myapplication.ui.main.MainRepository
+import com.project.myapplication.ui.main.MainViewModel
 import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
 import com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel
 import com.project.myapplication.ui.intro.repository.FirstAccessSettingRepository

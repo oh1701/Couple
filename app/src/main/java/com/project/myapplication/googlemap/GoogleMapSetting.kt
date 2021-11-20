@@ -1,29 +1,14 @@
 package com.project.myapplication.googlemap
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageButton
 import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.target.ViewTarget
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.utils.GlideUtils
-import io.reactivex.Observable
 
 
 /** 맵 패키지 안에 마커 , 카메라 부분 등등으로 나누기*/
@@ -31,7 +16,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
     private lateinit var userMarker:Marker
     private lateinit var userMarkerImage:BitmapDescriptor
     private var cameraMoving = true
-    private val view = LayoutInflater.from(context).inflate(R.layout.marker_diaryview, null)
+    private val view = LayoutInflater.from(context).inflate(R.layout.google_usermarker, null)
     private val imageView = view.findViewById<ImageView>(R.id.profile_image)
     private val glideUtils = GlideUtils(context)
 

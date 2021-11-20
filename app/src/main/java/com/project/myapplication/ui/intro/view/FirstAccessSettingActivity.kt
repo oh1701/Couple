@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityFirstaccessSettingBinding
-import com.project.myapplication.ui.MainActivity
+import com.project.myapplication.ui.main.MainActivity
 import com.project.myapplication.ui.intro.viewmodel.FirstAccessSettingViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

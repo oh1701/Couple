@@ -7,14 +7,14 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.project.myapplication.ui.MainViewModel" />
+            type="com.project.myapplication.ui.main.MainViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/main_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.main.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

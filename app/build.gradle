@@ -91,12 +91,12 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.0.7'
 
     /** Room DB 사용 */
-    implementation "androidx.room:room-runtime:2.4.0-beta01"
-    testImplementation "androidx.room:room-testing:2.4.0-beta01"
-    kapt "androidx.room:room-compiler:2.4.0-beta01"
-    annotationProcessor "androidx.room:room-compiler:2.4.0-beta01"
-    implementation "androidx.room:room-rxjava2:2.4.0-beta01"
-    implementation "androidx.room:room-guava:2.4.0-beta01"
+    implementation "androidx.room:room-runtime:2.4.0-beta02"
+    testImplementation "androidx.room:room-testing:2.4.0-beta02"
+    kapt "androidx.room:room-compiler:2.4.0-beta02"
+    annotationProcessor "androidx.room:room-compiler:2.4.0-beta02"
+    implementation "androidx.room:room-rxjava2:2.4.0-beta02"
+    implementation "androidx.room:room-guava:2.4.0-beta02"
 
     /** Diary 사용 */
     implementation 'com.google.android:flexbox:2.0.1' // Flex Box Layout
@@ -108,4 +108,5 @@ dependencies {
 
     /** View Pager2 */
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }

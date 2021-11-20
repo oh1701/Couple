@@ -1,6 +1,5 @@
-package com.project.myapplication.ui
+package com.project.myapplication.ui.main
 
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel

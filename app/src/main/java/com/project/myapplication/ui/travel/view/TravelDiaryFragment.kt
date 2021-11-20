@@ -14,6 +14,7 @@ import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.observer.EventObserver
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
+import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
@@ -85,6 +86,11 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.diaryTouchBtnCheck.observe(viewLifecycleOwner, CustomObserver{ boolean ->
             thisViewModel.viewEnabledValue(boolean.not()) // 버튼이 켜지면 Enabled false 처리해야함.
+        })
+
+        thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{boolean ->
+            if(boolean)
+                FontDialogFragment().show(supportFragmentManager, "")
         })
     }
 

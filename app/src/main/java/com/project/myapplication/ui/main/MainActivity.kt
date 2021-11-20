@@ -1,4 +1,4 @@
-package com.project.myapplication.ui
+package com.project.myapplication.ui.main
 
 import android.os.Bundle
 import androidx.core.view.GravityCompat

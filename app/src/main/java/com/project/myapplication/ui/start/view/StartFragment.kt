@@ -9,8 +9,8 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentStartBinding
-import com.project.myapplication.ui.MainActivity
-import com.project.myapplication.ui.MainViewModel
+import com.project.myapplication.ui.main.MainActivity
+import com.project.myapplication.ui.main.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.StartViewModel
 import com.project.myapplication.ui.travel.view.TravelActivity
 import org.koin.android.ext.android.inject

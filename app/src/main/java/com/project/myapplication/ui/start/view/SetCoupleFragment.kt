@@ -11,7 +11,7 @@ import com.project.myapplication.utils.observer.EventObserver
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentSetcoupleBinding
-import com.project.myapplication.ui.MainViewModel
+import com.project.myapplication.ui.main.MainViewModel
 import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
 import com.project.myapplication.utils.Datepicker
 import org.koin.android.ext.android.inject

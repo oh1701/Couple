@@ -14,7 +14,7 @@
 
         <variable
             name="mainActivityViewModel"
-            type="com.project.myapplication.ui.MainViewModel" />
+            type="com.project.myapplication.ui.main.MainViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

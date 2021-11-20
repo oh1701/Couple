@@ -1,12 +1,10 @@
 package com.project.myapplication.ui.intro.view
 
-import android.animation.Animator
 import android.os.Bundle
-import android.util.Log
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityIntroBinding
-import com.project.myapplication.ui.MainActivity
+import com.project.myapplication.ui.main.MainActivity
 import com.project.myapplication.ui.intro.viewmodel.IntroViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

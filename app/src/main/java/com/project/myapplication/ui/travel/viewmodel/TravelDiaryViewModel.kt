@@ -37,6 +37,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _diaryViewVisibility = MutableLiveData<Int>()
     val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
+    private val _diaryFontBtnCheck = MutableLiveData<Event<Boolean>>()
+    val diaryFontBtnCheck:LiveData<Event<Boolean>> = _diaryFontBtnCheck
     private val _diaryTrashBtnCheck = MutableLiveData<CustomObserve<Boolean>>()
     val diaryTrashBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTrashBtnCheck
     private val _diaryTouchBtnCheck = MutableLiveData<CustomObserve<Boolean>>()
@@ -62,6 +64,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTouchBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTagBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
+        _diaryFontBtnCheck.value = Event(false)
     }
 
     // DB 관련
@@ -192,6 +195,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             "touch" -> _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
             "tag" -> _diaryTagBtnCheck.value = CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
             "trash" -> _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
+            "font" -> _diaryFontBtnCheck.value = Event(_diaryFontBtnCheck.value?.peekContent()!!.not())
         }
     }
 

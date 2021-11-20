@@ -64,10 +64,10 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
         else{
             if(isGpsEnabled && isNetworkEnabled) {
                 lm.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 3000L, 0.0F, checkLocation
+                    LocationManager.NETWORK_PROVIDER, 2000L, 0.0F, checkLocation
                 )
                 lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 3000L, 0.0F, checkLocation
+                    LocationManager.GPS_PROVIDER, 2000L, 0.0F, checkLocation
                 )
             }
             else{

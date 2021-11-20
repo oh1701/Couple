@@ -191,7 +191,10 @@
                 android:layout_height="match_parent"
 
                 android:background="@drawable/btn_select"
-                android:src="@drawable/ic_baseline_text_fields_24_black"/>
+                android:src="@drawable/ic_baseline_text_fields_24"
+
+                android:tag="font"
+                android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
 
             <ImageButton
                 android:layout_width="40dp"
