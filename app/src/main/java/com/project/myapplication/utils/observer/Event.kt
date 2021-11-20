@@ -1,4 +1,4 @@
-package com.project.myapplication.utils
+package com.project.myapplication.utils.observer
 
 import androidx.lifecycle.Observer
 

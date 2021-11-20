@@ -81,6 +81,7 @@
                 android:onClickListener="@{() -> travelDiaryFragment.cameraOpen()}"
                 android:scaleType="centerInside"
 
+                android:enabled="@{travelDiaryViewModel.diaryEnabled}"
                 android:src="@drawable/ic_baseline_photo_camera_24"
                 app:imageFromUri="@{travelDiaryViewModel.diaryImageUri}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +121,7 @@
                 android:inputType="text"
 
                 android:textColor="@color/black"
+                android:enabled="@{travelDiaryViewModel.diaryEnabled}"
 
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -150,12 +152,12 @@
                 android:background="@android:color/transparent"
 
                 android:layout_marginTop="10dp"
+                android:enabled="@{travelDiaryViewModel.diaryEnabled}"
 
                 android:textSize="14sp"
                 android:hint="내용을 입력해주세요."
                 android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textColor="@color/black"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/diary_date"/>
@@ -197,7 +199,7 @@
 
                 android:tag="touch"
                 android:background="@drawable/btn_select"
-                app:OnOffBoolean="@{travelDiaryViewModel.diaryTouchBtnCheck}"
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTouchBtnCheck.peekContent()}"
                 android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_baseline_pan_tool_24"/>
@@ -208,7 +210,7 @@
 
                 android:tag="tag"
                 android:background="@drawable/btn_select"
-                app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck}"
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck.peekContent()}"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_baseline_tag_24"
                 android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
@@ -222,7 +224,7 @@
                 android:background="@drawable/btn_select"
                 android:src="@drawable/ic_baseline_restore_from_trash_24"
 
-                app:OnOffBoolean="@{travelDiaryViewModel.diaryTrashBtnCheck}"
+                app:OnOffBoolean="@{travelDiaryViewModel.diaryTrashBtnCheck.peekContent()}"
                 android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
 
         </LinearLayout>
@@ -236,6 +238,7 @@
             app:layout_constraintBottom_toBottomOf="@id/content_scrollView"
             android:layout_margin="15dp"
 
+            android:enabled="@{travelDiaryViewModel.diaryEnabled}"
             android:background="@drawable/circle_black"
             android:onClickListener="@{() -> travelDiaryViewModel.createDiary()}"
             />

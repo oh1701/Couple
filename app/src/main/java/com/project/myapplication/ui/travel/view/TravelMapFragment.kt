@@ -1,28 +1,23 @@
 package com.project.myapplication.ui.travel.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.EventObserver
+import com.project.myapplication.utils.observer.EventObserver
 import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.ClusterSetting
 import com.project.myapplication.googlemap.GoogleMapSetting
 import com.project.myapplication.googlemap.MarkerClusterItem
-import com.project.myapplication.googlemap.MarkerClusterRenderer
-import com.project.myapplication.googlemap.model.ClusterMarkerData
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.*
 
 /** 나중에 getLocation, getGecoder 분리하기 */
 /** LocationListener가 나갔다가 들어오면 오랫동안 작동이 안된다. */

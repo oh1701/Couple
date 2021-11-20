@@ -7,9 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.utils.Event
+import com.project.myapplication.utils.observer.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
+import com.project.myapplication.utils.observer.CustomObserve
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -36,12 +37,14 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _diaryViewVisibility = MutableLiveData<Int>()
     val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
-    private val _diaryTrashBtnCheck = MutableLiveData<Boolean>()
-    val diaryTrashBtnCheck:LiveData<Boolean> = _diaryTrashBtnCheck
-    private val _diaryTouchBtnCheck = MutableLiveData<Boolean>()
-    val diaryTouchBtnCheck:LiveData<Boolean> = _diaryTouchBtnCheck
-    private val _diaryTagBtnCheck = MutableLiveData<Boolean>()
-    val diaryTagBtnCheck:LiveData<Boolean> = _diaryTagBtnCheck
+    private val _diaryTrashBtnCheck = MutableLiveData<CustomObserve<Boolean>>()
+    val diaryTrashBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTrashBtnCheck
+    private val _diaryTouchBtnCheck = MutableLiveData<CustomObserve<Boolean>>()
+    val diaryTouchBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTouchBtnCheck
+    private val _diaryTagBtnCheck = MutableLiveData<CustomObserve<Boolean>>()
+    val diaryTagBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTagBtnCheck
+    private val _diaryEnabled = MutableLiveData<Boolean>()
+    val diaryEnabled:LiveData<Boolean> = _diaryEnabled
 
     // 다이어리 입력
     private val _diaryImageUri = MutableLiveData<String>(null)
@@ -56,10 +59,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val createMarkerEvent:LiveData<Event<Boolean>> = _createMarkerEvent
 
     init{
-        _diaryTrashBtnCheck.value = false
-        _diaryTouchBtnCheck.value = false
-        _diaryTagBtnCheck.value = false
+        _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
+        _diaryTouchBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
+        _diaryTagBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
     }
+
+    // DB 관련
 
     fun getDiary(id:Int){ // 마커 클릭을 통해서 다이어리 생성
         _createDiaryID.value = id // 존재하던 마커를 수정하기 위해 현재 id를 받아온 ID로 설정한다
@@ -79,28 +84,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             }
             .subscribe()
         )
-    }
-
-    fun getUri(uri: Uri){ // 갤러리 or 카메라에서 이미지 가져오기
-        _diaryImageUri.value = uri.toString()
-    }
-
-    fun createDiarysetting(latLng: LatLng?){ // 다이어리 생성 버튼 누른 시간.
-        _createDiaryCoupleDay.value = repository.getDateday()
-        _createDiaryLatLng.value = latLng
-        getCreateDay()
-
-        if(createDiaryID.value == null){ // 현재 ID가 지정되어 있지 않은 경우에만 (마커 클릭을 통해 들어온 것이 아닐경우에만) 설정.
-            getDBsizeID()
-        }
-    }
-
-    fun changedButtonCheck(view: View){ // 버튼 상태 확인
-        when(view.tag){
-            "touch" -> { _diaryTouchBtnCheck.value = _diaryTouchBtnCheck.value?.not() }
-            "tag" -> { _diaryTagBtnCheck.value = _diaryTagBtnCheck.value?.not() }
-            "trash" -> { _diaryTrashBtnCheck.value = _diaryTrashBtnCheck.value?.not() }
-        }
     }
 
     fun createDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
@@ -148,6 +131,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete {
                                 toast("수정 완료")
+                                _diaryCompleteButton.value = Event(true)
                                 Log.e("createDiary update ::", "성공 ${createDiaryID.value}")
                             }
                             .doOnError {
@@ -162,10 +146,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         } else if (diaryContent.value == null) {
             toast("내용을 입력해주세요.")
         }
-    }
-
-    fun closeDiary():Boolean{
-        return diaryTitle.value == null && diaryContent.value == null
     }
 
     private fun getDBsizeID(){
@@ -183,7 +163,43 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribe())
     }
 
-    private fun getCreateDay(){
+    // DB 호출 함수 관련 or 뷰 관련
+
+    fun getUri(uri: Uri){ // 갤러리 or 카메라에서 이미지 가져오기
+        _diaryImageUri.value = uri.toString()
+    }
+
+    fun createDiarysetting(latLng: LatLng?){ // 다이어리 생성 버튼 누른 시간.
+        _createDiaryCoupleDay.value = repository.getDateday()
+        _createDiaryLatLng.value = latLng
+        getCreateDay()
+
+        if(createDiaryID.value == null){ // 현재 ID가 지정되어 있지 않은 경우에만 (마커 클릭을 통해 들어온 것이 아닐경우에만) 설정.
+            getDBsizeID()
+        }
+    }
+
+    fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
+        _diaryEnabled.value = boolean
+        when(boolean.not()){
+            false -> toast("터치 금지 해제")
+            true -> toast("터치 금지 활성화")
+        }
+    }
+
+    fun changedButtonCheck(view: View){ // 버튼 상태 확인
+        when(view.tag){
+            "touch" -> _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
+            "tag" -> _diaryTagBtnCheck.value = CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
+            "trash" -> _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
+        }
+    }
+
+    fun closeDiary():Boolean{
+        return diaryTitle.value == null && diaryContent.value == null
+    }
+
+    private fun getCreateDay(){ // 다이어리 생성 날짜
         val now = System.currentTimeMillis()
         val date = Date(now)
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)

@@ -3,7 +3,7 @@ package com.project.myapplication.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.myapplication.utils.Event
+import com.project.myapplication.utils.observer.Event
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 

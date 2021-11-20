@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.application.KoinApplication
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.utils.Event
+import com.project.myapplication.utils.observer.Event
 import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
 import io.reactivex.disposables.CompositeDisposable
 

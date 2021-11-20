@@ -37,10 +37,16 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
     private fun getObservableMarker(cluster: Cluster<MarkerClusterItem>):String?{
         val reverseCluster = cluster.items.toMutableList().reversed()
         var uri = ""
-        
-        reverseCluster.map {
-            if(it.diaryData().imageUri != null){
-                uri = it.diaryData().imageUri!!
+
+        var int = 1
+        reverseCluster.run {
+            this.forEach {
+                if(it.diaryData().imageUri != null) {
+                    uri = it.diaryData().imageUri!!
+                    Log.e("실행히애히앻ㅇ", "시애래애냉ㄴ해느, $int")
+                    int++
+                    return@run
+                }
             }
         }
 

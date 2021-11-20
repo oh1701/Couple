@@ -35,22 +35,7 @@ class GlideUtils(private val context: Context){
                 ): Boolean {
                     Log.e("onLoadFailed", "onLoadFailed")
 
-                    getmarker?.let{ mymarker -> // 마커가 Null이 아니면 설정해줌.
-                        if(mymarker is Marker){
-                            mymarker
-                                .setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
-                            when(tag){
-                                "user" -> mymarker.zIndex = 1.5f
-                                "cluster" -> mymarker.zIndex = 1.0f
-                            }
-                        }
-                        else if(mymarker is MarkerOptions){ // Cluster로 온것들
-                            Log.e("123", "optionsdf")
-                            mymarker
-                                .zIndex(1.0f)
-                                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
-                        }
-                    }
+                    markerSeticon(getmarker, view, tag)
                     return false
                 }
                 override fun onResourceReady(
@@ -66,23 +51,8 @@ class GlideUtils(private val context: Context){
                         is ImageView -> intoView.setImageDrawable(resource)
                         is ImageButton -> intoView.setImageDrawable(resource)
                     }
+                    markerSeticon(getmarker, view, tag)
 
-                    getmarker?.let{ mymarker -> // 마커가 Null이 아니면 설정해줌.
-                        if(mymarker is Marker){
-                            mymarker
-                                .setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
-                            when(tag){
-                                "user" -> mymarker.zIndex = 1.5f
-                                "cluster" -> mymarker.zIndex = 1.0f
-                            }
-                        }
-                        else if(mymarker is MarkerOptions){ // Cluster로 온것들
-                            Log.e("123", "optionsdf")
-                            mymarker
-                                .zIndex(1.0f)
-                                .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
-                        }
-                    }
                     return false
                 }
             })
@@ -102,6 +72,24 @@ class GlideUtils(private val context: Context){
         when(intoView){
             is ImageView -> into(intoView)
             is ImageButton -> into(intoView)
+        }
+    }
+
+    private fun<getMarker> markerSeticon(getmarker:getMarker, view:View, tag:String){
+        getmarker?.let{ mymarker -> // 마커가 Null이 아니면 설정해줌.
+            if(mymarker is Marker){
+                mymarker
+                    .setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+                when(tag){
+                    "user" -> mymarker.zIndex = 1.5f
+                    "cluster" -> mymarker.zIndex = 1.0f
+                }
+            }
+            else if(mymarker is MarkerOptions){ // Cluster로 온것들
+                mymarker
+                    .zIndex(1.0f)
+                    .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+            }
         }
     }
 }

@@ -11,12 +11,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.EventObserver
+import com.project.myapplication.utils.observer.EventObserver
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.utils.observer.CustomObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -72,11 +73,18 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun initObserve() {
         thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{ event -> // 완료 시 에러용 토스트
             Toast.makeText(requireContext(), event, Toast.LENGTH_SHORT).show()
+        })
+
+        thisViewModel.diaryCompleteButton.observe(viewLifecycleOwner, EventObserver{
             supportFragmentManager.popBackStack()
         })
 
         thisViewModel.createMarkerEvent.observe(viewLifecycleOwner, EventObserver{
             sharedActivityViewModel.newCreateMarker(thisViewModel.createDiaryID.value!!)
+        })
+
+        thisViewModel.diaryTouchBtnCheck.observe(viewLifecycleOwner, CustomObserver{ boolean ->
+            thisViewModel.viewEnabledValue(boolean.not()) // 버튼이 켜지면 Enabled false 처리해야함.
         })
     }
 
