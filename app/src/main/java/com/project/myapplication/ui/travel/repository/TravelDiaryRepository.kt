@@ -1,17 +1,20 @@
 package com.project.myapplication.ui.travel.repository
 
-import android.util.Log
+import android.text.Editable
+import androidx.core.text.toSpannable
 import com.project.myapplication.base.BaseRepository
+import com.project.myapplication.data.room.dao.FontDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.db.RoomDiaryDB
+import com.project.myapplication.data.room.entity.Font
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class TravelDiaryRepository:BaseRepository() {
     override val roomDiaryDao: RoomDiaryDao
         get() = super.roomDiaryDao
+    val font:FontDao = RoomDiaryDB.INSTANCE!!.font()
 
 
     fun insertDB(entity: RoomDiaryEntity): Completable {
@@ -46,5 +49,10 @@ class TravelDiaryRepository:BaseRepository() {
 
     fun getDiaryID(id:Int):Single<RoomDiaryEntity>{
         return roomDiaryDao.selectIdDao(id)
+    }
+
+    fun sfsf(ff: Editable){
+//        ff.toSpannable()
+//        font.insertDao(Font(1, ))
     }
 }

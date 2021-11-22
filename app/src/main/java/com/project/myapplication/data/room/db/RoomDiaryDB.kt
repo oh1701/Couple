@@ -4,25 +4,26 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.project.myapplication.data.room.dao.FontDao
 import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.entity.Font
 import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 
-@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class], version = 2)
+@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, Font::class], version = 1)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao
+    abstract fun font(): FontDao
 
     companion object{
-        private val MIGRATION_1_2 = object : Migration(1,2){
-            override fun migrate(database: SupportSQLiteDatabase) {
-                val alter = "ALTER TABLE RoomDiaryEntity ADD COLUMN content TEXT NOT NULL Default 0"
-                database.execSQL(alter)
-            }
-        }
+//        private val MIGRATION_1_2 = object : Migration(1,2){
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                val alter = "ALTER TABLE RoomDiaryEntity ADD COLUMN content TEXT NOT NULL Default 0"
+//                database.execSQL(alter)
+//            }
+//        }
 
         var INSTANCE : RoomDiaryDB? = null
 
@@ -32,7 +33,7 @@ abstract class RoomDiaryDB:RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         RoomDiaryDB::class.java, "RoomDiaryDB")
                         .fallbackToDestructiveMigration()
-                        .addMigrations(MIGRATION_1_2)
+//                        .addMigrations(MIGRATION_1_2)
                         .build()
                 }
             }

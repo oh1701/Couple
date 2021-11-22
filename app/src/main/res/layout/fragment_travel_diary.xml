@@ -112,6 +112,7 @@
 
                 android:layout_marginTop="20dp"
 
+                app:fontCallback="@{travelDiaryViewModel.fontSaveCallback}"
                 app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
                 android:textCursorDrawable="@null"
                 android:hint="제목을 입력해주세요."
@@ -163,6 +164,7 @@
                 android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textColor="@color/black"
 
+                app:fontCallback="@{travelDiaryViewModel.fontSaveCallback}"
                 app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -4,12 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.Html
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.text.getSpans
+import androidx.core.text.toSpannable
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.observer.EventObserver
@@ -69,6 +75,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         startActivityForResult() // oncreate 선언.
         customCallback = EventCustomCallback(customEvent)
         customCallback.setChanged()
+        thisViewModel.fontSaveCallbackFunction() // 폰트 설정시 콜백 받을 수 있게끔 설정
     }
 
     override fun initView() {
@@ -77,8 +84,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelDiaryFragment = this
 
         binding.diaryLocation.setOnClickListener {
-            Log.e("12313123123", binding.content.selectionStart.toString())
+//            val span = binding.content.text.toSpannable()
+//            val a = Html.toHtml(span).toString()
+//            binding.title.text = SpannableStringBuilder(SpannableString(Html.fromHtml(a)))
+
         }
+
         this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
         thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }

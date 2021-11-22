@@ -12,5 +12,5 @@ data class RoomDiaryEntity (
     @ColumnInfo(name = "content") val content:String,
     @ColumnInfo(name = "date") val date:String,
     @ColumnInfo(name = "longitude") val longitude:Double,
-    @ColumnInfo(name = "latitude") val latitude:Double,
+    @ColumnInfo(name = "latitude") val latitude:Double
     )

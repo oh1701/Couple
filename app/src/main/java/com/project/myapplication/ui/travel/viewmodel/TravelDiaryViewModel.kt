@@ -1,12 +1,14 @@
 package com.project.myapplication.ui.travel.viewmodel
 
 import android.net.Uri
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
+import com.project.myapplication.bind.FontSave
 import com.project.myapplication.utils.observer.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.FontSetting
@@ -48,6 +50,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryTagBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTagBtnCheck
     private val _diaryEnabled = MutableLiveData<Boolean>()
     val diaryEnabled:LiveData<Boolean> = _diaryEnabled
+    private val _fontSaveCallback = MutableLiveData<((FontSave?) -> Unit)?>()
+    val fontSaveCallback:LiveData<((FontSave?) -> Unit)?> = _fontSaveCallback
+
 
     // 다이어리 입력
     private val _diaryImageUri = MutableLiveData<String>(null)
@@ -217,4 +222,14 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
         _createDiaryDay.value = sdf
     }
+
+    fun fontSaveCallbackFunction(){
+        _fontSaveCallback.value = {
+            if(it != null){
+                Log.e("실행함함", it.toString())
+            }
+        }
+    }
 }
+
+/** EditText Spannable 여러개 등록 안되어서 Data class 만들고 계산식 사용한 함수 만들어서 다 계산하기*/
