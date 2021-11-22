@@ -1,19 +1,17 @@
 package com.project.myapplication.ui.travel.viewmodel
 
 import android.net.Uri
-import android.text.Editable
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.bind.FontSave
-import com.project.myapplication.utils.observer.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.FontSetting
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.observer.CustomObserve
+import com.project.myapplication.utils.observer.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -50,8 +48,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryTagBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTagBtnCheck
     private val _diaryEnabled = MutableLiveData<Boolean>()
     val diaryEnabled:LiveData<Boolean> = _diaryEnabled
-    private val _fontSaveCallback = MutableLiveData<((FontSave?) -> Unit)?>()
-    val fontSaveCallback:LiveData<((FontSave?) -> Unit)?> = _fontSaveCallback
+    private val _fontSaveCallback = MutableLiveData<((String?) -> Unit)?>()
+    val fontSaveCallback:LiveData<((String?) -> Unit)?> = _fontSaveCallback
 
 
     // 다이어리 입력
@@ -225,9 +223,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     fun fontSaveCallbackFunction(){
         _fontSaveCallback.value = {
-            if(it != null){
-                Log.e("실행함함", it.toString())
-            }
+            Log.e("Html, spannable", it.toString())
         }
     }
 }

@@ -21,6 +21,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.project.myapplication.googlemap.GoogleMapSetting
 
+/** Create By Gyu Seong Oh. 2021 / 11  */
+
 class GlideUtils(private val context: Context){
     fun <Type, V, mapMarker> glideListener(view: View, image:Type, intoView:V, getmarker:mapMarker?, tag:String){ // 제너릭 타입을 통해 타입 미지정
         Glide.with(view)

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 
+/** Create By Gyu Seong Oh. 2021 / 10  */
+
 class SettingIntent(private val activity: Activity) {
     fun dialogIntentSetting() {
         val intent = Intent(

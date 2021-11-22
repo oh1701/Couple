@@ -17,6 +17,7 @@ import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import java.io.File
 
 /** 저장할 이미지 파일 경로 */
+/** Create By Gyu Seong Oh. 2021 / 10  */
 
 class PhotoClass(private val context: Context) {
     fun getImage(): Uri {

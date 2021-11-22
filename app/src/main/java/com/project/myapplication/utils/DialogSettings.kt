@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.util.DisplayMetrics
 
+/** Create By Gyu Seong Oh. 2021 / 11  */
+
 class DialogSettings(private val context: Context) {
     private var metrics: DisplayMetrics = context.resources.displayMetrics
 

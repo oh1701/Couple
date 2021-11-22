@@ -6,6 +6,8 @@ import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
 import java.util.*
 
+/** Create By Gyu Seong Oh. 2021 / 11 */
+
 class Datepicker(private val context: Context) { // di 사용못함. applicationContext 사용하면 안됨
     fun <T>datePicker(viewModel: T) {
         when(viewModel){

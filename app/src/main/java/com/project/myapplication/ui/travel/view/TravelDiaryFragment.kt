@@ -8,12 +8,18 @@ import android.text.Editable
 import android.text.Html
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+import android.text.style.BackgroundColorSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
 import androidx.core.text.toSpannable
 import com.project.myapplication.R
@@ -31,6 +37,9 @@ import com.project.myapplication.utils.observer.CustomObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.lang.Integer.parseInt
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
     override val layoutResourceId: Int = R.layout.fragment_travel_diary
@@ -75,7 +84,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         startActivityForResult() // oncreate 선언.
         customCallback = EventCustomCallback(customEvent)
         customCallback.setChanged()
-        thisViewModel.fontSaveCallbackFunction() // 폰트 설정시 콜백 받을 수 있게끔 설정
     }
 
     override fun initView() {
@@ -83,13 +91,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
-        binding.diaryLocation.setOnClickListener {
-//            val span = binding.content.text.toSpannable()
-//            val a = Html.toHtml(span).toString()
-//            binding.title.text = SpannableStringBuilder(SpannableString(Html.fromHtml(a)))
-
-        }
-
+        thisViewModel.fontSaveCallbackFunction()
         this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
         thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }

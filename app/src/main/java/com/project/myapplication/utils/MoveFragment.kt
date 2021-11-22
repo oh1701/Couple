@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.project.myapplication.R
 
+/** Create By Gyu Seong Oh. 2021 / 10  */
+
 class MoveFragment {
     private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
         return if(fragmentManager.fragments.size > 0){
