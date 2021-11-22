@@ -85,7 +85,6 @@
                 android:src="@drawable/ic_baseline_photo_camera_24"
                 app:imageFromUri="@{travelDiaryViewModel.diaryImageUri}"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,6 +112,8 @@
 
                 android:layout_marginTop="20dp"
 
+                app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
+                android:textCursorDrawable="@null"
                 android:hint="제목을 입력해주세요."
                 android:text="@={travelDiaryViewModel.diaryTitle}"
                 android:background="@android:color/transparent"
@@ -128,7 +129,8 @@
                 android:typeface="serif"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image" />
+                app:layout_constraintTop_toBottomOf="@id/image"
+                />
 
             <TextView
                 android:id="@+id/diary_date"
@@ -146,11 +148,13 @@
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
             <EditText
+                android:id="@+id/content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:background="@android:color/transparent"
 
+                android:textCursorDrawable="@null"
                 android:layout_marginTop="10dp"
                 android:enabled="@{travelDiaryViewModel.diaryEnabled}"
 
@@ -158,6 +162,8 @@
                 android:hint="내용을 입력해주세요."
                 android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textColor="@color/black"
+
+                app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/diary_date"/>

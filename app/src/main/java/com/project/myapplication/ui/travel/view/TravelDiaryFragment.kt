@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -14,10 +15,12 @@ import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.utils.observer.EventObserver
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
+import com.project.myapplication.model.FontSetting
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.utils.EventCustomCallback
 import com.project.myapplication.utils.observer.CustomObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -33,6 +36,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
     private lateinit var diaryOnBackPressed:OnBackPressedCallback
+    private lateinit var customCallback:EventCustomCallback
+    private val customEvent:(FontSetting) -> Unit = { setting ->
+        fontSetting(setting)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,6 +67,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startActivityForResult() // oncreate 선언.
+        customCallback = EventCustomCallback(customEvent)
+        customCallback.setChanged()
     }
 
     override fun initView() {
@@ -67,11 +76,15 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
+        binding.diaryLocation.setOnClickListener {
+            Log.e("12313123123", binding.content.selectionStart.toString())
+        }
         this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
-        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)
+        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
 
     override fun initObserve() {
+
         thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{ event -> // 완료 시 에러용 토스트
             Toast.makeText(requireContext(), event, Toast.LENGTH_SHORT).show()
         })
@@ -88,9 +101,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             thisViewModel.viewEnabledValue(boolean.not()) // 버튼이 켜지면 Enabled false 처리해야함.
         })
 
-        thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{boolean ->
-            if(boolean)
-                FontDialogFragment().show(supportFragmentManager, "")
+        thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{
+            FontDialogFragment().apply{
+                arguments = Bundle().apply{
+                    putParcelable("listener", customCallback)
+                }
+            }.show(supportFragmentManager, this.javaClass.simpleName)
         })
     }
 
@@ -114,6 +130,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             photoClass.albumPictureResult(result, thisViewModel)
         }
+    }
+
+    private fun fontSetting(fontSetting: FontSetting){ // FontDialogFragment로 전달된 Callback으로부터 받아온 값을 Viewmodel로 전달
+        thisViewModel.getFontSetting(fontSetting)
     }
 
     override fun onDestroyView() {

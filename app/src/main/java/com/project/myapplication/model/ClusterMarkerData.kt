@@ -1,4 +1,4 @@
-package com.project.myapplication.googlemap.model
+package com.project.myapplication.model
 
 /** GoogleMap Marker Cluster Data Class*/
 

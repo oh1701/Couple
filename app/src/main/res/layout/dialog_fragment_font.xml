@@ -6,6 +6,10 @@
 
     <data>
         <variable
+            name="fontDialogFragment"
+            type="com.project.myapplication.ui.dialog.view.FontDialogFragment" />
+
+        <variable
             name="fontDialogViewModel"
             type="com.project.myapplication.ui.dialog.viewmodel.FontDialogViewModel" />
     </data>
@@ -38,6 +42,10 @@
             android:layout_height="wrap_content"
 
             android:hint="이곳에 글씨를 입력해보세요."
+            android:textCursorDrawable="@null"
+            android:letterSpacing="@{fontDialogViewModel.letterSpacing}"
+            android:lineSpacingMultiplier="@{fontDialogViewModel.lineSpacing}"
+            android:textSize="@{fontDialogViewModel.textSize}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf ="parent"
@@ -72,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                app:buttonColor="@{fontDialogViewModel.buttonColor}"
                 app:ColorPickerListener="@{previewedit}"/>
 
         </LinearLayout>
@@ -98,10 +107,12 @@
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"
 
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:backgroundTint="#000000"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn2"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"/>
@@ -115,12 +126,14 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn3"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn4"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"/>
@@ -135,12 +148,14 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn5"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn6"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_margin="5dp"/>
@@ -203,7 +218,8 @@
                     android:text="증가"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
-
+                    android:tag="lineSpacing"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.plusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/topbottom_spacing"
                     app:layout_constraintRight_toLeftOf="@id/minus"
@@ -217,6 +233,8 @@
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
 
+                    android:tag="lineSpacing"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.minusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/plus"
                     app:layout_constraintRight_toRightOf="parent"
@@ -249,7 +267,9 @@
                     android:text="증가"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
+                    android:tag="letterSpacing"
 
+                    android:onClickListener="@{(v) -> fontDialogViewModel.plusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/letter_spacing"
                     app:layout_constraintRight_toLeftOf="@id/letter_minus"
@@ -263,6 +283,8 @@
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
 
+                    android:tag="letterSpacing"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.minusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/letter_plus"
                     app:layout_constraintRight_toRightOf="parent"
@@ -295,6 +317,8 @@
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
 
+                    android:tag="textSize"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.plusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/text_size"
                     app:layout_constraintRight_toLeftOf="@id/size_minus"
@@ -308,6 +332,8 @@
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
 
+                    android:tag="textSize"
+                    android:onClickListener="@{(v) -> fontDialogViewModel.minusSizeFont(v)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/size_plus"
                     app:layout_constraintRight_toRightOf="parent"
@@ -345,6 +371,7 @@
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
 
+                    android:onClickListener="@{() -> fontDialogFragment.dialog.dismiss()}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
 
@@ -363,6 +390,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
 
+                    android:onClickListener="@{() -> fontDialogViewModel.dialogComplete()}"
                     android:background="@drawable/btn_radius50_d6c1c1"
                     android:layout_marginEnd="10dp"/>
 

@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityTravelBinding
+import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*

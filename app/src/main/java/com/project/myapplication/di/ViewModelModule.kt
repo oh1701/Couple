@@ -3,6 +3,7 @@ package com.project.myapplication.di
 import com.project.myapplication.ui.main.MainRepository
 import com.project.myapplication.ui.main.MainViewModel
 import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
+import com.project.myapplication.ui.dialog.viewmodel.FontDialogViewModel
 import com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel
 import com.project.myapplication.ui.intro.repository.FirstAccessSettingRepository
 import com.project.myapplication.ui.intro.repository.IntroRepository
@@ -30,4 +31,5 @@ val viewModelModule = module {
     viewModel { SetCoupleViewModel(SetCoupleRepository()) }
     viewModel { FirstAccessSettingViewModel(FirstAccessSettingRepository()) }
     viewModel { WarningDialogViewModel(WarningDialogRepository()) }
+    viewModel { FontDialogViewModel() }
 }

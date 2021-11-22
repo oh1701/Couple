@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.utils.observer.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.model.FontSetting
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.observer.CustomObserve
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,6 +54,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryImageUri : LiveData<String> = _diaryImageUri
     val diaryTitle = MutableLiveData<String>()
     val diaryContent = MutableLiveData<String>()
+    private val _fontSettingInput = MutableLiveData<FontSetting>()
+    val fontSettingInput:LiveData<FontSetting> = _fontSettingInput
 
     //다이어리 저장`
     private val _diaryCompleteButton = MutableLiveData<Event<Boolean>>()
@@ -64,7 +67,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTouchBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTagBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
-        _diaryFontBtnCheck.value = Event(false)
+        _diaryEnabled.value = true
     }
 
     // DB 관련
@@ -195,12 +198,16 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             "touch" -> _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
             "tag" -> _diaryTagBtnCheck.value = CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
             "trash" -> _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
-            "font" -> _diaryFontBtnCheck.value = Event(_diaryFontBtnCheck.value?.peekContent()!!.not())
+            "font" -> _diaryFontBtnCheck.value = Event(true)
         }
     }
 
     fun closeDiary():Boolean{
         return diaryTitle.value == null && diaryContent.value == null
+    }
+
+    fun getFontSetting(fontSetting: FontSetting){
+        _fontSettingInput.value = fontSetting
     }
 
     private fun getCreateDay(){ // 다이어리 생성 날짜

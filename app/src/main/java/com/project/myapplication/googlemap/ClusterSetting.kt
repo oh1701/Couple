@@ -1,13 +1,12 @@
 package com.project.myapplication.googlemap
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
-import com.project.myapplication.googlemap.model.ClusterMarkerData
+import com.project.myapplication.model.ClusterMarkerData
 
 class ClusterSetting {
     fun setCluster(context: Context, cluster: ClusterManager<MarkerClusterItem>, map: GoogleMap){
