@@ -1,15 +1,20 @@
 package com.project.myapplication.ui.travel.viewmodel
 
 import android.net.Uri
+import android.text.*
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
+import com.project.myapplication.bind.EditTextBind.cursorFontSetting
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.FontSetting
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
+import com.project.myapplication.utils.FontToHtml
 import com.project.myapplication.utils.observer.CustomObserve
 import com.project.myapplication.utils.observer.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +28,7 @@ import java.util.*
 class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
         get() = super.compositeDisposable
-    
+
     // 초기 세팅
     private val _createDiaryDay = MutableLiveData<String>()
     val createDiaryDay:LiveData<String> = _createDiaryDay
@@ -59,12 +64,18 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryContent = MutableLiveData<String>()
     private val _fontSettingInput = MutableLiveData<FontSetting>()
     val fontSettingInput:LiveData<FontSetting> = _fontSettingInput
+    private val _contentFont = MutableLiveData<SpannableStringBuilder>()
+    val contentFont:LiveData<SpannableStringBuilder> = _contentFont
 
     //다이어리 저장`
     private val _diaryCompleteButton = MutableLiveData<Event<Boolean>>()
     val diaryCompleteButton:LiveData<Event<Boolean>> = _diaryCompleteButton
     private val _createMarkerEvent = MutableLiveData<Event<Boolean>>()
     val createMarkerEvent:LiveData<Event<Boolean>> = _createMarkerEvent
+
+    //폰트용
+    private val startHtml = FontToHtml().getStartHtmlFontColor()
+    var otherHtml = startHtml + ""
 
     init{
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
@@ -221,10 +232,35 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _createDiaryDay.value = sdf
     }
 
-    fun fontSaveCallbackFunction(){
-        _fontSaveCallback.value = {
-            Log.e("Html, spannable", it.toString())
+    fun fontSaveTextWatcherFunction(editText: EditText){ //
+        val watcher = object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, allLength: Int, remove: Int, p3: Int) {
+                if (editText.selectionStart > 0) {
+                    if (fontSettingInput.value != null && remove == 0) {
+                        val span = editText.text.setSpan(
+                            ForegroundColorSpan(fontSettingInput.value!!.colorHex!!.defaultColor), //Int
+                            editText.selectionStart - 1, //커서의 1개 전. Int
+                            editText.selectionStart, // 커서 위치 Int
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+
+                        otherHtml += FontToHtml().getHtmlColorSetting(fontSettingInput.value!!.colorHex!!.defaultColor, p0.toString().substring(editText.selectionStart - 1, editText.selectionStart))
+
+                        Log.e("SpannableString", otherHtml)
+                        editText.text.removeSpan(span) // Span을 지우지 않으면 다시 설정해도 이전 설정이 적용된다.
+                    }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
         }
+
+        editText.removeTextChangedListener(watcher)
+        editText.addTextChangedListener(watcher)
     }
 }
 

@@ -33,6 +33,7 @@ import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
+import com.project.myapplication.utils.FontToHtml
 import com.project.myapplication.utils.observer.CustomObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -91,7 +92,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
 
-        thisViewModel.fontSaveCallbackFunction()
+        thisViewModel.fontSaveTextWatcherFunction(binding.content)
         this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
         thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
@@ -120,6 +121,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
                     putParcelable("listener", customCallback)
                 }
             }.show(supportFragmentManager, this.javaClass.simpleName)
+        })
+
+        thisViewModel.contentFont.observe(this, {
+            binding.title.text = it
         })
     }
 
