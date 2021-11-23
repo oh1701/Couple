@@ -1,10 +1,14 @@
-package com.project.myapplication.model
+package com.project.myapplication.model.font
 
 import android.content.res.ColorStateList
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class FontSetting(
+@Parcelize
+data class FontBindSetting(
     val letterSpacing:Float?,
     val lineSpacing:Float?,
     val fontTypedSizeValue:Float?,
     val colorHex:ColorStateList?
-)
+): Parcelable
+

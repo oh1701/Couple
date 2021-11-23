@@ -1,7 +1,6 @@
 package com.project.myapplication.data.room.dao
 
 import androidx.room.*
-import com.project.myapplication.data.room.entity.Font
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -22,18 +21,4 @@ interface RoomDiaryDao {
 
     @Query("DELETE FROM RoomDiaryEntity WHERE imageUri = :id")
     fun deleteIdDao(id:Int)
-}
-
-
-@Dao
-interface FontDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDao(vararg font: Font): Completable
-
-    @Update
-    fun updateDao(vararg font: Font): Completable
-
-    @Query("SELECT * FROM font")
-    fun selectAllDao():Single<List<Font>>
-
 }

@@ -3,6 +3,7 @@ package com.project.myapplication.base
 import android.content.SharedPreferences
 import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.dao.RoomFontDao
 import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import org.koin.core.KoinComponent
 import org.koin.core.get
@@ -13,6 +14,7 @@ import java.util.*
 open class BaseRepository:KoinComponent{
     protected open val roomDiaryDao:RoomDiaryDao by inject()
     protected open val roomDaoCoupleSetting:RoomCoupleSettingDao by inject()
+    protected open val roomFontDao:RoomFontDao by inject()
     protected open val sharedPreferences:IntroSettingShared by inject()
 
     protected open fun getCoupleDate(): Long {

@@ -1,27 +1,23 @@
 package com.project.myapplication.utils
 
-import android.content.Context
 import android.os.Parcelable
-import android.util.AttributeSet
-import android.view.View
-import com.project.myapplication.model.FontSetting
-import kotlinx.android.parcel.Parcelize
+import com.project.myapplication.model.font.FontBindSetting
 import kotlinx.parcelize.IgnoredOnParcel
 
 /** Create By Gyu Seong Oh. 2021 / 11  */
 
 @kotlinx.parcelize.Parcelize
-class EventCustomCallback(val fontCallback: (FontSetting) -> Unit) :Parcelable {
+class EventCustomCallback(val fontCallback: (FontBindSetting) -> Unit) :Parcelable {
     @IgnoredOnParcel
     lateinit var dataChangeListener: DataChangeListener
 
     interface DataChangeListener {
-            fun fontSettingCallback(index: FontSetting)
+            fun fontSettingCallback(index: FontBindSetting)
     }
 
     fun setChanged(){
         dataChangeListener = object : DataChangeListener{
-            override fun fontSettingCallback(index: FontSetting) {
+            override fun fontSettingCallback(index: FontBindSetting) {
                 fontCallback.invoke(index)
             }
         }

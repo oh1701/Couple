@@ -3,12 +3,11 @@ package com.project.myapplication.ui.dialog.view
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseDialogFragment
 import com.project.myapplication.databinding.DialogFragmentFontBinding
-import com.project.myapplication.model.FontSetting
+import com.project.myapplication.model.font.FontBindSetting
 import com.project.myapplication.ui.dialog.viewmodel.FontDialogViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
 import com.project.myapplication.utils.observer.EventObserver
-import io.reactivex.Observable
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,6 +22,7 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         binding.fontDialogFragment = this
 
         thisViewModel.getMetrics(resources.displayMetrics)
+        thisViewModel.getFontSetting(arguments?.getParcelable<FontBindSetting>("FontSetting"))
     }
 
     override fun initObserve() {
@@ -32,10 +32,11 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
 
         thisViewModel.fonSettingComplete.observe(this, EventObserver{ // Complete 되면 Callback 처리하기
             arguments?.getParcelable<EventCustomCallback>("listener")?.dataChangeListener?.fontSettingCallback(
-                FontSetting(thisViewModel.letterSpacing.value,
+                FontBindSetting(thisViewModel.letterSpacing.value,
                     thisViewModel.lineSpacing.value,
                     thisViewModel.textTypedValue.value,
-                    binding.previewedit.textColors))
+                    binding.previewedit.textColors)
+            )
 
             this.dialog?.dismiss()
         })

@@ -17,4 +17,8 @@ class FontToHtml {
         val colorString = String.format("#%06X", (0xFFFFFF and color))
         return "<span style=\"color:$colorString;\">$getStr</span>" // otherHtml에 += 로 넣어줘야함.
     }
+
+    fun colorIntToString(color:Int):String{
+        return String.format("#%06X", (0xFFFFFF and color))
+    }
 }

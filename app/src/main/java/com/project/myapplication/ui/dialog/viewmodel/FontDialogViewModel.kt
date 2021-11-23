@@ -1,5 +1,7 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
@@ -7,6 +9,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
+import com.project.myapplication.model.font.FontBindSetting
 import com.project.myapplication.utils.observer.Event
 
 class FontDialogViewModel:BaseViewModel() {
@@ -21,6 +24,8 @@ class FontDialogViewModel:BaseViewModel() {
     val textSize:LiveData<Float> = _textSize
     private val _fontSettingComplete = MutableLiveData<Event<Boolean>>()
     val fonSettingComplete:LiveData<Event<Boolean>> = _fontSettingComplete
+    private val _textColor = MutableLiveData<Int>(Color.parseColor("#000000"))
+    val textColor:LiveData<Int> = _textColor
     private val _buttonColor = MutableLiveData<Int>()
     val buttonColor:LiveData<Int> = _buttonColor
 
@@ -87,5 +92,14 @@ class FontDialogViewModel:BaseViewModel() {
 
     fun setEditTextColor(v:View){
         _buttonColor.value = v.backgroundTintList?.defaultColor
+    }
+
+    fun getFontSetting(fontSetting:FontBindSetting?){
+        if(fontSetting != null){
+            _textTypedValue.value = fontSetting.fontTypedSizeValue
+            _lineSpacing.value = fontSetting.lineSpacing
+            _letterSpacing.value = fontSetting.letterSpacing
+            _textColor.value = fontSetting.colorHex!!.defaultColor
+        }
     }
 }

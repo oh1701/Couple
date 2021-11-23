@@ -117,6 +117,7 @@
                 android:textCursorDrawable="@null"
                 android:hint="제목을 입력해주세요."
                 android:text="@={travelDiaryViewModel.diaryTitle}"
+
                 android:background="@android:color/transparent"
                 android:gravity="start"
                 android:ellipsize="end"
@@ -161,7 +162,6 @@
 
                 android:textSize="14sp"
                 android:hint="내용을 입력해주세요."
-                android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textColor="@color/black"
 
                 app:fontCallback="@{travelDiaryViewModel.fontSaveCallback}"

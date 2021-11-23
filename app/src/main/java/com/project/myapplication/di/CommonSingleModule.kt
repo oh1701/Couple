@@ -9,6 +9,7 @@ import org.koin.dsl.module
 val commonSingleModule = module {
     single { RoomDiaryDB.INSTANCE!!.roomDaoImage() }
     single { RoomDiaryDB.INSTANCE!!.roomDaoCoupleSetting() }
+    single { RoomDiaryDB.INSTANCE!!.roomDaoFont() }
     single { IntroSettingShared(get()) }
     single { DialogSettings(get()) }
 }

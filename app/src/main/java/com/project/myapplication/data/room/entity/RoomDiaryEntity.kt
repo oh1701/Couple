@@ -3,6 +3,7 @@ package com.project.myapplication.data.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.project.myapplication.model.font.FontRoomSetting
 
 @Entity
 data class RoomDiaryEntity (
@@ -13,4 +14,4 @@ data class RoomDiaryEntity (
     @ColumnInfo(name = "date") val date:String,
     @ColumnInfo(name = "longitude") val longitude:Double,
     @ColumnInfo(name = "latitude") val latitude:Double
-    )
+)

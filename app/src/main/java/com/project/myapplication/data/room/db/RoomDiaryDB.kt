@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.project.myapplication.data.room.dao.FontDao
 import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
-import com.project.myapplication.data.room.entity.Font
+import com.project.myapplication.data.room.dao.RoomFontDao
 import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomFontEntity
 
-@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, Font::class], version = 1)
+@Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, RoomFontEntity::class], version = 1)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao
-    abstract fun font(): FontDao
+    abstract fun roomDaoFont(): RoomFontDao
 
     companion object{
 //        private val MIGRATION_1_2 = object : Migration(1,2){

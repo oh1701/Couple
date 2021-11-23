@@ -46,6 +46,10 @@
             android:letterSpacing="@{fontDialogViewModel.letterSpacing}"
             android:lineSpacingMultiplier="@{fontDialogViewModel.lineSpacing}"
             android:textSize="@{fontDialogViewModel.textSize}"
+            android:textColor="@{fontDialogViewModel.textColor}"
+            android:textColorHint="@{fontDialogViewModel.textColor}"
+
+
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf ="parent"
