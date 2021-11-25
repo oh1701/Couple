@@ -27,7 +27,6 @@ class WarningDialogFragment:BaseDialogFragment<DialogFragmentWarningBinding, War
                     commonIntent.dialogIntentSetting()
                     dialog?.dismiss()
                 }
-                "save" -> { thisViewModel.saveContent() }
             }
         })
     }

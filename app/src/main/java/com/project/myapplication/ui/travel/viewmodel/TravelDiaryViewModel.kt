@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomFontEntity
 import com.project.myapplication.model.font.FontBindSetting
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.FontToHtml
@@ -99,12 +100,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         )
     }
 
-    fun createDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
-        if (diaryTitle.value != null && diaryContent.value != null) {
+    fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
+        if (diaryTitle.value != null && diaryContent.value != null && diaryImageUri.value != null) {
             compositeDisposable
                 .add(
                     if(_checkInsertUpdate.value!!.peekContent()) {
-                        repository.insertDB(
+                        repository.insertDiaryDB(
                             RoomDiaryEntity(
                                 createDiaryID.value!!,
                                 diaryImageUri.value,
@@ -120,6 +121,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             .doOnComplete {
                                 toast("성공")
                                 _createMarkerEvent.value = Event(true)
+                                roomSaveFont()
                                 Log.e("createDiary insert ::", "성공 ${createDiaryID.value}")
                             }
                             .doOnError {
@@ -129,7 +131,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             .subscribe()
                     }
                 else {
-                        repository.updateDB(
+                        repository.updateDiaryDB(
                             RoomDiaryEntity(
                                 createDiaryID.value!!,
                                 diaryImageUri.value,
@@ -145,6 +147,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             .doOnComplete {
                                 toast("수정 완료")
                                 _diaryCompleteButton.value = Event(true)
+                                roomSaveFont()
                                 Log.e("createDiary update ::", "성공 ${createDiaryID.value}")
                             }
                             .doOnError {
@@ -154,10 +157,37 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                             .subscribe()
                     }
                 )
+        } else if(diaryImageUri.value == null){
+            toast("1장 이상의 이미지를 등록해주세요.")
         } else if (diaryTitle.value == null) {
             toast("제목을 입력해주세요.")
         } else if (diaryContent.value == null) {
             toast("내용을 입력해주세요.")
+        }
+    }
+
+    private fun roomSaveFont(){
+        if(_checkInsertUpdate.value!!.peekContent()) {
+            repository.insertFontDB(
+                RoomFontEntity(
+                    createDiaryID.value!!,
+                    null,
+                    otherHtml + FontToHtml().endHtml,
+                    fontSettingInput.value?.letterSpacing,
+                    fontSettingInput.value?.lineSpacing,
+                    fontSettingInput.value?.fontTypedSizeValue
+            ))
+        }
+        else{
+            repository.updateFontDB(
+                RoomFontEntity(
+                    createDiaryID.value!!,
+                    null,
+                    otherHtml + FontToHtml().endHtml,
+                    fontSettingInput.value?.letterSpacing,
+                    fontSettingInput.value?.lineSpacing,
+                    fontSettingInput.value?.fontTypedSizeValue
+                ))
         }
     }
 
@@ -210,7 +240,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     fun closeDiary():Boolean{
-        return diaryTitle.value == null && diaryContent.value == null
+        return diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value == null
     }
 
     fun getFontSetting(fontSetting: FontBindSetting){

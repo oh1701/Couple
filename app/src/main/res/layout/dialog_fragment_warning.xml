@@ -35,7 +35,7 @@
         android:layout_height="0dp"
 
         android:gravity="center"
-        android:text="정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
+        android:text="@{dialogViewModel.warningText}"
 
         android:textSize="14dp"
         app:layout_constraintBottom_toTopOf="@id/warning_negative"

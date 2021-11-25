@@ -1,9 +1,11 @@
 package com.project.myapplication.ui.travel.view
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -39,7 +41,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private var fontSetting:FontBindSetting? = null
     private val customEvent:(FontBindSetting) -> Unit = { setting ->
         fontSetting = setting
-        fontSetting(fontSetting!!)
+        thisViewModel.getFontSetting(fontSetting!!)
     }
 
     override fun onAttach(context: Context) {
@@ -70,6 +72,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         startActivityForResult() // oncreate 선언.
         customCallback = EventCustomCallback(customEvent)
         customCallback.setChanged()
+        
     }
 
     override fun initView() {
@@ -93,6 +96,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.createMarkerEvent.observe(viewLifecycleOwner, EventObserver{
             sharedActivityViewModel.newCreateMarker(thisViewModel.createDiaryID.value!!)
+            supportFragmentManager.popBackStack()
         })
 
         thisViewModel.diaryTouchBtnCheck.observe(viewLifecycleOwner, CustomObserver{ boolean ->
@@ -109,13 +113,19 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         })
     }
 
-    fun cameraOpen(){
-        // 카메라면 이거.
-        cameraFileUri = photoClass.getImage()
-        startForResultCamera.launch(cameraFileUri)
-
-        // 앨범이면 이거
-//        startForResultAlbum.launch(photoClass.albumPictureIntent())
+    fun cameraOpen(){ // startForResultCamera 의 registerForActivityResult가 AppCompat 상속 아니면 안불러짐
+        val option = arrayOf<CharSequence>("카메라로 촬영하기", "앨범에서 불러오기")
+        val dialog = AlertDialog.Builder(requireContext())
+        dialog.setItems(option) { dialog, item ->
+            if (option[item] == "카메라로 촬영하기") {
+                cameraFileUri = photoClass.getImage()
+                startForResultCamera.launch(cameraFileUri)
+            }
+            else{
+                startForResultAlbum.launch(photoClass.albumPictureIntent())
+            }
+        }
+        dialog.show()
     }
 
     private fun startActivityForResult(){
@@ -131,13 +141,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         }
     }
 
-    private fun fontSetting(fontSetting: FontBindSetting){ // FontDialogFragment로 전달된 Callback으로부터 받아온 값을 Viewmodel로 전달
-        thisViewModel.getFontSetting(fontSetting)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-
         diaryOnBackPressed.remove()
     }
 }

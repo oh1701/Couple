@@ -66,6 +66,8 @@
             app:layout_constraintTop_toBottomOf="@id/backPressed"
             android:orientation="vertical">
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,8 +114,7 @@
 
                 android:layout_marginTop="20dp"
 
-                app:fontCallback="@{travelDiaryViewModel.fontSaveCallback}"
-                app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
+                android:tag="title"
                 android:textCursorDrawable="@null"
                 android:hint="제목을 입력해주세요."
                 android:text="@={travelDiaryViewModel.diaryTitle}"
@@ -152,10 +153,11 @@
             <EditText
                 android:id="@+id/content"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="start"
                 android:background="@android:color/transparent"
 
+                android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textCursorDrawable="@null"
                 android:layout_marginTop="10dp"
                 android:enabled="@{travelDiaryViewModel.diaryEnabled}"
@@ -169,7 +171,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/diary_date"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -242,16 +243,16 @@
 
         <Button
             android:id="@+id/save_diary"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="저장하기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginRight="15dp"
 
-            app:layout_constraintEnd_toEndOf="@id/content_scrollView"
-            app:layout_constraintBottom_toBottomOf="@id/content_scrollView"
-            android:layout_margin="15dp"
-
+            android:background="@color/purple_200"
             android:enabled="@{travelDiaryViewModel.diaryEnabled}"
-            android:background="@drawable/circle_black"
-            android:onClickListener="@{() -> travelDiaryViewModel.createDiary()}"
+            android:onClickListener="@{() -> travelDiaryViewModel.roomSaveDiary()}"
             />
 
 

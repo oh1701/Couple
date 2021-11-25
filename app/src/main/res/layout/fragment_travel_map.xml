@@ -61,9 +61,10 @@
 
         <ImageButton
             android:id="@+id/backPressed"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:onClickListener="@{() -> travelMapFrgament.requireActivity().onBackPressed()}"
+            android:background="@drawable/ic_arrow_left_dark"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -81,11 +82,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
+        android:background="@drawable/btn_on"
         android:onClickListener="@{() -> travelMapViewModel.createDiaryButton()}"
         android:layout_margin="20dp"
-        android:src="@drawable/heart1"/>
+        android:src="@drawable/ic_baseline_create_24"/>
 
-    <ImageButton
+    <Button
         android:id="@+id/CameraAutoSet"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -95,7 +97,9 @@
 
         android:onClickListener="@{() -> travelMapViewModel.cameraAutoSet()}"
         android:layout_margin="20dp"
-        android:src="@drawable/heart1"/>
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:text="@{travelMapViewModel.cameraAutoText}" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

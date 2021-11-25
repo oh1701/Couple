@@ -40,8 +40,8 @@ object EditTextBind {
                     remove: Int,
                     p3: Int
                 ) {
-                    if (editText.selectionStart > 0) {
-                        if (fontSetting != null && remove == 0) {
+                    if (editText.selectionStart > 0) { // 커서 위치가 1 이상이되었을때
+                        if (fontSetting != null && remove == 0) { // Setting이 nul이 아니거나 제거하는 상황이 아니면
                             val span = editText.text.setSpan(
                                 ForegroundColorSpan(fontSetting!!.colorHex!!.defaultColor), //Int
                                 editText.selectionStart - 1, //커서의 1개 전. Int

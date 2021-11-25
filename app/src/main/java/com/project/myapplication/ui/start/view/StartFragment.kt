@@ -22,10 +22,6 @@ class StartFragment: BaseFragment<FragmentStartBinding, StartViewModel>() {
         get() = R.layout.fragment_start
     override val thisViewModel: StartViewModel by viewModel()
     private val sharedActivityViewModel: MainViewModel by sharedViewModel()
-    private val photoFilePath: PhotoClass by inject()
-    private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
-    private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
-    private lateinit var cameraFileUri: Uri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

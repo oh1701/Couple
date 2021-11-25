@@ -1,6 +1,7 @@
 package com.project.myapplication.utils
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import com.project.myapplication.ui.start.viewmodel.SetCoupleViewModel
@@ -20,6 +22,8 @@ import java.io.File
 /** Create By Gyu Seong Oh. 2021 / 10  */
 
 class PhotoClass(private val context: Context) {
+    private var cameraFileUri:Uri? = null
+
     fun getImage(): Uri {
         val photoFile = File.createTempFile("IMG_",".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES))
         val file = FileProvider.getUriForFile(

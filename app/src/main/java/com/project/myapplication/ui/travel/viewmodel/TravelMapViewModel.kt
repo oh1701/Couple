@@ -18,9 +18,12 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     val createTravelDiary:LiveData<Event<Boolean>> = _createTravelDiary
     private val _cameraAutoSetting = MutableLiveData<Boolean>()
     val cameraAutoSetting:LiveData<Boolean> = _cameraAutoSetting
+    private val _cameraAutoText = MutableLiveData<String>()
+    val cameraAutoText:LiveData<String> = _cameraAutoText
 
     init {
         _cameraAutoSetting.value = true
+        _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
     }
 
     fun getAllDiary(){ // 저장된 다이어리들 가져오기.
@@ -56,5 +59,6 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
 
     fun cameraAutoSet(){
         _cameraAutoSetting.value = _cameraAutoSetting.value?.not()
+        _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
     }
 }

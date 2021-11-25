@@ -28,12 +28,13 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
     val warningText:LiveData<String> = _warningText
 
     fun settingDialog(tag: String?) {
+        text(tag)
         if (tag == "Permission") {
             _positiveButtonTag.value = "설정"
             _negativeButtonTag.value = "취소"
         } else {
-            _positiveButtonTag.value = "저장"
-            _negativeButtonTag.value = "삭제"
+            _positiveButtonTag.value = "삭제"
+            _negativeButtonTag.value = "취소"
         }
     }
 
@@ -42,11 +43,13 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
             "삭제" -> { _selectButtonClick.value = Event("onBackPressed") }
             "취소" -> { _selectButtonClick.value = Event("dismiss") }
             "설정" -> { _selectButtonClick.value = Event("Setting") }
-            "저장" -> { _selectButtonClick.value = Event("save") }
         }
     }
 
-    fun saveContent(){ //Diary 나 등등 여러개 저장.
-
+    fun text(tag : String?){
+        if (tag == "Permission")
+            _warningText.value = "정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
+        else
+            _warningText.value = "작성중인 내용이 존재합니다.\n해당 내용을 저장하지 않고 삭제하시겠습니까?"
     }
 }

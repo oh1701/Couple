@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/background_layout_conner.xml" value="0.30153846153846153" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/btn_on.xml" value="0.2916666666666667" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/btn_select.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/circle_content_clustercount.xml" value="0.30153846153846153" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/circle_content_clustercount22.xml" value="0.30153846153846153" />
@@ -11,6 +12,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/diary_btn_on.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/gradient_user_profile.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_arrow_left_dark.xml" value="0.30625" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_create_24.xml" value="0.2916666666666667" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_pan_tool_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_restore_from_trash_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_tag_24.xml" value="0.30625" />
@@ -33,6 +35,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/ic_launcher_background.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/image.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/letter_spacing.xml" value="0.30153846153846153" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/notsetting_image_background.xml" value="0.29814814814814816" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/picture_circle_background_none.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/round_layout.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout-v26/fragment_travel_diary.xml" value="0.22" />
@@ -58,7 +61,8 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary.xml" value="0.22" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary_create.xml" value="0.217578125" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_map.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_mapmarker.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_mapmarker.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_usermarker.xml" value="0.2856410256410256" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/marker_diaryview.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/recycler_font_layout.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/round_layout.xml" value="0.29010416666666666" />
