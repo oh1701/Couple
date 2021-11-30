@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_tag_24.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_text_fields_24_black.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/ic_baseline_warning_amber_24.xml" value="0.30625" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable-v24/tag_oval.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/allconner_round_layout.xml" value="0.30625" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/btn_rentagle_radius.xml" value="0.30153846153846153" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/drawable/circle_.xml" value="0.30625" />
@@ -65,6 +66,7 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_usermarker.xml" value="0.2856410256410256" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/marker_diaryview.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/recycler_font_layout.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/recycler_tag_layout.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/round_layout.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/menu/menu_main.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16979166666666667" />

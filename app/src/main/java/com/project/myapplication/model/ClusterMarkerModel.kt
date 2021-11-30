@@ -2,7 +2,7 @@ package com.project.myapplication.model
 
 /** GoogleMap Marker Cluster Data Class*/
 
-data class ClusterMarkerData(
+data class ClusterMarkerModel(
     val imageUri: String?,
     val title:String,
     val content:String?,

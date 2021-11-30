@@ -4,7 +4,7 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseDialogFragment
 import com.project.myapplication.databinding.DialogFragmentWarningBinding
 import com.project.myapplication.ui.dialog.viewmodel.WarningDialogViewModel
-import com.project.myapplication.utils.observer.EventObserver
+import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class WarningDialogFragment:BaseDialogFragment<DialogFragmentWarningBinding, WarningDialogViewModel>() {

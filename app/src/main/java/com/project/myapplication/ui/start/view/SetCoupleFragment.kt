@@ -7,7 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.observer.EventObserver
+import com.project.myapplication.utils.customobserver.EventObserver
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.databinding.FragmentSetcoupleBinding

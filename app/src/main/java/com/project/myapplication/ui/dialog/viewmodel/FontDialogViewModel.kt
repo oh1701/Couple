@@ -1,16 +1,14 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.model.font.FontBindSetting
-import com.project.myapplication.utils.observer.Event
+import com.project.myapplication.model.font.FontBindSettingModel
+import com.project.myapplication.utils.customobserver.Event
 
 class FontDialogViewModel:BaseViewModel() {
     private val _metrics = MutableLiveData<DisplayMetrics>()
@@ -94,12 +92,12 @@ class FontDialogViewModel:BaseViewModel() {
         _buttonColor.value = v.backgroundTintList?.defaultColor
     }
 
-    fun getFontSetting(fontSetting:FontBindSetting?){
-        if(fontSetting != null){
-            _textTypedValue.value = fontSetting.fontTypedSizeValue
-            _lineSpacing.value = fontSetting.lineSpacing
-            _letterSpacing.value = fontSetting.letterSpacing
-            _textColor.value = fontSetting.colorHex!!.defaultColor
+    fun getFontSetting(fontSettingModel:FontBindSettingModel?){
+        if(fontSettingModel != null){
+            _textTypedValue.value = fontSettingModel.fontTypedSizeValue
+            _lineSpacing.value = fontSettingModel.lineSpacing
+            _letterSpacing.value = fontSettingModel.letterSpacing
+            _textColor.value = fontSettingModel.colorHex!!.defaultColor
         }
     }
 }

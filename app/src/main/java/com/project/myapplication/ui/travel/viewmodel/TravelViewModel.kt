@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.utils.observer.Event
+import com.project.myapplication.utils.customobserver.Event
 import io.reactivex.disposables.CompositeDisposable
 
 class TravelViewModel:BaseViewModel() {

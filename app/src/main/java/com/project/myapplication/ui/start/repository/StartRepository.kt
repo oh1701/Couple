@@ -4,13 +4,11 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
-import com.project.myapplication.data.room.dao.RoomDiaryDao
-import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
-import com.project.myapplication.data.sharedpreference.IntroSettingShared
+import com.project.myapplication.db.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.db.room.dao.RoomDiaryDao
+import com.project.myapplication.db.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.db.sharedpreference.IntroSettingShared
 import io.reactivex.Single
-import java.text.SimpleDateFormat
-import java.util.*
 
 class StartRepository:BaseRepository() {
     override val roomDiaryDao: RoomDiaryDao

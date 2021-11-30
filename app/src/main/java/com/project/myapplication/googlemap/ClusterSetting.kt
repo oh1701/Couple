@@ -5,8 +5,8 @@ import android.widget.Toast
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterManager
-import com.project.myapplication.data.room.entity.RoomDiaryEntity
-import com.project.myapplication.model.ClusterMarkerData
+import com.project.myapplication.db.room.entity.RoomDiaryEntity
+import com.project.myapplication.model.ClusterMarkerModel
 
 class ClusterSetting {
     fun setCluster(context: Context, cluster: ClusterManager<MarkerClusterItem>, map: GoogleMap){
@@ -37,7 +37,7 @@ class ClusterSetting {
                     LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
                     diary.id.toString(),
                     null,
-                    ClusterMarkerData(
+                    ClusterMarkerModel(
                         diary.imageUri,
                         diary.title,
                         diary.content,
@@ -56,7 +56,7 @@ class ClusterSetting {
                 LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
                 diary.id.toString(),
                 null,
-                ClusterMarkerData(
+                ClusterMarkerModel(
                     diary.imageUri,
                     diary.title,
                     diary.content,

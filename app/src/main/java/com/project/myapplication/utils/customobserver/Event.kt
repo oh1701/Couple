@@ -1,6 +1,8 @@
-package com.project.myapplication.utils.observer
+package com.project.myapplication.utils.customobserver
 
 import androidx.lifecycle.Observer
+
+// 한번만 처리되어야 하는 이벤트 ( 뷰 파괴되었을때 방지용)
 
 open class Event<out T>(private val content: T) {
     private var hasBeenHandled = false

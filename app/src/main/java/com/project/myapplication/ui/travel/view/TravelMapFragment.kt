@@ -8,7 +8,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.observer.EventObserver
+import com.project.myapplication.utils.customobserver.EventObserver
 import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.ClusterSetting

@@ -1,7 +1,7 @@
-package com.project.myapplication.data.room.dao
+package com.project.myapplication.db.room.dao
 
 import androidx.room.*
-import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.db.room.entity.RoomCoupleSettingEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

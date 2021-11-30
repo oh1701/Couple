@@ -8,13 +8,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.data.room.entity.RoomDiaryEntity
-import com.project.myapplication.data.room.entity.RoomFontEntity
-import com.project.myapplication.model.font.FontBindSetting
+import com.project.myapplication.db.room.entity.RoomDiaryEntity
+import com.project.myapplication.db.room.entity.RoomFontEntity
+import com.project.myapplication.model.DiaryTagModel
+import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.FontToHtml
-import com.project.myapplication.utils.observer.CustomObserve
-import com.project.myapplication.utils.observer.Event
+import com.project.myapplication.utils.customobserver.CustomObserve
+import com.project.myapplication.utils.customobserver.Event
+import com.project.myapplication.utils.customobserver.RecyclerListLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -68,14 +70,19 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     //폰트
     private var otherHtml = ""
-    private val _fontSettingInput = MutableLiveData<FontBindSetting>(FontBindSetting(0.0f, 1.0f, 16.0f, ColorStateList.valueOf(-570425344)))
-    val fontSettingInput:LiveData<FontBindSetting> = _fontSettingInput
+    private val _fontSettingInput = MutableLiveData(FontBindSettingModel(0.0f, 1.0f, 16.0f, ColorStateList.valueOf(-570425344)))
+    val fontSettingModelInput:LiveData<FontBindSettingModel> = _fontSettingInput
+
+    //리사이클러뷰
+    val recyclerList = RecyclerListLiveData<DiaryTagModel>()
+
 
     init{
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTouchBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTagBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryEnabled.value = true
+        recyclerList.listLiveData()
     }
 
     // DB 관련
@@ -173,9 +180,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                     createDiaryID.value!!,
                     null,
                     otherHtml + FontToHtml().endHtml,
-                    fontSettingInput.value?.letterSpacing,
-                    fontSettingInput.value?.lineSpacing,
-                    fontSettingInput.value?.fontTypedSizeValue
+                    fontSettingModelInput.value?.letterSpacing,
+                    fontSettingModelInput.value?.lineSpacing,
+                    fontSettingModelInput.value?.fontTypedSizeValue
             ))
         }
         else{
@@ -184,9 +191,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                     createDiaryID.value!!,
                     null,
                     otherHtml + FontToHtml().endHtml,
-                    fontSettingInput.value?.letterSpacing,
-                    fontSettingInput.value?.lineSpacing,
-                    fontSettingInput.value?.fontTypedSizeValue
+                    fontSettingModelInput.value?.letterSpacing,
+                    fontSettingModelInput.value?.lineSpacing,
+                    fontSettingModelInput.value?.fontTypedSizeValue
                 ))
         }
     }
@@ -243,8 +250,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         return diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value == null
     }
 
-    fun getFontSetting(fontSetting: FontBindSetting){
-        _fontSettingInput.value = fontSetting
+    fun getFontSetting(fontSettingModel: FontBindSettingModel){
+        _fontSettingInput.value = fontSettingModel
     }
 
     private fun getCreateDay(){ // 다이어리 생성 날짜
@@ -262,6 +269,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 Log.e("otherHtml", otherHtml + FontToHtml().endHtml)
             }
         }
+    }
+
+    fun addTagRecyclerlist(){
+        recyclerList.add(DiaryTagModel("# ", "1"))
     }
 }
 

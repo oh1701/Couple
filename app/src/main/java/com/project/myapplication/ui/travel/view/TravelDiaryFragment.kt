@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -14,15 +13,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
-import com.project.myapplication.model.font.FontBindSetting
+import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
 import com.project.myapplication.utils.PhotoClass
-import com.project.myapplication.utils.observer.CustomObserver
-import com.project.myapplication.utils.observer.EventObserver
+import com.project.myapplication.utils.customobserver.CustomObserver
+import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -38,10 +37,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private lateinit var cameraFileUri: Uri
     private lateinit var diaryOnBackPressed:OnBackPressedCallback
     private lateinit var customCallback:EventCustomCallback
-    private var fontSetting:FontBindSetting? = null
-    private val customEvent:(FontBindSetting) -> Unit = { setting ->
-        fontSetting = setting
-        thisViewModel.getFontSetting(fontSetting!!)
+    private var fontSettingModel:FontBindSettingModel? = null
+    private val customEvent:(FontBindSettingModel) -> Unit = { setting ->
+        fontSettingModel = setting
+        thisViewModel.getFontSetting(fontSettingModel!!)
     }
 
     override fun onAttach(context: Context) {
@@ -107,7 +106,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             FontDialogFragment().apply{
                 arguments = Bundle().apply{
                     putParcelable("listener", customCallback)
-                    putParcelable("FontSetting", fontSetting)
+                    putParcelable("FontSetting", fontSettingModel)
                 }
             }.show(supportFragmentManager, this.javaClass.simpleName)
         })

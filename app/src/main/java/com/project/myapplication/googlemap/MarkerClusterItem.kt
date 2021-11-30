@@ -2,18 +2,18 @@ package com.project.myapplication.googlemap
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
-import com.project.myapplication.model.ClusterMarkerData
+import com.project.myapplication.model.ClusterMarkerModel
 
 class MarkerClusterItem(
     latLng : LatLng,
     titleID : String?,
     pSnippet : String?,
-    pData : ClusterMarkerData
+    pModel : ClusterMarkerModel
 ): ClusterItem {
     private val position: LatLng = latLng
     private val title: String? = titleID
     private val snippet: String? = pSnippet
-    private val data : ClusterMarkerData = pData
+    private val model : ClusterMarkerModel = pModel
 
     override fun getPosition(): LatLng {
         return position
@@ -31,7 +31,7 @@ class MarkerClusterItem(
         return position
     }
 
-    fun diaryData():ClusterMarkerData{
-        return data
+    fun diaryData(): ClusterMarkerModel {
+        return model
     }
 }

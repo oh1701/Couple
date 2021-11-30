@@ -1,9 +1,8 @@
-package com.project.myapplication.data.room.entity
+package com.project.myapplication.db.room.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.project.myapplication.model.font.FontRoomSetting
 
 @Entity
 data class RoomDiaryEntity (

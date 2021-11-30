@@ -5,7 +5,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class FontBindSetting(
+data class FontBindSettingModel(
     val letterSpacing:Float?,
     val lineSpacing:Float?,
     val fontTypedSizeValue:Float?,

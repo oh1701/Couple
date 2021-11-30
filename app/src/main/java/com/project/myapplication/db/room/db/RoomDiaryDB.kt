@@ -1,15 +1,15 @@
-package com.project.myapplication.data.room.db
+package com.project.myapplication.db.room.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
-import com.project.myapplication.data.room.dao.RoomDiaryDao
-import com.project.myapplication.data.room.dao.RoomFontDao
-import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
-import com.project.myapplication.data.room.entity.RoomDiaryEntity
-import com.project.myapplication.data.room.entity.RoomFontEntity
+import com.project.myapplication.db.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.db.room.dao.RoomDiaryDao
+import com.project.myapplication.db.room.dao.RoomFontDao
+import com.project.myapplication.db.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.db.room.entity.RoomDiaryEntity
+import com.project.myapplication.db.room.entity.RoomFontEntity
 
 @Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, RoomFontEntity::class], version = 1)
 abstract class RoomDiaryDB:RoomDatabase() {

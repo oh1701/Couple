@@ -1,6 +1,8 @@
-package com.project.myapplication.utils.observer
+package com.project.myapplication.utils.customobserver
 
 import androidx.lifecycle.Observer
+
+// 처음 대입값은 observe 안하는 용도
 
 open class CustomObserve<out T>(private val content:T, private val firstInitialization:Boolean) {
     fun getContentIfNotHandled(): T? {

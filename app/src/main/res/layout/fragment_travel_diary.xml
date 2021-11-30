@@ -167,10 +167,32 @@
                 android:textColor="@color/black"
 
                 app:fontCallback="@{travelDiaryViewModel.fontSaveCallback}"
-                app:CursorFontSetting="@{travelDiaryViewModel.fontSettingInput}"
+                app:CursorFontSetting="@{travelDiaryViewModel.fontSettingModelInput}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/diary_date"/>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/myFlexBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="5dp"
+                    app:alignContent="stretch"
+                    app:alignItems="stretch"
+                    app:flexDirection="row"
+
+                    app:flexWrap="wrap"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Flex_recycler"
+                        app:recyclerViewSet="@{travelDiaryViewModel.recyclerList}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.flexbox.FlexboxLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -225,7 +247,7 @@
                 app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck.peekContent()}"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_baseline_tag_24"
-                android:onClickListener="@{(v) -> travelDiaryViewModel.changedButtonCheck(v)}"/>
+                android:onClickListener="@{() -> travelDiaryViewModel.addTagRecyclerlist()}"/>
 
             <ImageButton
                 android:layout_width="40dp"
