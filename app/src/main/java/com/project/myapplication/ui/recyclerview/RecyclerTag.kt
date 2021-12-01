@@ -1,10 +1,9 @@
-package com.project.myapplication.ui.travel.recycler
+package com.project.myapplication.ui.recyclerview
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.project.myapplication.R
 import com.project.myapplication.model.DiaryTagModel

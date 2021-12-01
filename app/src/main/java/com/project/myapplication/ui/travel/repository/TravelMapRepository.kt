@@ -1,9 +1,9 @@
 package com.project.myapplication.ui.travel.repository
 
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.db.room.dao.RoomCoupleSettingDao
-import com.project.myapplication.db.room.dao.RoomDiaryDao
-import com.project.myapplication.db.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import io.reactivex.Single
 
 class TravelMapRepository:BaseRepository() {

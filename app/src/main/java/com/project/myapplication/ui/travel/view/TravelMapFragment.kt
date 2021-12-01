@@ -8,14 +8,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.utils.customobserver.EventObserver
-import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.ClusterSetting
 import com.project.myapplication.googlemap.GoogleMapSetting
 import com.project.myapplication.googlemap.MarkerClusterItem
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.utils.MoveFragment
+import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

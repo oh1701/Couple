@@ -6,7 +6,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.project.myapplication.model.DiaryTagModel
-import com.project.myapplication.ui.travel.recycler.RecyclerTag
+import com.project.myapplication.ui.recyclerview.RecyclerTag
 
 object RecyclerViewBind {
     @JvmStatic

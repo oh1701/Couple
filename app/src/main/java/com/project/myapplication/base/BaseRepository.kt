@@ -1,9 +1,9 @@
 package com.project.myapplication.base
 
-import com.project.myapplication.db.room.dao.RoomCoupleSettingDao
-import com.project.myapplication.db.room.dao.RoomDiaryDao
-import com.project.myapplication.db.room.dao.RoomFontDao
-import com.project.myapplication.db.sharedpreference.IntroSettingShared
+import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.dao.RoomFontDao
+import com.project.myapplication.data.sharedpreference.IntroSettingShared
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.text.SimpleDateFormat

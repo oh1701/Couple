@@ -2,7 +2,7 @@ package com.project.myapplication.application
 
 import android.app.Application
 import android.util.Log
-import com.project.myapplication.db.room.db.RoomDiaryDB
+import com.project.myapplication.data.room.db.RoomDiaryDB
 import com.project.myapplication.di.commonFactoryModule
 import com.project.myapplication.di.commonSingleModule
 import com.project.myapplication.di.viewModelModule

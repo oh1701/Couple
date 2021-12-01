@@ -110,4 +110,7 @@ dependencies {
     /** View Pager2 */
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    /** 이미지 슬라이드 시 아래 동그라미 */
+    implementation 'me.relex:circleindicator:2.1.4'
+
 }

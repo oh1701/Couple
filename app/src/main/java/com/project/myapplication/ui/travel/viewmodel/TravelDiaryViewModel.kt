@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.db.room.entity.RoomDiaryEntity
-import com.project.myapplication.db.room.entity.RoomFontEntity
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomFontEntity
 import com.project.myapplication.model.DiaryTagModel
 import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository

@@ -1,8 +1,8 @@
 package com.project.myapplication.ui.start.repository
 
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.db.room.dao.RoomCoupleSettingDao
-import com.project.myapplication.db.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
+import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

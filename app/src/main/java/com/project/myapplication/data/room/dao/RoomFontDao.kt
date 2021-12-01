@@ -1,7 +1,7 @@
-package com.project.myapplication.db.room.dao
+package com.project.myapplication.data.room.dao
 
 import androidx.room.*
-import com.project.myapplication.db.room.entity.RoomFontEntity
+import com.project.myapplication.data.room.entity.RoomFontEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

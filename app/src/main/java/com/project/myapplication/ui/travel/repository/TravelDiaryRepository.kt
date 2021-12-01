@@ -1,10 +1,10 @@
 package com.project.myapplication.ui.travel.repository
 
 import com.project.myapplication.base.BaseRepository
-import com.project.myapplication.db.room.dao.RoomDiaryDao
-import com.project.myapplication.db.room.dao.RoomFontDao
-import com.project.myapplication.db.room.entity.RoomDiaryEntity
-import com.project.myapplication.db.room.entity.RoomFontEntity
+import com.project.myapplication.data.room.dao.RoomDiaryDao
+import com.project.myapplication.data.room.dao.RoomFontDao
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomFontEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.utils.customobserver.Event
-import com.project.myapplication.db.room.entity.RoomCoupleSettingEntity
+import com.project.myapplication.data.room.entity.RoomCoupleSettingEntity
 import com.project.myapplication.ui.start.repository.SetCoupleRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

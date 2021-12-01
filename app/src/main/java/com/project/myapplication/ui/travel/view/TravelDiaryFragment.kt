@@ -10,12 +10,17 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.model.font.FontBindSettingModel
+import com.project.myapplication.ui.Viewpagerrrr
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
+import com.project.myapplication.ui.start.view.StartFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback

@@ -5,7 +5,7 @@ import android.widget.Toast
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterManager
-import com.project.myapplication.db.room.entity.RoomDiaryEntity
+import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.ClusterMarkerModel
 
 class ClusterSetting {
@@ -67,4 +67,5 @@ class ClusterSetting {
         )
         cluster.cluster()
     }
+
 }
