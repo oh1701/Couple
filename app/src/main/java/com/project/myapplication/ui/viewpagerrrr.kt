@@ -23,6 +23,7 @@ class Viewpagerrrr(private val image:String?, private val fragment: Fragment):Ba
         if (image != null)
             Glide.with(this).load(Uri.parse(image)).transform(CenterCrop(), RoundedCorners(40)).into(binding.viewPagerImage)
 
+        Log.e("실행", "실행")
         binding.viewPagerImage.setOnClickListener {
             if(fragment is TravelDiaryFragment) {
                 fragment.cameraOpen()

@@ -76,6 +76,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     //리사이클러뷰
     val recyclerList = ListMutableLiveData<DiaryTagModel>()
 
+    //현재 이미지 뷰페이저 위치
+    private val _imageViewPagerNumber = MutableLiveData(0)
+    val imageViewPagerNumber:LiveData<Int> = _imageViewPagerNumber
+    val imageViewPagerNumberCallback = MutableLiveData<(Int) -> Unit> { ImagePosition ->
+        _imageViewPagerNumber.value = ImagePosition
+    }
 
     init{
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)

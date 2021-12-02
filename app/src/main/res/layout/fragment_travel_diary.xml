@@ -93,6 +93,7 @@
                     app:ViewPagerImageBind="@{travelDiaryFragment}"
                     app:ViewPagerLiveImage="@{travelDiaryViewModel.diaryImageUri}"
                     app:ViewPagerindicator="@{indicator}"
+                    app:ViewPagerImagePosition="@{travelDiaryViewModel.imageViewPagerNumberCallback}"
                     android:scaleType="fitXY"
                     android:background="@drawable/notsetting_image_background" />
 
@@ -102,7 +103,6 @@
                     android:layout_height="24dp"
                     android:layout_marginBottom="10dp"
                     app:spi_dotSize="5dp"
-
                     android:layout_gravity="bottom|center" />
 
             </FrameLayout>
