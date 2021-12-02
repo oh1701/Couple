@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 
-open class RecyclerListLiveData <T>:MutableLiveData<ArrayList<T>>() {
+open class ListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
     open fun listLiveData() { // 초기 설정. value를 가져온 ArrayList 형식으로 지정
-        value = ArrayList() //NPE 방지용 (NullPointerException)
+        value = ArrayList() //NPE 방지용 (NullPointerException). null확인 시 오류남.
     }
 
     open fun add(item: T) {
@@ -41,6 +41,11 @@ open class RecyclerListLiveData <T>:MutableLiveData<ArrayList<T>>() {
 
     open fun notifyChange() {
         val items: ArrayList<T> = value!!
+        value = items
+    }
+
+    open fun change(item: List<T>?){
+        val items: ArrayList<T> = item as ArrayList<T>
         value = items
     }
 }

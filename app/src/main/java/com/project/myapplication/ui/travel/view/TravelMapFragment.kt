@@ -55,10 +55,15 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         })
 
         thisViewModel.createTravelDiary.observe(viewLifecycleOwner, EventObserver{ // 다이어리 버튼 눌리면.
-            MoveFragment()
-                .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
-                .addToBackStack("Map")
-                .commit()
+            if(sharedActivityViewModel.myLocationLatLng.value == null){
+                toast("위치 정보가 불러와지지 않았습니다.\n잠시 후 다시 시도해주세요.")
+            }
+            else{
+                MoveFragment()
+                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
+                    .addToBackStack("Map")
+                    .commit()
+            }
         })
 
         thisViewModel.cameraAutoSetting.observe(viewLifecycleOwner){

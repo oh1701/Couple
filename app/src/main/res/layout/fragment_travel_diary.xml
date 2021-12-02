@@ -96,16 +96,15 @@
                     android:scaleType="fitXY"
                     android:background="@drawable/notsetting_image_background" />
 
-                <me.relex.circleindicator.CircleIndicator3
+                <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
                     android:layout_marginBottom="10dp"
-                    app:ci_drawable="@drawable/ci_indicator_circle"
-                    app:ci_height="5dp"
-                    app:ci_width="5dp"
-                    app:ci_margin="4dp"
+                    app:spi_dotSize="5dp"
+
                     android:layout_gravity="bottom|center" />
+
             </FrameLayout>
 
             <TextView

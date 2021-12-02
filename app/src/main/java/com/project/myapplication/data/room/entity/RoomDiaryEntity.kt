@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class RoomDiaryEntity (
     @PrimaryKey(autoGenerate = true) val id:Int,
-    @ColumnInfo(name = "imageUri") val imageUri: String?,
+    @ColumnInfo(name = "imageUri") val imageUri: List<String>?,
     @ColumnInfo(name = "title") val title:String,
     @ColumnInfo(name = "content") val content:String,
     @ColumnInfo(name = "date") val date:String,

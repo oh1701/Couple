@@ -1,9 +1,8 @@
 package com.project.myapplication.data.room.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.google.gson.Gson
 import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
 import com.project.myapplication.data.room.dao.RoomFontDao
@@ -12,6 +11,7 @@ import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.data.room.entity.RoomFontEntity
 
 @Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, RoomFontEntity::class], version = 1)
+@TypeConverters(ListConvertor::class)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao
@@ -40,4 +40,12 @@ abstract class RoomDiaryDB:RoomDatabase() {
             return INSTANCE
         }
     }
+}
+
+class ListConvertor{
+    @TypeConverter
+    fun imageStringToJson(value: List<String?>) = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToImageString(value: String) = Gson().fromJson(value, Array<String?>::class.java).toList()
 }

@@ -1,5 +1,6 @@
 package com.project.myapplication.ui.travel.viewmodel
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.util.Log
@@ -16,7 +17,7 @@ import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.FontToHtml
 import com.project.myapplication.utils.customobserver.CustomObserve
 import com.project.myapplication.utils.customobserver.Event
-import com.project.myapplication.utils.customobserver.RecyclerListLiveData
+import com.project.myapplication.utils.customobserver.ListMutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -57,8 +58,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontSaveCallback:LiveData<((String?) -> Unit)?> = _fontSaveCallback
 
     // 다이어리 입력
-    private val _diaryImageUri = MutableLiveData<String>(null)
-    val diaryImageUri : LiveData<String> = _diaryImageUri
+    val diaryImageUri = ListMutableLiveData<String>()
     val diaryTitle = MutableLiveData<String>()
     val diaryContent = MutableLiveData<String>()
 
@@ -74,7 +74,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontSettingModelInput:LiveData<FontBindSettingModel> = _fontSettingInput
 
     //리사이클러뷰
-    val recyclerList = RecyclerListLiveData<DiaryTagModel>()
+    val recyclerList = ListMutableLiveData<DiaryTagModel>()
 
 
     init{
@@ -83,6 +83,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _diaryTagBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryEnabled.value = true
         recyclerList.listLiveData()
+        diaryImageUri.listLiveData()
     }
 
     // DB 관련
@@ -94,7 +95,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-                _diaryImageUri.value = it.imageUri
+                diaryImageUri.change(it.imageUri)
                 diaryTitle.value = it.title
                 diaryContent.value = it.content
                 _checkInsertUpdate.value = Event(false)
@@ -215,8 +216,25 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     // DB 호출 함수 관련 or 뷰 관련
 
-    fun getUri(uri: Uri){ // 갤러리 or 카메라에서 이미지 가져오기
-        _diaryImageUri.value = uri.toString()
+    fun getUri(uri: Uri){ // 카메라에서 이미지 가져오기
+        if(diaryImageUri.value == null || diaryImageUri.value!!.size < 6){
+            diaryImageUri.add(uri.toString())
+        }
+        else{
+            toast("현재 설정된 이미지가 최대치입니다.")
+        }
+    }
+
+    fun getClipData(imageClipData: Intent?){
+        if(imageClipData?.clipData == null){ // 불러온 이미지가 한 장이면
+            diaryImageUri.add(imageClipData?.data.toString())
+        }
+        else{
+            for (i in 0 until imageClipData.clipData!!.itemCount) {
+                diaryImageUri.add(imageClipData.clipData!!.getItemAt(i).uri.toString())
+                Log.e("실행중인가요", "${diaryImageUri.value}")
+            }
+        }
     }
 
     fun createDiarysetting(latLng: LatLng?){ // 다이어리 생성 버튼 누른 시간.

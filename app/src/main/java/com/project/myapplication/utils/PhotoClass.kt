@@ -54,12 +54,12 @@ class PhotoClass(private val context: Context) {
 
     fun <T> albumPictureResult(result: ActivityResult, viewModel: T){
         if(result.resultCode == Activity.RESULT_OK) {
-            val albumClipData = result.data?.data // 이미지 다중선택 시 클립데이타로 받아와야함.
+            val resultData = result.data
 
-            if(albumClipData != null){
+            if(resultData != null){
                 when(viewModel){
-                    is SetCoupleViewModel -> { viewModel.getUri(albumClipData)}
-                    is TravelDiaryViewModel -> { viewModel.getUri(albumClipData)}
+                    is SetCoupleViewModel -> { viewModel.getUri(resultData)}
+                    is TravelDiaryViewModel -> { viewModel.getClipData(resultData)}
                 }
             }
             else{

@@ -1,5 +1,6 @@
 package com.project.myapplication.ui.start.viewmodel
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -38,8 +39,8 @@ class SetCoupleViewModel(private val repository: SetCoupleRepository):BaseViewMo
     val birthdayMonth = MutableLiveData<String>()
     val birthdayDay = MutableLiveData<String>()
 
-    fun getUri(uri: Uri) {
-        _photoUri.value = uri.toString()
+    fun getUri(ImageData: Intent?) {
+        _photoUri.value = ImageData?.data.toString()
     }
 
     fun setBirthDay(year: Int, month: Int, day: Int) {

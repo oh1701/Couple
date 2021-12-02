@@ -112,5 +112,5 @@ dependencies {
 
     /** 이미지 슬라이드 시 아래 동그라미 */
     implementation 'me.relex:circleindicator:2.1.4'
-
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
 }

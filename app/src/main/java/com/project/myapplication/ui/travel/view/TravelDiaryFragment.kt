@@ -76,7 +76,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         startActivityForResult() // oncreate 선언.
         customCallback = EventCustomCallback(customEvent)
         customCallback.setChanged()
-        
+        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
 
     override fun initView() {
@@ -86,7 +86,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.fontSaveTextWatcherFunction()
         this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
-        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
 
     override fun initObserve() {
@@ -126,7 +125,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
                 startForResultCamera.launch(cameraFileUri)
             }
             else{
-                startForResultAlbum.launch(photoClass.albumPictureIntent())
+                startForResultAlbum.launch(photoClass.albumMultipleIntent())
             }
         }
         dialog.show()
