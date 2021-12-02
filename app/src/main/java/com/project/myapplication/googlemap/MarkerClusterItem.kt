@@ -19,7 +19,7 @@ class MarkerClusterItem(
         return position
     }
 
-    override fun getTitle(): String? {
+    override fun getTitle(): String? { // Diary의 ID 임
         return title
     }
 

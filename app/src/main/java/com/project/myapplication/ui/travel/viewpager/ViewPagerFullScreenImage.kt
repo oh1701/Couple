@@ -1,4 +1,4 @@
-package com.project.myapplication.ui
+package com.project.myapplication.ui.travel.viewpager
 
 import android.content.Context
 import androidx.activity.OnBackPressedCallback

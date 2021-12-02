@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.project.myapplication.ui.ViewPagerImageAdapter
+import com.project.myapplication.ui.travel.viewpager.ViewPagerImageAdapter
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 
 object ViewPagerBind {

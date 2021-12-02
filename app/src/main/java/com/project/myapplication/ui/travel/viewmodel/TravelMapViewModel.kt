@@ -2,9 +2,12 @@ package com.project.myapplication.ui.travel.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.utils.customobserver.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
+import com.project.myapplication.googlemap.MarkerClusterItem
 import com.project.myapplication.ui.travel.repository.TravelMapRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +23,8 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     val cameraAutoSetting:LiveData<Boolean> = _cameraAutoSetting
     private val _cameraAutoText = MutableLiveData<String>()
     val cameraAutoText:LiveData<String> = _cameraAutoText
+    private val _markerClickListener = MutableLiveData<Event<String>>()
+    val markerClickListener:LiveData<Event<String>> = _markerClickListener
 
     init {
         _cameraAutoSetting.value = true
@@ -60,5 +65,9 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     fun cameraAutoSet(){
         _cameraAutoSetting.value = _cameraAutoSetting.value?.not()
         _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
+    }
+
+    fun markerClickListener(id:String){
+        _markerClickListener.value = Event(id)
     }
 }

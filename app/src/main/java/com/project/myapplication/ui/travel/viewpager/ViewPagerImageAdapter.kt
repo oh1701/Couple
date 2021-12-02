@@ -1,4 +1,4 @@
-package com.project.myapplication.ui
+package com.project.myapplication.ui.travel.viewpager
 
 import android.net.Uri
 import android.util.Log

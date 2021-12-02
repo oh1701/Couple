@@ -23,6 +23,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /** insertDB는 작성완료했을때 RoomDiaryEntity를 파라미터값으로 받는다.*/
 
@@ -111,7 +112,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-                diaryImageUri.change(it.imageUri)
+                diaryImageUri.addAll(it.imageUri)
                 diaryTitle.value = it.title
                 diaryContent.value = it.content
                 _checkInsertUpdate.value = Event(false)
@@ -289,7 +290,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     fun closeDiary():Boolean{
-        return diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value == null
+        return diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value.isNullOrEmpty()
     }
 
     fun getFontSetting(fontSettingModel: FontBindSettingModel){

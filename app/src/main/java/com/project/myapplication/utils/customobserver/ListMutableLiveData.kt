@@ -1,8 +1,5 @@
 package com.project.myapplication.utils.customobserver
 
-import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
-
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.databinding.adapters.NumberPickerBindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,11 +38,6 @@ open class ListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
 
     open fun notifyChange() {
         val items: ArrayList<T> = value!!
-        value = items
-    }
-
-    open fun change(item: List<T>?){
-        val items: ArrayList<T> = item as ArrayList<T>
         value = items
     }
 }

@@ -9,36 +9,7 @@ import com.project.myapplication.R
 /** Create By Gyu Seong Oh. 2021 / 10  */
 
 class MoveFragment {
-    private fun checkNowFragment(fragmentManager: FragmentManager): Fragment? {
-        return if(fragmentManager.fragments.size > 0){
-            fragmentManager.fragments[0]
-        }
-        else{
-            null
-        }
-    }
-
-    fun moveFragment(fragmentManager: FragmentManager, fragmentName:Fragment){
-        if(checkNowFragment(fragmentManager) != null){
-            if(checkNowFragment(fragmentManager)!!::class.simpleName.toString() != fragmentName::class.simpleName){
-                fragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left,
-                        R.anim.slide_in_left,
-                        R.anim.slide_out_right)
-                    .replace(
-                        R.id.inside_fragment,
-                        fragmentName
-                    ).commit()
-            }
-
-            Log.e("현재 프래그먼트는", checkNowFragment(fragmentManager)!!::class.simpleName.toString())
-            Log.e("바뀔 프래그먼트는", fragmentName::class.simpleName.toString())
-        }
-    }
-
-    fun createDiary(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
+    fun createDiary(fragmentManager: FragmentManager, fragmentName:Fragment, tag:String): FragmentTransaction {
         return fragmentManager.beginTransaction().setCustomAnimations(
             R.anim.slide_in_bottom,
             0,
@@ -47,7 +18,7 @@ class MoveFragment {
         ).add(
             R.id.fragment_layout,
             fragmentName,
-            "create"
+            tag
         )
     }
 

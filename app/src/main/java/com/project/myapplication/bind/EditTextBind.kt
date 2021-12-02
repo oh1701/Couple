@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.Spannable
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.project.myapplication.model.font.FontBindSettingModel
@@ -11,12 +12,12 @@ import com.project.myapplication.utils.FontToHtml
 
 object EditTextBind {
     var fontSettingModel:FontBindSettingModel? = null // font 기입될 때마다 바꿔주는 용
-    private var firstTextWatcher = true // TextWatcher 중복 방지용 (처음 설정에서만 TextWatcher 설정)
+    var firstTextWatcher = true // TextWatcher 중복 방지용 (처음 설정에서만 TextWatcher 설정)
 
     /** DiaryContent, DiaryTitle과 같이 폰트 사용하는 것들 callback 받기 위한 용도. */
     @JvmStatic
     @BindingAdapter("CursorFontSetting", "fontCallback")
-    fun cursorFontSetting(editText: EditText, fontSettingsModel: FontBindSettingModel?, callback:((String?) -> Unit)?){ //        val font = RoomDiaryDB.INSTANCE!!.font().insertDao(Font())
+    fun cursorFontSetting(editText: EditText, fontSettingsModel: FontBindSettingModel?, callback:((String?) -> Unit)?){ // val font = RoomDiaryDB.INSTANCE!!.font().insertDao(Font())
         val startHtml = FontToHtml().getStartHtmlFontColor()
         var otherHtml = startHtml + ""
         fontSettingModel = fontSettingsModel
@@ -47,10 +48,10 @@ object EditTextBind {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
 
+                            Log.e("확인", "확인")
                             otherHtml += FontToHtml().getHtmlColorSetting(
                                 fontSettingModel!!.colorHex!!.defaultColor,
-                                p0.toString()
-                                    .substring(editText.selectionStart - 1, editText.selectionStart)
+                                p0.toString().substring(editText.selectionStart - 1, editText.selectionStart)
                             )
                             callback?.invoke(otherHtml)
                             editText.text.removeSpan(span) // Span을 지우지 않으면 다시 설정해도 이전 설정이 적용된다.

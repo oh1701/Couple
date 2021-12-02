@@ -8,6 +8,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
+import com.project.myapplication.bind.EditTextBind
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.ClusterSetting
 import com.project.myapplication.googlemap.GoogleMapSetting
@@ -60,7 +61,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             }
             else{
                 MoveFragment()
-                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment())
+                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment(), "create")
                     .addToBackStack("Map")
                     .commit()
             }
@@ -71,6 +72,13 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
                 googleMapSetting.settingCamera(it)
             }
         }
+
+        thisViewModel.markerClickListener.observe(viewLifecycleOwner, EventObserver{ MarkerID ->
+            MoveFragment()
+                .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment(), MarkerID)
+                .addToBackStack("Map")
+                .commit()
+        })
     }
 
     override fun sharedObserve() {
@@ -100,7 +108,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             googleMapSetting = GoogleMapSetting(requireContext(), googleMap)
             googleMapSetting.mapSetting()
             cluster = ClusterManager<MarkerClusterItem>(requireContext(), googleMap)
-            clusterSetting.setCluster(requireContext(), cluster, googleMap)
+            clusterSetting.setCluster(requireContext(), cluster, googleMap, thisViewModel)
             thisViewModel.getAllDiary()
         }
     }

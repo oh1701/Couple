@@ -6,21 +6,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
+import com.project.myapplication.bind.EditTextBind
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.model.font.FontBindSettingModel
-import com.project.myapplication.ui.ViewPagerFullScreenImage
+import com.project.myapplication.ui.travel.viewpager.ViewPagerFullScreenImage
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
-import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.utils.customobserver.CustomObserver
 import com.project.myapplication.utils.customobserver.EventObserver
@@ -82,7 +81,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         binding.travelDiaryFragment = this
 
         thisViewModel.fontSaveTextWatcherFunction()
-        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악.
+        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이거나 문자면 마커 클릭 아님
     }
 
     override fun initObserve() {
@@ -153,5 +152,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun onDestroyView() {
         super.onDestroyView()
         diaryOnBackPressed.remove()
+        EditTextBind.firstTextWatcher = true
+        EditTextBind.fontSettingModel = null
     }
 }
