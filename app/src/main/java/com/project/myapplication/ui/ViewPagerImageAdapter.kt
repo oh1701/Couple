@@ -9,20 +9,19 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.databinding.ActivityViewpagerimageBinding
+import com.project.myapplication.databinding.FragmentViewpagerimageBinding
 import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ViewPagerImageAdapter(private val image:String?, private val fragment: Fragment):BaseFragment<ActivityViewpagerimageBinding, BaseViewModel>() {
+class ViewPagerImageAdapter(private val image:String?, private val fragment: Fragment):BaseFragment<FragmentViewpagerimageBinding, BaseViewModel>() {
     override val layoutResourceId: Int
-        get() = R.layout.activity_viewpagerimage
+        get() = R.layout.fragment_viewpagerimage
     override val thisViewModel: BaseViewModel by viewModel()
 
     override fun initView() {
         if (image != null)
             Glide.with(this).load(Uri.parse(image)).transform(CenterCrop(), RoundedCorners(40)).into(binding.viewPagerImage)
 
-        Log.e("실행", "실행")
         binding.viewPagerImage.setOnClickListener {
             if(fragment is TravelDiaryFragment) {
                 fragment.cameraOpen()

@@ -14,11 +14,13 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
 import com.project.myapplication.model.font.FontBindSettingModel
+import com.project.myapplication.ui.ViewPagerFullScreenImage
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
+import com.project.myapplication.utils.MoveFragment
 import com.project.myapplication.utils.PhotoClass
 import com.project.myapplication.utils.customobserver.CustomObserver
 import com.project.myapplication.utils.customobserver.EventObserver
@@ -84,8 +86,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     }
 
     override fun initObserve() {
-        thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{ event -> // 완료 시 에러용 토스트
-            Toast.makeText(requireContext(), event, Toast.LENGTH_SHORT).show()
+        thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{ event -> // 완료, 에러용 토스트
+            toast(event)
         })
 
         thisViewModel.diaryCompleteButton.observe(viewLifecycleOwner, EventObserver{
@@ -112,18 +114,27 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     }
 
     fun cameraOpen(){ // startForResultCamera 의 registerForActivityResult가 AppCompat 상속 아니면 안불러짐
-        val option = arrayOf<CharSequence>("카메라로 촬영하기", "앨범에서 불러오기")
-        val dialog = AlertDialog.Builder(requireContext())
-        dialog.setItems(option) { dialog, item ->
-            if (option[item] == "카메라로 촬영하기") {
-                cameraFileUri = photoClass.getImage()
-                startForResultCamera.launch(cameraFileUri)
+        if(thisViewModel.diaryEnabled.value == true) { // 살펴보기 기능 꺼져있을 경우
+            val option = arrayOf<CharSequence>("카메라로 촬영하기", "앨범에서 불러오기")
+            val dialog = AlertDialog.Builder(requireContext())
+            dialog.setItems(option) { dialog, item ->
+                if (option[item] == "카메라로 촬영하기") {
+                    cameraFileUri = photoClass.getImage()
+                    startForResultCamera.launch(cameraFileUri)
+                } else {
+                    startForResultAlbum.launch(photoClass.albumMultipleIntent())
+                }
             }
-            else{
-                startForResultAlbum.launch(photoClass.albumMultipleIntent())
-            }
+            dialog.show()
         }
-        dialog.show()
+    }
+
+    fun fullScreenViewPagerOpen(){
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack("Map")
+            .add(R.id.fragment_layout, ViewPagerFullScreenImage(thisViewModel.diaryImageUri.value, thisViewModel.imageViewPagerNumber.value))
+            .commit()
     }
 
     private fun startActivityForResult(){

@@ -78,7 +78,6 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -106,13 +105,15 @@
                     android:layout_gravity="bottom|center" />
 
                 <ImageButton
+                    android:id="@+id/ImageFullButton"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@color/black"
-                    android:visibility="gone"
+                    android:background="#656464"
                     android:src="@drawable/ic_baseline_open_in_full_24"
+                    android:onClickListener="@{() -> travelDiaryFragment.fullScreenViewPagerOpen()}"
+                    android:visibility="@{travelDiaryViewModel.viewPagerFullScreenButtonVisibility}"
                     android:layout_margin="10dp"
-                    android:layout_gravity="top|right"/>
+                    android:layout_gravity="top|end"/>
             </FrameLayout>
 
             <TextView

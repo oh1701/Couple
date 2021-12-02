@@ -76,11 +76,21 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     //리사이클러뷰
     val recyclerList = ListMutableLiveData<DiaryTagModel>()
 
+    //뷰페이저 확대, 지우기 버튼 visibility
+    private val _viewPagerFullScreenButtonVisibility = MutableLiveData<Int>(View.GONE)
+    val viewPagerFullScreenButtonVisibility:LiveData<Int> = _viewPagerFullScreenButtonVisibility
+
     //현재 이미지 뷰페이저 위치
-    private val _imageViewPagerNumber = MutableLiveData(0)
+    private val _imageViewPagerNumber = MutableLiveData<Int>(null)
     val imageViewPagerNumber:LiveData<Int> = _imageViewPagerNumber
     val imageViewPagerNumberCallback = MutableLiveData<(Int) -> Unit> { ImagePosition ->
         _imageViewPagerNumber.value = ImagePosition
+        if(diaryImageUri.value?.isNullOrEmpty() == true){ // 이미지 존재 유무에 따라 설정.
+            _viewPagerFullScreenButtonVisibility.value = View.GONE
+        }
+        else{
+            _viewPagerFullScreenButtonVisibility.value = View.VISIBLE
+        }
     }
 
     init{
@@ -256,17 +266,25 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
         _diaryEnabled.value = boolean
         when(boolean.not()){
-            false -> toast("터치 금지 해제")
-            true -> toast("터치 금지 활성화")
+            false -> toast("살펴보기 해제")
+            true -> toast("살펴보기 설정")
         }
     }
 
     fun changedButtonCheck(view: View){ // 버튼 상태 확인
-        when(view.tag){
-            "touch" -> _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
-            "tag" -> _diaryTagBtnCheck.value = CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
-            "trash" -> _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
-            "font" -> _diaryFontBtnCheck.value = Event(true)
+        if(view.tag == "touch") {
+            _diaryTouchBtnCheck.value =
+                CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
+        }
+
+        if(diaryEnabled.value == true) {
+            when (view.tag) {
+                "tag" -> _diaryTagBtnCheck.value =
+                    CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
+                "trash" -> _diaryTrashBtnCheck.value =
+                    CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
+                "font" -> _diaryFontBtnCheck.value = Event(true)
+            }
         }
     }
 
@@ -296,7 +314,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     fun addTagRecyclerlist(){
-        recyclerList.add(DiaryTagModel("# ", "1"))
+        if(diaryEnabled.value == true)
+            recyclerList.add(DiaryTagModel("# ", "1"))
     }
 }
 
