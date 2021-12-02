@@ -9,14 +9,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.base.BaseViewModel
-import com.project.myapplication.databinding.ActivityViewpagerBinding
+import com.project.myapplication.databinding.ActivityViewpagerimageBinding
 import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.ext.getScopeName
 
-class Viewpagerrrr(private val image:String?, private val fragment: Fragment):BaseFragment<ActivityViewpagerBinding, BaseViewModel>() {
+class ViewPagerImageAdapter(private val image:String?, private val fragment: Fragment):BaseFragment<ActivityViewpagerimageBinding, BaseViewModel>() {
     override val layoutResourceId: Int
-        get() = R.layout.activity_viewpager
+        get() = R.layout.activity_viewpagerimage
     override val thisViewModel: BaseViewModel by viewModel()
 
     override fun initView() {

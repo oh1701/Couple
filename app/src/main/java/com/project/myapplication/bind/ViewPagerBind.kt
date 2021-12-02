@@ -1,23 +1,11 @@
 package com.project.myapplication.bind
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.adapter.FragmentViewHolder
 import androidx.viewpager2.widget.ViewPager2
-import com.project.myapplication.R
-import com.project.myapplication.ui.Viewpagerrrr
-import com.project.myapplication.ui.travel.view.TravelDiaryFragment
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import me.relex.circleindicator.CircleIndicator3
-import org.koin.ext.getScopeName
+import com.project.myapplication.ui.ViewPagerImageAdapter
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-import java.util.concurrent.TimeUnit
 
 object ViewPagerBind {
     @JvmStatic
@@ -51,8 +39,8 @@ class MyAdapter(private val fragment: Fragment, private val image: ArrayList<Str
 
     override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
         return when (image?.size) {
-            null, 0 -> Viewpagerrrr(null, fragment)
-            else -> Viewpagerrrr(image[position], fragment)
+            null, 0 -> ViewPagerImageAdapter(null, fragment)
+            else -> ViewPagerImageAdapter(image[position], fragment)
         }
     }
 }
