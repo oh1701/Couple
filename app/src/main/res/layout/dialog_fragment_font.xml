@@ -204,8 +204,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/topbottom_spacing"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
 
@@ -218,7 +218,7 @@
                 <Button
                     android:id="@+id/plus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="증가"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
@@ -232,7 +232,7 @@
                 <Button
                     android:id="@+id/minus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="감소"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
@@ -253,8 +253,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/letter_spacing"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
 
@@ -267,7 +267,7 @@
                 <Button
                     android:id="@+id/letter_plus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="증가"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
@@ -282,7 +282,7 @@
                 <Button
                     android:id="@+id/letter_minus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="감소"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
@@ -302,8 +302,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/text_size"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
 
@@ -316,7 +316,7 @@
                 <Button
                     android:id="@+id/size_plus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="증가"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"
@@ -331,7 +331,7 @@
                 <Button
                     android:id="@+id/size_minus"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:text="감소"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMaxTextSize="14sp"

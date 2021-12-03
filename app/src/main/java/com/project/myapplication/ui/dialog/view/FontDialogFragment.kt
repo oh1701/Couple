@@ -1,5 +1,7 @@
 package com.project.myapplication.ui.dialog.view
 
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseDialogFragment
 import com.project.myapplication.databinding.DialogFragmentFontBinding
@@ -20,6 +22,8 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
     override fun initView() {
         binding.fontDialogViewModel = thisViewModel
         binding.fontDialogFragment = this
+        binding.fontRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.fontRecyclerview
 
         thisViewModel.getMetrics(resources.displayMetrics)
         thisViewModel.getFontSetting(arguments?.getParcelable<FontBindSettingModel>("FontSetting"))

@@ -24,8 +24,6 @@ class ClusterSetting {
         map.setOnMarkerClickListener(cluster) // 마커 클릭시 실행하는 함수
 
         cluster.setOnClusterItemClickListener { markerItem ->
-            Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
-            Log.e("cluster", markerItem.title ?: "create")
             when(viewModel){
                 is TravelMapViewModel -> {
                     viewModel.markerClickListener(markerItem.title ?: "create")
@@ -35,8 +33,6 @@ class ClusterSetting {
         }
 
         cluster.setOnClusterClickListener { markerClusterItem ->
-            Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
-
             when(viewModel){
                 is TravelMapViewModel -> {
                     viewModel.markerClickListener(markerClusterItem.items.toMutableList()[0].title ?: "create")
