@@ -26,6 +26,7 @@ object EditTextBind {
             letterSpacing = fontSettingModel!!.letterSpacing!!
             setLineSpacing(0.0f, fontSettingModel!!.lineSpacing!!)
             textSize = fontSettingModel!!.fontTypedSizeValue!!
+            typeface = fontSettingsModel!!.fontTypeFace
         }
 
         if(firstTextWatcher) {

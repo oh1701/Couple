@@ -39,7 +39,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private lateinit var diaryOnBackPressed:OnBackPressedCallback
     private lateinit var customCallback:EventCustomCallback
     private var fontSettingModel:FontBindSettingModel? = null
-    private val customEvent:(FontBindSettingModel) -> Unit = { setting ->
+    private val fontCustomEvent:(FontBindSettingModel) -> Unit = { setting ->
         fontSettingModel = setting
         thisViewModel.getFontSetting(fontSettingModel!!)
     }
@@ -70,7 +70,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startActivityForResult() // oncreate 선언.
-        customCallback = EventCustomCallback(customEvent)
+        customCallback = EventCustomCallback(fontCustomEvent)
         customCallback.setChanged()
         thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
@@ -100,6 +100,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.diaryTouchBtnCheck.observe(viewLifecycleOwner, CustomObserver{ boolean ->
             thisViewModel.viewEnabledValue(boolean.not()) // 버튼이 켜지면 Enabled false 처리해야함.
+        })
+
+        thisViewModel.removeWarningDialog.observe(viewLifecycleOwner, EventObserver{
+            if(it){
+                warningDialogFragment.show(supportFragmentManager, "removeDiary")
+            }
         })
 
         thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{

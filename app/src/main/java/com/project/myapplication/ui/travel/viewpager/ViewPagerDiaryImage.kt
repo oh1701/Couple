@@ -13,7 +13,7 @@ import com.project.myapplication.databinding.FragmentViewpagerimageBinding
 import com.project.myapplication.ui.travel.view.TravelDiaryFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ViewPagerImageAdapter(private val image:String?, private val fragment: Fragment):BaseFragment<FragmentViewpagerimageBinding, BaseViewModel>() {
+class ViewPagerDiaryImage(private val image:String?, private val fragment: Fragment):BaseFragment<FragmentViewpagerimageBinding, BaseViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_viewpagerimage
     override val thisViewModel: BaseViewModel by viewModel()

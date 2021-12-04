@@ -215,7 +215,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/Flex_recycler"
-                        app:recyclerViewSet="@{travelDiaryViewModel.recyclerList}"
+                        app:recyclerTagSet="@{travelDiaryViewModel.recyclerList}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -294,14 +294,15 @@
             android:id="@+id/save_diary"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="저장하기"
+            android:text="@{travelDiaryViewModel.diarySaveOrRemoveButton}"
+            android:tag="@{travelDiaryViewModel.diarySaveOrRemoveButton}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="15dp"
 
             android:background="@color/purple_200"
             android:enabled="@{travelDiaryViewModel.diaryEnabled}"
-            android:onClickListener="@{() -> travelDiaryViewModel.roomSaveDiary()}"
+            android:onClickListener="@{(v) -> travelDiaryViewModel.saveORremoveButtonClick(v)}"
             />
 
 

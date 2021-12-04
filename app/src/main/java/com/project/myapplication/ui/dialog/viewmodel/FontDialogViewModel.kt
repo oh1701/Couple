@@ -1,6 +1,7 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
@@ -24,6 +25,8 @@ class FontDialogViewModel:BaseViewModel() {
     val fonSettingComplete:LiveData<Event<Boolean>> = _fontSettingComplete
     private val _textColor = MutableLiveData<Int>(Color.parseColor("#000000"))
     val textColor:LiveData<Int> = _textColor
+    private val _textTypeFace = MutableLiveData<Typeface>(Typeface.DEFAULT)
+    val textTypeFace:LiveData<Typeface> = _textTypeFace
     private val _buttonColor = MutableLiveData<Int>()
     val buttonColor:LiveData<Int> = _buttonColor
 
@@ -98,6 +101,7 @@ class FontDialogViewModel:BaseViewModel() {
             _lineSpacing.value = fontSettingModel.lineSpacing
             _letterSpacing.value = fontSettingModel.letterSpacing
             _textColor.value = fontSettingModel.colorHex!!.defaultColor
+            _textTypeFace.value = fontSettingModel.fontTypeFace
         }
     }
 }

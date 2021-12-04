@@ -39,9 +39,9 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
                 FontBindSettingModel(thisViewModel.letterSpacing.value,
                     thisViewModel.lineSpacing.value,
                     thisViewModel.textTypedValue.value,
-                    binding.previewedit.textColors)
+                    binding.previewedit.textColors,
+                    binding.previewedit.typeface)
             )
-
             this.dialog?.dismiss()
         })
     }

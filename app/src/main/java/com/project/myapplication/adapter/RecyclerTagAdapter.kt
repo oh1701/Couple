@@ -1,4 +1,4 @@
-package com.project.myapplication.ui.recycler_adapter
+package com.project.myapplication.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,13 +11,13 @@ import com.project.myapplication.model.DiaryTagModel
 class RecyclerTagAdapter(private val tagline:ArrayList<DiaryTagModel>): RecyclerView.Adapter<RecyclerTagAdapter.ViewHolder>(){
     lateinit var context:Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTagAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_tag_layout, parent, false)
         context = parent.context
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerTagAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
     }
 

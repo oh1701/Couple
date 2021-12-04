@@ -58,8 +58,8 @@ class FullScreenImageAdapter(private val fragment: Fragment,
 
     override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
         return when (image?.size) {
-            null, 0 -> ViewPagerImageAdapter(null, fragment)
-            else -> ViewPagerImageAdapter(image[position], fragment)
+            null, 0 -> ViewPagerDiaryImage(null, fragment)
+            else -> ViewPagerDiaryImage(image[position], fragment)
         }
     }
 }

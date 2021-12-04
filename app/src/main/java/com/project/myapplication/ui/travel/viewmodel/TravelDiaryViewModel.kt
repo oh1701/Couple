@@ -2,6 +2,7 @@ package com.project.myapplication.ui.travel.viewmodel
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -63,15 +64,27 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryTitle = MutableLiveData<String>()
     val diaryContent = MutableLiveData<String>()
 
-    //다이어리 저장`
+    // 저장 or 삭제 버튼 변경
+    private val _diarySaveOrRemoveButton = MutableLiveData<String>("저장하기")
+    val diarySaveOrRemoveButton:LiveData<String> = _diarySaveOrRemoveButton
+
+    //다이어리 저장
     private val _diaryCompleteButton = MutableLiveData<Event<Boolean>>()
     val diaryCompleteButton:LiveData<Event<Boolean>> = _diaryCompleteButton
     private val _createMarkerEvent = MutableLiveData<Event<Boolean>>()
     val createMarkerEvent:LiveData<Event<Boolean>> = _createMarkerEvent
 
+    //다이어리 삭제
+    private val _diaryRemoveButton = MutableLiveData<Event<Boolean>>()
+    val diaryRemoveButton:LiveData<Event<Boolean>> = _diaryRemoveButton
+    private val _removeMarkerEvent = MutableLiveData<Event<Boolean>>()
+    val removeMarkerEvent:LiveData<Event<Boolean>> = _removeMarkerEvent
+    private val _removeWarningDialog = MutableLiveData(Event(false))
+    val removeWarningDialog:LiveData<Event<Boolean>> = _removeWarningDialog
+
     //폰트
     private var otherHtml = ""
-    private val _fontSettingInput = MutableLiveData(FontBindSettingModel(0.0f, 1.0f, 16.0f, ColorStateList.valueOf(-570425344)))
+    private val _fontSettingInput = MutableLiveData(FontBindSettingModel(0.0f, 1.0f, 16.0f, ColorStateList.valueOf(-570425344), Typeface.DEFAULT))
     val fontSettingModelInput:LiveData<FontBindSettingModel> = _fontSettingInput
 
     //리사이클러뷰
@@ -81,15 +94,20 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _viewPagerFullScreenButtonVisibility = MutableLiveData<Int>(View.GONE)
     val viewPagerFullScreenButtonVisibility:LiveData<Int> = _viewPagerFullScreenButtonVisibility
 
+    //마커 클릭 후 콘텐츠 변화 상태 확인
+    private val _updateImageValue = ListMutableLiveData<String>()
+    private val _updateTitleValue = MutableLiveData<String>()
+    private val _updateContentValue = MutableLiveData<String>()
+
     //현재 이미지 뷰페이저 위치
     private val _imageViewPagerNumber = MutableLiveData<Int>(null)
     val imageViewPagerNumber:LiveData<Int> = _imageViewPagerNumber
     val imageViewPagerNumberCallback = MutableLiveData<(Int) -> Unit> { ImagePosition ->
         _imageViewPagerNumber.value = ImagePosition
-        if(diaryImageUri.value?.isNullOrEmpty() == true){ // 이미지 존재 유무에 따라 설정.
+        if(diaryImageUri.value?.isNullOrEmpty() == true || diaryTrashBtnCheck.value?.peekContent() == true){ // 이미지 존재 유무에 따라 설정.
             _viewPagerFullScreenButtonVisibility.value = View.GONE
         }
-        else{
+        else if(diaryImageUri.value?.isNullOrEmpty() == false){
             _viewPagerFullScreenButtonVisibility.value = View.VISIBLE
         }
     }
@@ -101,6 +119,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _diaryEnabled.value = true
         recyclerList.listLiveData()
         diaryImageUri.listLiveData()
+        _updateImageValue.listLiveData()
     }
 
     // DB 관련
@@ -116,16 +135,35 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 diaryTitle.value = it.title
                 diaryContent.value = it.content
                 _checkInsertUpdate.value = Event(false)
+                _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
+
+                //업데이트 확인용
+                _updateImageValue.addAll(it.imageUri)
+                _updateTitleValue.value = diaryTitle.value
+                _updateContentValue.value = diaryContent.value
             }
-            .doOnError { 
-                Log.e("getDiary ::", "실패")
-                toast("Error : 올바른 초기 값을 가져오지 못하였습니다. ")
+            .doOnError {
+                Log.e("getDiary ::", "실패 이유 $:$it")
+                toast("Error : 데이터 값을 가져오지 못하였습니다. ")
             }
             .subscribe()
         )
     }
 
-    fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
+    fun saveORremoveButtonClick(v:View){
+        if(v.tag == "저장하기"){
+            roomSaveDiary()
+        }
+        else{
+            roomRemoveDiary()
+        }
+    }
+
+    private fun roomRemoveDiary(){ // Room 삭제, value에 ID 저장 후 observe를 통해 ID에 맞는 Marker 삭제
+        _removeWarningDialog.value = Event(true)
+    }
+
+    private fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
         if (diaryTitle.value != null && diaryContent.value != null && diaryImageUri.value != null) {
             compositeDisposable
                 .add(
@@ -221,8 +259,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-                _createDiaryID.value = it.size + 1
-                Log.e("getDBsize ::", "사이즈는 ${it.size + 1},\n 내용물은 $it")
+                _createDiaryID.value = it[it.lastIndex].id + 1 // 리스트의 마지막 ID + 1로 저장.
+                Log.e("getDBsize ::", "사이즈는 ${it[it.lastIndex].id + 1},\n 내용물은 $it")
             }
             .doOnError {
                 Log.e("실패", "실패")
@@ -234,12 +272,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     // DB 호출 함수 관련 or 뷰 관련
 
     fun getUri(uri: Uri){ // 카메라에서 이미지 가져오기
-        if(diaryImageUri.value == null || diaryImageUri.value!!.size < 6){
-            diaryImageUri.add(uri.toString())
-        }
-        else{
-            toast("현재 설정된 이미지가 최대치입니다.")
-        }
+        diaryImageUri.add(uri.toString())
     }
 
     fun getClipData(imageClipData: Intent?){
@@ -267,8 +300,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
         _diaryEnabled.value = boolean
         when(boolean.not()){
-            false -> toast("살펴보기 해제")
-            true -> toast("살펴보기 설정")
+            false -> toast("수정 금지모드 해제")
+            true -> toast("수정 금지모드")
         }
     }
 
@@ -282,15 +315,38 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             when (view.tag) {
                 "tag" -> _diaryTagBtnCheck.value =
                     CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
-                "trash" -> _diaryTrashBtnCheck.value =
-                    CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
+                "trash" -> {
+                    _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
+                    diarySaveOrRemoveButtonChange()
+                }
                 "font" -> _diaryFontBtnCheck.value = Event(true)
             }
         }
     }
 
+    private fun diarySaveOrRemoveButtonChange(){
+        if(_diaryTrashBtnCheck.value?.peekContent()!! || _diaryTrashBtnCheck.value?.peekContent() == null){ // 휴지통 버튼 켜져있으면
+            _diarySaveOrRemoveButton.value = "삭제하기"
+            _viewPagerFullScreenButtonVisibility.value = View.GONE
+        }
+        else{
+            _diarySaveOrRemoveButton.value = "저장하기"
+
+            if(!diaryImageUri.value.isNullOrEmpty())
+                _viewPagerFullScreenButtonVisibility.value = View.VISIBLE
+        }
+    }
+    
     fun closeDiary():Boolean{
-        return diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value.isNullOrEmpty()
+        return if(_checkInsertUpdate.value!!.peekContent()) { // 다이어리 생성 통해서 온것이면
+            diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value.isNullOrEmpty()
+        }
+        else{ // 마커클릭 통해서 온것이면
+            Log.e("afafafaf", "${_updateImageValue.value}\n, ${_updateContentValue.value} \n,${_updateTitleValue.value}")
+            diaryTitle.value == _updateTitleValue.value &&
+                    diaryContent.value == _updateContentValue.value &&
+                        diaryImageUri.value == _updateImageValue.value
+        }
     }
 
     fun getFontSetting(fontSettingModel: FontBindSettingModel){

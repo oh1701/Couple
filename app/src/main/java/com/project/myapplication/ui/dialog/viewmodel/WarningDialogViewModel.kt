@@ -29,27 +29,36 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
 
     fun settingDialog(tag: String?) {
         text(tag)
-        if (tag == "Permission") {
-            _positiveButtonTag.value = "설정"
-            _negativeButtonTag.value = "취소"
-        } else {
-            _positiveButtonTag.value = "삭제"
-            _negativeButtonTag.value = "취소"
+        when(tag){
+            "Permission" -> {
+                _positiveButtonTag.value = "설정"
+                _negativeButtonTag.value = "취소"
+            }
+            "closeDiary" -> {
+                _positiveButtonTag.value = "나가기"
+                _negativeButtonTag.value = "취소"
+            }
+            "removeDiary" -> {
+                _positiveButtonTag.value = "삭제"
+                _negativeButtonTag.value = "취소"
+            }
         }
     }
 
     fun selectButton(v: View){
         when(v.tag){
-            "삭제" -> { _selectButtonClick.value = Event("onBackPressed") }
+            "나가기" -> { _selectButtonClick.value = Event("onBackPressed") }
             "취소" -> { _selectButtonClick.value = Event("dismiss") }
             "설정" -> { _selectButtonClick.value = Event("Setting") }
+            "삭제" -> {_selectButtonClick.value = Event("removeDiary")}
         }
     }
 
     fun text(tag : String?){
-        if (tag == "Permission")
-            _warningText.value = "정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
-        else
-            _warningText.value = "작성중인 내용이 존재합니다.\n해당 내용을 저장하지 않고 삭제하시겠습니까?"
+        when(tag){
+            "Permission" -> _warningText.value = "정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
+            "closeDiary" -> _warningText.value = "작성중인 내용이 존재합니다.\n해당 내용을 저장하지 않고 나가시겠습니까?"
+            "removeDiary" -> _warningText.value = "이 게시물을 삭제하시겠습니까?\n삭제된 게시물은 복구되지 않습니다."
+        }
     }
 }
