@@ -21,6 +21,7 @@ import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.EventCustomCallback
 import com.project.myapplication.utils.PhotoClass
+import com.project.myapplication.utils.TextTypeFace
 import com.project.myapplication.utils.customobserver.CustomObserver
 import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.ext.android.inject
@@ -54,7 +55,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
                 }
                 else {
                     if(!warningDialogFragment.isAdded) {
-                        warningDialogFragment.show(supportFragmentManager, "diary")
+                        warningDialogFragment.show(supportFragmentManager, "closeDiary")
                     }
                     else{
                         warningDialogFragment.dismiss()

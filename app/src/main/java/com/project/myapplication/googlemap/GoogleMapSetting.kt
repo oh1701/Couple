@@ -63,7 +63,6 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
             userMarker = googleMap?.addMarker(MarkerOptions()
                 .position(latlng))!!
             glideUtils.glideListener(view, R.drawable.couple3, imageView, userMarker, "user")
-            Log.e("userMarker.isInitialized ::","userMarker.isInitialized")
         }
     }
 }

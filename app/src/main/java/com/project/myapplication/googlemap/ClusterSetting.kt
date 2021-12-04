@@ -53,7 +53,8 @@ class ClusterSetting {
                         diary.imageUri,
                         diary.title,
                         diary.content,
-                        diary.date,
+                        diary.createDay,
+                        diary.coupleDay,
                         null
                     )
                 )
@@ -72,7 +73,8 @@ class ClusterSetting {
                     diary.imageUri,
                     diary.title,
                     diary.content,
-                    diary.date,
+                    diary.createDay,
+                    diary.coupleDay,
                     null
                 )
             )

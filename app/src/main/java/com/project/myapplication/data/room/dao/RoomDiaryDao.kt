@@ -20,5 +20,5 @@ interface RoomDiaryDao {
     fun selectIdDao(id:Int):Single<RoomDiaryEntity>
 
     @Query("DELETE FROM RoomDiaryEntity WHERE imageUri = :id")
-    fun deleteIdDao(id:Int)
+    fun deleteIdDao(id:Int):Completable
 }

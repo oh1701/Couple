@@ -18,4 +18,7 @@ interface RoomFontDao {
 
     @Query("SELECT * FROM RoomFontEntity WHERE id = :id")
     fun selectIdDao(id:Int): Single<RoomFontEntity>
+
+    @Query("DELETE FROM RoomFontEntity WHERE id = :id")
+    fun deleteIdDao(id:Int):Completable
 }

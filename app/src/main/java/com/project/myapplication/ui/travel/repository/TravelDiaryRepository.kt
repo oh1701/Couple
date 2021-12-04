@@ -55,4 +55,8 @@ class TravelDiaryRepository:BaseRepository() {
     fun updateFontDB(roomFontEntity: RoomFontEntity):Completable{
         return roomFontDao.updateDao(roomFontEntity)
     }
+
+    fun selectFontDB(id:Int):Single<RoomFontEntity>{
+        return roomFontDao.selectIdDao(id)
+    }
 }

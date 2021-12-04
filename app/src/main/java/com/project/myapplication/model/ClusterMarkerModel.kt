@@ -6,6 +6,7 @@ data class ClusterMarkerModel(
     val imageUri: List<String>?,
     val title:String,
     val content:String?,
-    val date:String,
+    val createDay:String,
+    val coupleDay:String,
     val tag:String?
 )

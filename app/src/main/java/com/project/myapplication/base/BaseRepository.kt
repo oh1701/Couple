@@ -1,5 +1,6 @@
 package com.project.myapplication.base
 
+import android.content.Context
 import com.project.myapplication.data.room.dao.RoomCoupleSettingDao
 import com.project.myapplication.data.room.dao.RoomDiaryDao
 import com.project.myapplication.data.room.dao.RoomFontDao

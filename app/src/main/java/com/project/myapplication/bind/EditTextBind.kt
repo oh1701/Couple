@@ -49,7 +49,6 @@ object EditTextBind {
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
 
-                            Log.e("확인", "확인")
                             otherHtml += FontToHtml().getHtmlColorSetting(
                                 fontSettingModel!!.colorHex!!.defaultColor,
                                 p0.toString().substring(editText.selectionStart - 1, editText.selectionStart)

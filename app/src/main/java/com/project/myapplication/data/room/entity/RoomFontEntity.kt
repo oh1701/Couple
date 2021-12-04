@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class RoomFontEntity(
-    @PrimaryKey(autoGenerate = true) val id:Int, //1, 2 로 나누기
-    @ColumnInfo(name = "allTextFont") val allTextFont:String?,
+    @PrimaryKey(autoGenerate = false) val id:Int, //1, 2 로 나누기
+    @ColumnInfo(name = "textTypeFace") val textTypeFace:String,
     @ColumnInfo(name = "contentColor") val contentColor:String,
     @ColumnInfo(name = "letterSpacingContent") val letterSpacing:Float?,
     @ColumnInfo(name = "lineSpacingContent") val lineSpacing:Float?,

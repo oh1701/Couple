@@ -41,7 +41,7 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
         var int = 1
         reverseCluster.run {
             this.forEach {
-                if(it.diaryData().imageUri != null) {
+                if(!it.diaryData().imageUri.isNullOrEmpty()) {
                     uri = it.diaryData().imageUri!![0] // 마커 reverse 후 0번째것을 마커 대표 이미지로 설정. (최근 콘텐츠 이미지)
                     int++
                     return@run
@@ -95,7 +95,24 @@ class MarkerClusterRenderer(val context: Context, private val map: GoogleMap, pr
         val imageview = targetview.findViewById<ImageView>(R.id.marker_image)
         val image = cluster.diaryData().imageUri
 
-        glideUtils.glideListener(targetview, image?.get(0) ?: "", imageview, marker, "cluster")
+        if(image?.isNotEmpty() == true) {
+            glideUtils.glideListener(
+                targetview,
+                image[0],
+                imageview,
+                marker,
+                "cluster"
+            )
+        }
+        else{
+            glideUtils.glideListener(
+                targetview,
+                null,
+                imageview,
+                marker,
+                "cluster"
+            )
+        }
     }
 
     private fun <mapMarker>clusterGlide(cluster: Cluster<MarkerClusterItem>, marker:mapMarker){

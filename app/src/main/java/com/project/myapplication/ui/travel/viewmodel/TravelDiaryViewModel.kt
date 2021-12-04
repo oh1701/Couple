@@ -14,6 +14,7 @@ import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.data.room.entity.RoomFontEntity
 import com.project.myapplication.model.DiaryTagModel
 import com.project.myapplication.model.font.FontBindSettingModel
+import com.project.myapplication.model.font.FontTypeFace
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
 import com.project.myapplication.utils.FontToHtml
 import com.project.myapplication.utils.customobserver.CustomObserve
@@ -24,7 +25,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /** insertDB는 작성완료했을때 RoomDiaryEntity를 파라미터값으로 받는다.*/
 
@@ -33,17 +33,18 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         get() = super.compositeDisposable
 
     // 초기 세팅
+    private val _createDiaryCoupleDay = MutableLiveData<String>()
+    val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _createDiaryDay = MutableLiveData<String>()
     val createDiaryDay:LiveData<String> = _createDiaryDay
-    private val _createDiaryID = MutableLiveData<Int>() // 다이어리 생성 버튼 클릭 후 진입 시 생성되는 ID. List 사이즈 + 1
+    private val _createDiaryID = MutableLiveData<Int>() // 다이어리 생성 버튼 클릭 후 진입 시 생성되는 ID. List 마지막 인덱스 ID + 1
     val createDiaryID:LiveData<Int> = _createDiaryID
     private val _createDiaryLatLng = MutableLiveData<LatLng>()
     val createDiaryLatLng:LiveData<LatLng> = _createDiaryLatLng
     private val _checkInsertUpdate = MutableLiveData(Event(true)) // true면 Insert false 면 Update문 실행, default는 true
 
+
     // 다이어리 기본
-    private val _createDiaryCoupleDay = MutableLiveData<String>()
-    val createDiaryCoupleDay:LiveData<String> = _createDiaryCoupleDay
     private val _diaryViewVisibility = MutableLiveData<Int>()
     val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
     private val _diaryFontBtnCheck = MutableLiveData<Event<Boolean>>()
@@ -99,9 +100,13 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _updateTitleValue = MutableLiveData<String>()
     private val _updateContentValue = MutableLiveData<String>()
 
+    val typefaceObserveToString = MutableLiveData<String>()
+
     //현재 이미지 뷰페이저 위치
     private val _imageViewPagerNumber = MutableLiveData<Int>(null)
     val imageViewPagerNumber:LiveData<Int> = _imageViewPagerNumber
+
+    //콜백
     val imageViewPagerNumberCallback = MutableLiveData<(Int) -> Unit> { ImagePosition ->
         _imageViewPagerNumber.value = ImagePosition
         if(diaryImageUri.value?.isNullOrEmpty() == true || diaryTrashBtnCheck.value?.peekContent() == true){ // 이미지 존재 유무에 따라 설정.
@@ -112,6 +117,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
     }
 
+    //초기화
     init{
         _diaryTrashBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
         _diaryTouchBtnCheck.value = CustomObserve(content = false, firstInitialization = true)
@@ -127,6 +133,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     fun getDiary(id:Int){ // 마커 클릭을 통해서 다이어리 생성
         _createDiaryID.value = id // 존재하던 마커를 수정하기 위해 현재 id를 받아온 ID로 설정한다
 
+        getDiaryEntity(id)
+        getFontEntity(id)
+    }
+
+    private fun getDiaryEntity(id:Int){
+
         compositeDisposable.add(repository.getDiaryID(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -134,6 +146,9 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 diaryImageUri.addAll(it.imageUri)
                 diaryTitle.value = it.title
                 diaryContent.value = it.content
+                _createDiaryDay.value = it.createDay
+                _createDiaryCoupleDay.value = it.coupleDay
+                _createDiaryLatLng.value = LatLng(it.latitude, it.longitude)
                 _checkInsertUpdate.value = Event(false)
                 _diaryTouchBtnCheck.value = CustomObserve(_diaryTouchBtnCheck.value?.peekContent()!!.not(), false)
 
@@ -143,8 +158,23 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 _updateContentValue.value = diaryContent.value
             }
             .doOnError {
-                Log.e("getDiary ::", "실패 이유 $:$it")
-                toast("Error : 데이터 값을 가져오지 못하였습니다. ")
+                Log.e("getDiaryEntity ::", "실패 이유 $:$it")
+                toast("Error : 기본 데이터 값을 가져오지 못하였습니다. ")
+            }
+            .subscribe()
+        )
+    }
+
+    private fun getFontEntity(id:Int){
+        compositeDisposable.add(repository.selectFontDB(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess {
+
+                 }
+            .doOnError {
+                Log.e("getFontEntity ::", "실패 이유 $:$it")
+                toast("Error : 폰트 데이터 값을 가져오지 못하였습니다. ")
             }
             .subscribe()
         )
@@ -154,7 +184,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         if(v.tag == "저장하기"){
             roomSaveDiary()
         }
-        else{
+        else{ // 삭제하기
             roomRemoveDiary()
         }
     }
@@ -165,61 +195,14 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     private fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
         if (diaryTitle.value != null && diaryContent.value != null && diaryImageUri.value != null) {
-            compositeDisposable
-                .add(
-                    if(_checkInsertUpdate.value!!.peekContent()) {
-                        repository.insertDiaryDB(
-                            RoomDiaryEntity(
-                                createDiaryID.value!!,
-                                diaryImageUri.value,
-                                diaryTitle.value!!,
-                                diaryContent.value!!,
-                                createDiaryDay.value!!,
-                                createDiaryLatLng.value?.longitude ?: 0.0, // 서울 위경도로 바꾸기.
-                                createDiaryLatLng.value?.latitude ?: 0.0
-                            )
-                        )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                toast("성공")
-                                _createMarkerEvent.value = Event(true)
-                                roomSaveFont()
-                                Log.e("createDiary insert ::", "성공 ${createDiaryID.value}")
-                            }
-                            .doOnError {
-                                Log.e("createDiary insert ::", "실패")
-                                toast("Error :  일기 저장에 실패하였습니다.")
-                            }
-                            .subscribe()
-                    }
-                else {
-                        repository.updateDiaryDB(
-                            RoomDiaryEntity(
-                                createDiaryID.value!!,
-                                diaryImageUri.value,
-                                diaryTitle.value!!,
-                                diaryContent.value!!,
-                                createDiaryDay.value!!,
-                                createDiaryLatLng.value?.longitude ?: 0.0, // 서울 위경도로 바꾸기.
-                                createDiaryLatLng.value?.latitude ?: 0.0
-                            )
-                        )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                toast("수정 완료")
-                                _diaryCompleteButton.value = Event(true)
-                                roomSaveFont()
-                                Log.e("createDiary update ::", "성공 ${createDiaryID.value}")
-                            }
-                            .doOnError {
-                                Log.e("createDiary update ::", "실패")
-                                toast("Error :  일기 저장에 실패하였습니다.")
-                            }
-                            .subscribe()
-                    }
-                )
+            if(_checkInsertUpdate.value!!.peekContent()) {
+                roomInsertFont()
+                roomDiaryInsertDB()
+            }
+            else {
+                roomUpdateFont()
+                roomDiaryUpdateDB()
+            }
         } else if(diaryImageUri.value == null){
             toast("1장 이상의 이미지를 등록해주세요.")
         } else if (diaryTitle.value == null) {
@@ -229,41 +212,130 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
     }
 
-    private fun roomSaveFont(){
-        if(_checkInsertUpdate.value!!.peekContent()) {
+    private fun roomDiaryInsertDB(){
+        compositeDisposable
+            .add(repository.insertDiaryDB(
+                RoomDiaryEntity(
+                    createDiaryID.value!!,
+                    diaryImageUri.value,
+                    diaryTitle.value!!,
+                    diaryContent.value!!,
+                    createDiaryDay.value!!,
+                    createDiaryCoupleDay.value!!,
+                    createDiaryLatLng.value?.longitude ?: 0.0, // 서울 위경도로 바꾸기.
+                    createDiaryLatLng.value?.latitude ?: 0.0
+                )
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    toast("일기 저장 완료")
+                    _createMarkerEvent.value = Event(true)
+                    Log.e("createDiary insert ::", "성공 ${createDiaryID.value}")
+                }
+                .doOnError {
+                    Log.e("createDiary insert ::", "실패")
+                    toast("Error : 일기 저장에 실패하였습니다.")
+                }
+                .subscribe()
+            )
+    }
+
+    private fun roomDiaryUpdateDB(){
+        compositeDisposable.add(
+            repository.updateDiaryDB(
+                RoomDiaryEntity(
+                    createDiaryID.value!!,
+                    diaryImageUri.value,
+                    diaryTitle.value!!,
+                    diaryContent.value!!,
+                    createDiaryDay.value!!,
+                    createDiaryCoupleDay.value!!,
+                    createDiaryLatLng.value?.longitude ?: 0.0, // 서울 위경도로 바꾸기.
+                    createDiaryLatLng.value?.latitude ?: 0.0
+                )
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    toast("일기 수정 완료")
+                    _diaryCompleteButton.value = Event(true)
+                    Log.e("createDiary update ::", "성공 ${createDiaryID.value}")
+                }
+                .doOnError {
+                    Log.e("createDiary update ::", "실패")
+                    toast("Error : 일기 수정에 실패하였습니다.")
+                }
+                .subscribe()
+        )
+    }
+
+    private fun roomInsertFont(){
+        compositeDisposable.add(
             repository.insertFontDB(
                 RoomFontEntity(
                     createDiaryID.value!!,
-                    null,
-                    otherHtml + FontToHtml().endHtml,
-                    fontSettingModelInput.value?.letterSpacing,
-                    fontSettingModelInput.value?.lineSpacing,
-                    fontSettingModelInput.value?.fontTypedSizeValue
-            ))
-        }
-        else{
-            repository.updateFontDB(
-                RoomFontEntity(
-                    createDiaryID.value!!,
-                    null,
+                    typefaceObserveToString.value!!,
                     otherHtml + FontToHtml().endHtml,
                     fontSettingModelInput.value?.letterSpacing,
                     fontSettingModelInput.value?.lineSpacing,
                     fontSettingModelInput.value?.fontTypedSizeValue
                 ))
-        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    Log.e("insertFontDB ::", "폰트 저장 완료")
+                    toast("폰트 저장 완료")
+                }
+                .doOnError {
+                    Log.e("insertFontDB ::", "폰트 저장 에러")
+                    toast("Error : 폰트 저장에 실패하였습니다.")
+                }
+                .subscribe()
+        )
     }
 
+    private fun roomUpdateFont(){
+        compositeDisposable.add(
+        repository.updateFontDB(
+            RoomFontEntity(
+                createDiaryID.value!!,
+                typefaceObserveToString.value!!,
+                otherHtml + FontToHtml().endHtml,
+                fontSettingModelInput.value?.letterSpacing,
+                fontSettingModelInput.value?.lineSpacing,
+                fontSettingModelInput.value?.fontTypedSizeValue
+            ))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete { 
+                Log.e("updateFontDB ::", "폰트 수정 완료")
+                toast("폰트 수정 완료")
+            }
+            .doOnError {
+                Log.e("updateFontDB ::", "폰트 수정 에러")
+                toast("Error : 폰트 수정에 실패하였습니다.")
+            }
+            .subscribe()
+        )
+    }
     private fun getDBsizeID(){
         compositeDisposable.add(repository.getDiaryDB()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-                _createDiaryID.value = it[it.lastIndex].id + 1 // 리스트의 마지막 ID + 1로 저장.
-                Log.e("getDBsize ::", "사이즈는 ${it[it.lastIndex].id + 1},\n 내용물은 $it")
+                _createDiaryID.value =
+                    if(it.isEmpty()) {
+                        Log.e("getDBsize ::", "사이즈는 ${1},\n 내용물은 $it")
+                        1
+                    }
+                    else {
+                        Log.e("getDBsize ::", "사이즈는 ${it.last().id + 1},\n 내용물은 $it")
+                        it.last().id + 1
+                    }  // 리스트의 마지막 ID + 1로 저장.
             }
             .doOnError {
-                Log.e("실패", "실패")
+                Log.e("getDBsizeID ::", "실패")
                 toast("Error : 올바른 ID 값을 가져오지 못하였습니다.")
             }
             .subscribe())
@@ -282,17 +354,15 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         else{
             for (i in 0 until imageClipData.clipData!!.itemCount) {
                 diaryImageUri.add(imageClipData.clipData!!.getItemAt(i).uri.toString())
-                Log.e("실행중인가요", "${diaryImageUri.value}")
             }
         }
     }
 
     fun createDiarysetting(latLng: LatLng?){ // 다이어리 생성 버튼 누른 시간.
-        _createDiaryCoupleDay.value = repository.getDateday()
-        _createDiaryLatLng.value = latLng
-        getCreateDay()
-
         if(createDiaryID.value == null){ // 현재 ID가 지정되어 있지 않은 경우에만 (마커 클릭을 통해 들어온 것이 아닐경우에만) 설정.
+            _createDiaryCoupleDay.value = repository.getDateday()
+            _createDiaryLatLng.value = latLng
+            getCreateDay()
             getDBsizeID()
         }
     }
@@ -342,7 +412,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             diaryTitle.value == null && diaryContent.value == null && diaryImageUri.value.isNullOrEmpty()
         }
         else{ // 마커클릭 통해서 온것이면
-            Log.e("afafafaf", "${_updateImageValue.value}\n, ${_updateContentValue.value} \n,${_updateTitleValue.value}")
             diaryTitle.value == _updateTitleValue.value &&
                     diaryContent.value == _updateContentValue.value &&
                         diaryImageUri.value == _updateImageValue.value
@@ -365,7 +434,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _fontSaveCallback.value = {
             if (it != null) {
                 otherHtml = it
-                Log.e("otherHtml", otherHtml + FontToHtml().endHtml)
             }
         }
     }
