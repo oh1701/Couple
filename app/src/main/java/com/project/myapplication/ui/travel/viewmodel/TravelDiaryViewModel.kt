@@ -4,7 +4,11 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.net.Uri
+import android.text.Html
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,7 +47,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val createDiaryLatLng:LiveData<LatLng> = _createDiaryLatLng
     private val _checkInsertUpdate = MutableLiveData(Event(true)) // true면 Insert false 면 Update문 실행, default는 true
 
-
     // 다이어리 기본
     private val _diaryViewVisibility = MutableLiveData<Int>()
     val diaryViewVisibility:LiveData<Int> = _diaryViewVisibility
@@ -57,8 +60,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryTagBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTagBtnCheck
     private val _diaryEnabled = MutableLiveData<Boolean>()
     val diaryEnabled:LiveData<Boolean> = _diaryEnabled
-    private val _fontSaveCallback = MutableLiveData<((String?) -> Unit)?>()
-    val fontSaveCallback:LiveData<((String?) -> Unit)?> = _fontSaveCallback
 
     // 다이어리 입력
     val diaryImageUri = ListMutableLiveData<String>()
@@ -83,10 +84,23 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _removeWarningDialog = MutableLiveData(Event(false))
     val removeWarningDialog:LiveData<Event<Boolean>> = _removeWarningDialog
 
-    //폰트
-    private var otherHtml = ""
-    private val _fontSettingInput = MutableLiveData(FontBindSettingModel(0.0f, 1.0f, 16.0f, ColorStateList.valueOf(-570425344), Typeface.DEFAULT))
-    val fontSettingModelInput:LiveData<FontBindSettingModel> = _fontSettingInput
+    //폰트 적용
+    private val _fontletterSpacing = MutableLiveData<Float>(0.0f)
+    val fontletterSpacing :LiveData<Float> = _fontletterSpacing
+    private val _fontlineSpacing = MutableLiveData<Float>(1.0f)
+    val fontlineSpacing :LiveData<Float> = _fontlineSpacing
+    private val _fontTypedSizeValue = MutableLiveData<Float>(16.0f)
+    val fontTypedSizeValue:LiveData<Float> = _fontTypedSizeValue
+    private val _fontSize = MutableLiveData<Float>()
+    val fontSize:LiveData<Float> = _fontSize
+    private val _fontcolorHex = MutableLiveData<ColorStateList>(ColorStateList.valueOf(-570425344))
+    val fontcolorHex:LiveData<ColorStateList> = _fontcolorHex
+    private val _fontTypeFace = MutableLiveData<Typeface>(Typeface.DEFAULT)
+    val fontTypeFace:LiveData<Typeface> = _fontTypeFace
+    
+    //TypeFace 변경용
+    val fontStringToTypeface = MutableLiveData<Typeface>()
+    val fontTypefaceToString = MutableLiveData<String>()
 
     //리사이클러뷰
     val recyclerList = ListMutableLiveData<DiaryTagModel>()
@@ -99,8 +113,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _updateImageValue = ListMutableLiveData<String>()
     private val _updateTitleValue = MutableLiveData<String>()
     private val _updateContentValue = MutableLiveData<String>()
-
-    val typefaceObserveToString = MutableLiveData<String>()
 
     //현재 이미지 뷰페이저 위치
     private val _imageViewPagerNumber = MutableLiveData<Int>(null)
@@ -171,7 +183,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
 
-                 }
+            }
             .doOnError {
                 Log.e("getFontEntity ::", "실패 이유 $:$it")
                 toast("Error : 폰트 데이터 값을 가져오지 못하였습니다. ")
@@ -186,11 +198,12 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
         else{ // 삭제하기
             roomRemoveDiary()
+            Log.e("콘텐트는", diaryContent.value.toString())
         }
     }
 
     private fun roomRemoveDiary(){ // Room 삭제, value에 ID 저장 후 observe를 통해 ID에 맞는 Marker 삭제
-        _removeWarningDialog.value = Event(true)
+//        _removeWarningDialog.value = Event(true)
     }
 
     private fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
@@ -275,11 +288,11 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             repository.insertFontDB(
                 RoomFontEntity(
                     createDiaryID.value!!,
-                    typefaceObserveToString.value!!,
-                    otherHtml + FontToHtml().endHtml,
-                    fontSettingModelInput.value?.letterSpacing,
-                    fontSettingModelInput.value?.lineSpacing,
-                    fontSettingModelInput.value?.fontTypedSizeValue
+                    fontTypefaceToString.value,
+                    fontcolorHex.value!!.defaultColor,
+                    fontletterSpacing.value,
+                    fontlineSpacing.value,
+                    fontTypedSizeValue.value
                 ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -300,15 +313,15 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         repository.updateFontDB(
             RoomFontEntity(
                 createDiaryID.value!!,
-                typefaceObserveToString.value!!,
-                otherHtml + FontToHtml().endHtml,
-                fontSettingModelInput.value?.letterSpacing,
-                fontSettingModelInput.value?.lineSpacing,
-                fontSettingModelInput.value?.fontTypedSizeValue
+                fontTypefaceToString.value,
+                fontcolorHex.value!!.defaultColor,
+                fontletterSpacing.value,
+                fontlineSpacing.value,
+                fontTypedSizeValue.value
             ))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { 
+            .doOnComplete {
                 Log.e("updateFontDB ::", "폰트 수정 완료")
                 toast("폰트 수정 완료")
             }
@@ -359,6 +372,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     fun createDiarysetting(latLng: LatLng?){ // 다이어리 생성 버튼 누른 시간.
+        _fontSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, fontTypedSizeValue.value!!, metrics.value)
         if(createDiaryID.value == null){ // 현재 ID가 지정되어 있지 않은 경우에만 (마커 클릭을 통해 들어온 것이 아닐경우에만) 설정.
             _createDiaryCoupleDay.value = repository.getDateday()
             _createDiaryLatLng.value = latLng
@@ -418,10 +432,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
     }
 
-    fun getFontSetting(fontSettingModel: FontBindSettingModel){
-        _fontSettingInput.value = fontSettingModel
-    }
-
     private fun getCreateDay(){ // 다이어리 생성 날짜
         val now = System.currentTimeMillis()
         val date = Date(now)
@@ -430,13 +440,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _createDiaryDay.value = sdf
     }
 
-    fun fontSaveTextWatcherFunction(){
-        _fontSaveCallback.value = {
-            if (it != null) {
-                otherHtml = it
-            }
-        }
-    }
 
     fun addTagRecyclerlist(){
         if(diaryEnabled.value == true)

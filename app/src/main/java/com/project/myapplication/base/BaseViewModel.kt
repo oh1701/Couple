@@ -1,5 +1,6 @@
 package com.project.myapplication.base
 
+import android.util.DisplayMetrics
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,8 @@ open class BaseViewModel: ViewModel(), KoinComponent{
     open val throwableMessage:LiveData<Throwable> = _throwableMessage
     private val _toastLiveData = MutableLiveData<Event<String>>()
     open val toastLiveData:LiveData<Event<String>> = _toastLiveData
+    private val _metrics = MutableLiveData<DisplayMetrics>()
+    open val metrics:LiveData<DisplayMetrics> = _metrics
 
     override fun onCleared() {
         super.onCleared()
@@ -25,5 +28,9 @@ open class BaseViewModel: ViewModel(), KoinComponent{
 
     open fun toast(str:String){
         _toastLiveData.value = Event(str)
+    }
+
+    open fun getMetrics(metrics: DisplayMetrics) {
+        _metrics.value = metrics
     }
 }

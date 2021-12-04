@@ -12,6 +12,6 @@ data class FontBindSettingModel(
     val lineSpacing:Float?,
     val fontTypedSizeValue:Float?,
     val colorHex:ColorStateList?,
-    val fontTypeFace: @RawValue Typeface
+    val fontTypeFace: @RawValue Typeface?
 ): Parcelable
 

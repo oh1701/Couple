@@ -8,7 +8,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
-import com.project.myapplication.bind.EditTextBind
 import com.project.myapplication.databinding.FragmentTravelMapBinding
 import com.project.myapplication.googlemap.ClusterSetting
 import com.project.myapplication.googlemap.GoogleMapSetting

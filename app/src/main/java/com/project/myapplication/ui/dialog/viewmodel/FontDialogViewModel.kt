@@ -12,7 +12,6 @@ import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.utils.customobserver.Event
 
 class FontDialogViewModel:BaseViewModel() {
-    private val _metrics = MutableLiveData<DisplayMetrics>()
     private val _letterSpacing = MutableLiveData(0.0f)
     val letterSpacing:LiveData<Float> = _letterSpacing
     private val _lineSpacing = MutableLiveData(1.0f)
@@ -48,7 +47,7 @@ class FontDialogViewModel:BaseViewModel() {
                 when(_textTypedValue.value!!){
                     in 16.0f .. 19.9f -> {
                         _textTypedValue.value = _textTypedValue.value!! + 1f
-                        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, _metrics.value)
+                        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, metrics.value)
                     }
                     else -> toast("사이즈가 최대치입니다.")
                 }
@@ -74,17 +73,12 @@ class FontDialogViewModel:BaseViewModel() {
                 when(_textTypedValue.value!!){
                     in 16.1f .. 20.9f -> {
                         _textTypedValue.value = _textTypedValue.value!! - 1f
-                        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, _metrics.value)
+                        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, metrics.value)
                     }
                     else -> toast("사이즈가 최소치입니다.")
                 }
             }
         }
-    }
-
-    fun getMetrics(metrics: DisplayMetrics){
-        _metrics.value = metrics
-        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, _metrics.value)
     }
 
     fun dialogComplete(){
@@ -96,6 +90,7 @@ class FontDialogViewModel:BaseViewModel() {
     }
 
     fun getFontSetting(fontSettingModel:FontBindSettingModel?){
+        _textSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _textTypedValue.value!!, metrics.value)
         if(fontSettingModel != null){
             _textTypedValue.value = fontSettingModel.fontTypedSizeValue
             _lineSpacing.value = fontSettingModel.lineSpacing
