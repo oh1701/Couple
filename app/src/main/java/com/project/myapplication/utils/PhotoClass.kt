@@ -36,19 +36,19 @@ class PhotoClass(private val context: Context) {
     }
 
     fun albumMultipleIntent():Intent{
-        val intent = Intent(Intent.ACTION_GET_CONTENT) // 순서에 맞게 가져오기 위해 PICK -> GET_CONTENT 사용하였음.
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        intent.putExtra("crop", true)
+        val intent = Intent() // 순서에 맞게 가져오기 위해 PICK -> GET_CONTENT 사용하였음.
+        intent.type = ("image/*")
+        intent.action = Intent.ACTION_PICK
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)  // 다중 이미지를 가져올 수 있도록 세팅
 
         return intent
     }
 
     fun albumPictureIntent():Intent{
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val intent = Intent()
+        intent.type = ("image/*")
+        intent.action = Intent.ACTION_PICK
+//        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
         return intent
     }

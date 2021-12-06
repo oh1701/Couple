@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -18,23 +19,21 @@ import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
-import com.project.myapplication.ui.travel.viewpager.ViewPagerFullScreenImage
-import com.project.myapplication.utils.EventCustomCallback
-import com.project.myapplication.utils.FontToHtml
-import com.project.myapplication.utils.PhotoClass
-import com.project.myapplication.utils.TextTypeFace
+import com.project.myapplication.ui.travel.viewpager.ViewPagerFullScreenImageFragment
+import com.project.myapplication.utils.*
 import com.project.myapplication.utils.customobserver.CustomObserver
 import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
+class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
     override val layoutResourceId: Int = R.layout.fragment_travel_diary
     override val thisViewModel: TravelDiaryViewModel by viewModel()
     private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
     private val warningDialogFragment: WarningDialogFragment by inject()
     private val photoClass: PhotoClass by inject()
+    private val getGeoCoder:GeoCoder by inject()
     private lateinit var startForResultAlbum: ActivityResultLauncher<Intent>
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
@@ -43,6 +42,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private var fontSettingModel:FontBindSettingModel? = null
     private val fontCustomEvent:(FontBindSettingModel) -> Unit = { setting ->
         fontSettingModel = setting
+        thisViewModel.fontSetting(setting)
         thisViewModel.fontTypefaceToString.value = TextTypeFace().fontToString(setting.fontTypeFace!!, requireContext())
     }
 
@@ -72,17 +72,21 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startActivityForResult() // oncreate 선언.
-        thisViewModel.getMetrics(resources.displayMetrics)
-        customCallback = EventCustomCallback(fontCustomEvent)
-        customCallback.setChanged()
-        thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
     }
 
     override fun initView() {
         binding.travelDiaryViewModel = thisViewModel
-        binding.travelMainViewModel = sharedActivityViewModel
         binding.travelDiaryFragment = this
-        this.tag?.toIntOrNull()?.let{ id -> thisViewModel.getDiary(id) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이거나 문자면 마커 클릭 아님
+
+        customCallback = EventCustomCallback(fontCustomEvent)
+        customCallback.setChanged()
+        thisViewModel.getMetrics(resources.displayMetrics)
+
+        if(markerID == null){
+            thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)} // 다이어리 초기 설정해주기.
+        else{
+            thisViewModel.getDiary(markerID) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
+
     }
 
     override fun initObserve() {
@@ -92,6 +96,16 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.diaryCompleteButton.observe(viewLifecycleOwner, EventObserver{
             supportFragmentManager.popBackStack()
+        })
+
+        thisViewModel.createDiaryLatLng.observe(viewLifecycleOwner, {
+            thisViewModel.getGeoCoder(getGeoCoder.getGeoCoder(it))
+        })
+
+        thisViewModel.fontUpdateComplete.observe(viewLifecycleOwner, {
+            val v = thisViewModel
+            fontSettingModel = FontBindSettingModel(v.fontletterSpacing.value, v.fontlineSpacing.value,
+            v.fontTypedSizeValue.value, v.fontcolorHex.value, v.fontTypeFace.value)
         })
 
         thisViewModel.createMarkerEvent.observe(viewLifecycleOwner, EventObserver{
@@ -107,6 +121,10 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             if(it){
                 warningDialogFragment.show(supportFragmentManager, "removeDiary")
             }
+        })
+
+        thisViewModel.fontTypefaceToString.observe(viewLifecycleOwner, {
+            thisViewModel.getFontTypeface(TextTypeFace().stringToFont(it, requireContext()))
         })
 
         thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{
@@ -140,7 +158,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         supportFragmentManager
             .beginTransaction()
             .addToBackStack("Map")
-            .add(R.id.fragment_layout, ViewPagerFullScreenImage(thisViewModel.diaryImageUri.value, thisViewModel.imageViewPagerNumber.value))
+            .add(R.id.fragment_layout, ViewPagerFullScreenImageFragment(thisViewModel.diaryImageUri.value, thisViewModel.imageViewPagerNumber.value))
             .commit()
     }
 
@@ -154,6 +172,13 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         startForResultAlbum = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             photoClass.albumPictureResult(result, thisViewModel)
+        }
+    }
+
+    fun onclick(v:View){
+        when(v.tag){
+            "right" -> sharedActivityViewModel.aaa(v.tag.toString())
+            "left" -> sharedActivityViewModel.aaa(v.tag.toString())
         }
     }
 

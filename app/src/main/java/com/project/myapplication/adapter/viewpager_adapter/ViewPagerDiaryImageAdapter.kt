@@ -1,11 +1,11 @@
-package com.project.myapplication.adapter
+package com.project.myapplication.adapter.viewpager_adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.project.myapplication.ui.travel.viewpager.ViewPagerDiaryImage
+import com.project.myapplication.ui.travel.viewpager.ViewPagerDiaryImageFragment
 
-class DiaryImageViewPagerAdapter(private val fragment: Fragment, private val image: ArrayList<String>?,
+class ViewPagerDiaryImageAdapter(private val fragment: Fragment, private val image: ArrayList<String>?,
                                  private val imagePosition: (Int) -> Unit, private val myViewPager2: ViewPager2
 ) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
@@ -26,8 +26,8 @@ class DiaryImageViewPagerAdapter(private val fragment: Fragment, private val ima
 
     override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
         return when (image?.size) {
-            null, 0 -> ViewPagerDiaryImage(null, fragment)
-            else -> ViewPagerDiaryImage(image[position], fragment)
+            null, 0 -> ViewPagerDiaryImageFragment(null, fragment, "diary")
+            else -> ViewPagerDiaryImageFragment(image[position], fragment, "diary")
         }
     }
 }

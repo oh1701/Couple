@@ -66,6 +66,12 @@
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary.xml" value="0.22" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_diary_create.xml" value="0.217578125" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_travel_map.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpager_fullscreen_image.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpager_image.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpager_travediary.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpager_travel_diary.xml" value="0.22" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpager_traveldiary.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fragment_viewpagerimage.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/fullscreen_image.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_mapmarker.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Gyu/Desktop/MyDate/app/src/main/res/layout/google_usermarker.xml" value="0.2856410256410256" />

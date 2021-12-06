@@ -13,6 +13,8 @@ import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityTravelBinding
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.utils.GeoCoder
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -20,17 +22,17 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_travel
     override val thisViewModel: TravelViewModel by viewModel()
-    private var geoCoder: Geocoder? = null
+    private val getCoder: GeoCoder by inject()
     private lateinit var lm : LocationManager
     var int = 0
     private val checkLocation = LocationListener { location ->
         location.let {
             if (location.provider == LocationManager.GPS_PROVIDER) {
                 thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
-                thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
+                thisViewModel.geoCoderToLocation(getCoder.getGeoCoder(LatLng(it.latitude, it.longitude)))
             } else {
                 thisViewModel.getMyLatLng(LatLng(it.latitude, it.longitude))
-                thisViewModel.geoCoderToLocation(getGeoCoder(LatLng(it.latitude, it.longitude)))
+                thisViewModel.geoCoderToLocation(getCoder.getGeoCoder(LatLng(it.latitude, it.longitude)))
             }
         }
     }
@@ -75,18 +77,6 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
                 toast("GPS 나 데이터 사용이 꺼져있음.")
             }
         }
-    }
-
-    private fun getGeoCoder(latlng: LatLng):String{
-        geoCoder = Geocoder(this, Locale.KOREA)
-        val location = geoCoder!!.getFromLocation(latlng.latitude, latlng.longitude, 2)
-
-        val contryName = location[0].countryName
-        val adminArea = location[0].adminArea
-        val localityName = location[0].locality
-        val thoroughfare = location[0].thoroughfare
-
-        return "$adminArea $localityName $thoroughfare"
     }
 
     override fun onDestroy() {

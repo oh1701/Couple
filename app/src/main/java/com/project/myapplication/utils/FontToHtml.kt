@@ -4,6 +4,8 @@ package com.project.myapplication.utils
 /** Create By Gyu Seong Oh. 2021 / 11 / 22 */
 /** SpannableStringBuilder(SpannableString(Html.fromhtml(문자값))) 으로 Text 넣으면 된다.*/
 
+/** 여러가지 문제로 인해 폐기. 나중에 연구해보기. */
+
 class FontToHtml {
     private val startHtml = "<p dir=\"ltr\">"
     private var otherHtml = startHtml + ""

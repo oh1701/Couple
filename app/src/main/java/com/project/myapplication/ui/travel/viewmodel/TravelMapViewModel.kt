@@ -23,8 +23,8 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     val cameraAutoSetting:LiveData<Boolean> = _cameraAutoSetting
     private val _cameraAutoText = MutableLiveData<String>()
     val cameraAutoText:LiveData<String> = _cameraAutoText
-    private val _markerClickListener = MutableLiveData<Event<String>>()
-    val markerClickListener:LiveData<Event<String>> = _markerClickListener
+    private val _markerClickListener = MutableLiveData<Event<ArrayList<String>>>()
+    val markerClickListener:LiveData<Event<ArrayList<String>>> = _markerClickListener
 
     init {
         _cameraAutoSetting.value = true
@@ -67,7 +67,7 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
         _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
     }
 
-    fun markerClickListener(id:String){
+    fun markerClickListener(id:ArrayList<String>){
         _markerClickListener.value = Event(id)
     }
 }

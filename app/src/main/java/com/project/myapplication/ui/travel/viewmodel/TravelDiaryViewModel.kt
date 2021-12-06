@@ -60,6 +60,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryTagBtnCheck:LiveData<CustomObserve<Boolean>> = _diaryTagBtnCheck
     private val _diaryEnabled = MutableLiveData<Boolean>()
     val diaryEnabled:LiveData<Boolean> = _diaryEnabled
+    private val _getNowLocation = MutableLiveData<String>()
+    val getNowLocation:LiveData<String> = _getNowLocation
 
     // 다이어리 입력
     val diaryImageUri = ListMutableLiveData<String>()
@@ -99,8 +101,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontTypeFace:LiveData<Typeface> = _fontTypeFace
     
     //TypeFace 변경용
-    val fontStringToTypeface = MutableLiveData<Typeface>()
-    val fontTypefaceToString = MutableLiveData<String>()
+    val fontTypefaceToString = MutableLiveData<String>("기본")
 
     //리사이클러뷰
     val recyclerList = ListMutableLiveData<DiaryTagModel>()
@@ -113,6 +114,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _updateImageValue = ListMutableLiveData<String>()
     private val _updateTitleValue = MutableLiveData<String>()
     private val _updateContentValue = MutableLiveData<String>()
+    val fontUpdateComplete = MutableLiveData<Boolean>()
 
     //현재 이미지 뷰페이저 위치
     private val _imageViewPagerNumber = MutableLiveData<Int>(null)
@@ -141,7 +143,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     // DB 관련
-
     fun getDiary(id:Int){ // 마커 클릭을 통해서 다이어리 생성
         _createDiaryID.value = id // 존재하던 마커를 수정하기 위해 현재 id를 받아온 ID로 설정한다
 
@@ -150,7 +151,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     private fun getDiaryEntity(id:Int){
-
         compositeDisposable.add(repository.getDiaryID(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -182,7 +182,13 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
-
+                _fontlineSpacing.value = it.lineSpacing
+                _fontletterSpacing.value = it.letterSpacing
+                _fontcolorHex.value = ColorStateList.valueOf(it.colorInt)
+                fontTypefaceToString.value = it.textTypeFace
+                _fontTypedSizeValue.value = it.fontTypedSizeValue
+                _fontSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, fontTypedSizeValue.value!!, metrics.value)
+                fontUpdateComplete.value = true
             }
             .doOnError {
                 Log.e("getFontEntity ::", "실패 이유 $:$it")
@@ -298,7 +304,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete {
                     Log.e("insertFontDB ::", "폰트 저장 완료")
-                    toast("폰트 저장 완료")
                 }
                 .doOnError {
                     Log.e("insertFontDB ::", "폰트 저장 에러")
@@ -323,7 +328,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete {
                 Log.e("updateFontDB ::", "폰트 수정 완료")
-                toast("폰트 수정 완료")
             }
             .doOnError {
                 Log.e("updateFontDB ::", "폰트 수정 에러")
@@ -339,11 +343,11 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
             .doOnSuccess {
                 _createDiaryID.value =
                     if(it.isEmpty()) {
-                        Log.e("getDBsize ::", "사이즈는 ${1},\n 내용물은 $it")
+                        Log.e("getDBsize ::", "DB로 사용될 ID는 ${1}")
                         1
                     }
                     else {
-                        Log.e("getDBsize ::", "사이즈는 ${it.last().id + 1},\n 내용물은 $it")
+                        Log.e("getDBsize ::", "DB로 사용될 ID는 ${it.last().id + 1}")
                         it.last().id + 1
                     }  // 리스트의 마지막 ID + 1로 저장.
             }
@@ -355,7 +359,6 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     // DB 호출 함수 관련 or 뷰 관련
-
     fun getUri(uri: Uri){ // 카메라에서 이미지 가져오기
         diaryImageUri.add(uri.toString())
     }
@@ -440,11 +443,24 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _createDiaryDay.value = sdf
     }
 
+    fun fontSetting(setting: FontBindSettingModel){
+        _fontlineSpacing.value = setting.lineSpacing
+        _fontletterSpacing.value = setting.letterSpacing
+        _fontcolorHex.value = setting.colorHex
+        _fontTypedSizeValue.value = setting.fontTypedSizeValue
+        _fontSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, setting.fontTypedSizeValue!!, metrics.value)
+    }
+
+    fun getFontTypeface(typeface: Typeface){
+        _fontTypeFace.value = typeface
+    }
+
+    fun getGeoCoder(geoCoderString: String?){
+        _getNowLocation.value = geoCoderString
+    }
 
     fun addTagRecyclerlist(){
         if(diaryEnabled.value == true)
             recyclerList.add(DiaryTagModel("# ", "1"))
     }
 }
-
-/** EditText Spannable 여러개 등록 안되어서 Data class 만들고 계산식 사용한 함수 만들어서 다 계산하기*/

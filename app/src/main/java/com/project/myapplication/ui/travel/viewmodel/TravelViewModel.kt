@@ -1,5 +1,6 @@
 package com.project.myapplication.ui.travel.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
@@ -16,6 +17,8 @@ class TravelViewModel:BaseViewModel() {
     val geoCoderToLocation:LiveData<String> = _geoCoderToLocation
     private val _newCreateMarker = MutableLiveData<Event<Int>>()
     val newCreateMarker:LiveData<Event<Int>> = _newCreateMarker
+    private val _check = MutableLiveData<String>()
+    val check:LiveData<String> = _check
 
     init{
         _geoCoderToLocation.value = "현재 위치를 찾고 있습니다 ..."
@@ -29,8 +32,11 @@ class TravelViewModel:BaseViewModel() {
         _geoCoderToLocation.value = location
     }
 
-
     fun newCreateMarker(id:Int){ // 다이어리 저장 버튼 누를시 맵 마커 create
         _newCreateMarker.value = Event(id)
+    }
+
+    fun aaa(tag:String){
+        _check.value = tag
     }
 }

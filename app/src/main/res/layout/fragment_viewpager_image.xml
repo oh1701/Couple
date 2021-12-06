@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 <LinearLayout
+    android:id="@+id/layout"
+    android:clickable="true"
+    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
@@ -12,7 +15,6 @@
     <ImageView
         android:id="@+id/viewPagerImage"
         android:src="@drawable/ic_baseline_photo_camera_24"
-        android:scaleType="centerInside"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

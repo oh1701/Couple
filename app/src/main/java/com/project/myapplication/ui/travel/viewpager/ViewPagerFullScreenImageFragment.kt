@@ -1,26 +1,28 @@
 package com.project.myapplication.ui.travel.viewpager
 
 import android.content.Context
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.project.myapplication.R
+import com.project.myapplication.adapter.viewpager_adapter.ViewPagerFullScreenImageAdapter
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.databinding.FragmentViewpagerFullscreenImageBinding
+import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ViewPagerFullScreenImage(private val image:ArrayList<String>?, private val count:Int?):BaseFragment<FragmentViewpagerFullscreenImageBinding, BaseViewModel>() {
+class ViewPagerFullScreenImageFragment(private val image:ArrayList<String>?, private val count:Int?):BaseFragment<FragmentViewpagerFullscreenImageBinding, BaseViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_viewpager_fullscreen_image
     override val thisViewModel: BaseViewModel by viewModel()
     private lateinit var diaryOnBackPressed:OnBackPressedCallback
 
     override fun initView() {
-        binding.fullscreenViewPagerImage.adapter = FullScreenImageAdapter(this, image)
+        binding.fullscreenViewPagerImage.adapter = ViewPagerFullScreenImageAdapter(this, image)
         binding.fullscreenViewPagerImage.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.fullscreenViewPagerImage.setCurrentItem(count ?: 0, false)
+        binding.fullscreenViewPagerImage.setCurrentItem(count ?: 0, true)
         binding.fullscreenViewPagerImage.offscreenPageLimit = 1
         binding.indicator.attachToPager(binding.fullscreenViewPagerImage)
     }
@@ -44,22 +46,5 @@ class ViewPagerFullScreenImage(private val image:ArrayList<String>?, private val
     override fun onDetach() {
         super.onDetach()
         diaryOnBackPressed.remove()
-    }
-}
-
-class FullScreenImageAdapter(private val fragment: Fragment,
-                             private val image: ArrayList<String>?) : FragmentStateAdapter(fragment){
-    override fun getItemCount(): Int {
-        return when (image?.size) {
-            null, 0 -> 1
-            else -> image.size
-        }
-    }
-
-    override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
-        return when (image?.size) {
-            null, 0 -> ViewPagerDiaryImage(null, fragment)
-            else -> ViewPagerDiaryImage(image[position], fragment)
-        }
     }
 }

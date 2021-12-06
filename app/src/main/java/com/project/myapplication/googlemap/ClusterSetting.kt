@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.ClusterMarkerModel
@@ -26,7 +27,7 @@ class ClusterSetting {
         cluster.setOnClusterItemClickListener { markerItem ->
             when(viewModel){
                 is TravelMapViewModel -> {
-                    viewModel.markerClickListener(markerItem.title ?: "create")
+                    viewModel.markerClickListener(arrayListOf(markerItem.title ?: "create"))
                 }
             }
             return@setOnClusterItemClickListener true
@@ -35,7 +36,11 @@ class ClusterSetting {
         cluster.setOnClusterClickListener { markerClusterItem ->
             when(viewModel){
                 is TravelMapViewModel -> {
-                    viewModel.markerClickListener(markerClusterItem.items.toMutableList()[0].title ?: "create")
+                    val list = arrayListOf<String>()
+                    markerClusterItem.items.forEach {
+                        list.add(it.title ?: "create")
+                    }
+                    viewModel.markerClickListener(list)
                 }
             }
             return@setOnClusterClickListener true

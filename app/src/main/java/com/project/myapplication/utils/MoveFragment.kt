@@ -9,7 +9,7 @@ import com.project.myapplication.R
 /** Create By Gyu Seong Oh. 2021 / 10  */
 
 class MoveFragment {
-    fun createDiary(fragmentManager: FragmentManager, fragmentName:Fragment, tag:String): FragmentTransaction {
+    fun createDiary(fragmentManager: FragmentManager, fragmentName:Fragment): FragmentTransaction {
         return fragmentManager.beginTransaction().setCustomAnimations(
             R.anim.slide_in_bottom,
             0,
@@ -17,8 +17,7 @@ class MoveFragment {
             R.anim.slide_out_bottom
         ).add(
             R.id.fragment_layout,
-            fragmentName,
-            tag
+            fragmentName
         )
     }
 
