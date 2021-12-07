@@ -19,12 +19,20 @@ class GeoCoder(private val context: Context) {
             val localityName = location[0].locality
             val thoroughfare = location[0].thoroughfare
 
-            val returnLocation = (localityName ?: adminArea) ?: null
+            val returnAdaminLocation = adminArea ?: null
+            val returnLocation = localityName ?: null
 
-            if (returnLocation == null && thoroughfare == null)
+
+            if (returnAdaminLocation == null && returnLocation == null && thoroughfare == null)
                 "확인되지 않는 지역"
-            else
+            else if(returnAdaminLocation != null && returnLocation != null)
+                "$returnAdaminLocation $returnLocation $thoroughfare"
+            else if(returnAdaminLocation == null && returnLocation != null)
                 "$returnLocation $thoroughfare"
+            else if(returnLocation == null)
+                "$returnAdaminLocation $thoroughfare"
+            else
+                thoroughfare
         }
     }
 }

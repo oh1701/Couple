@@ -23,7 +23,7 @@ class ViewPagerFullScreenImageFragment():BaseFragment<FragmentViewpagerFullscree
     override fun initView() {
         binding.fullscreenViewPagerImage.adapter = ViewPagerFullScreenImageAdapter(this, arguments?.getStringArrayList(image))
         binding.fullscreenViewPagerImage.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.fullscreenViewPagerImage.setCurrentItem(arguments?.getInt(count) ?: 0, true)
+        binding.fullscreenViewPagerImage.setCurrentItem(arguments?.getInt(count) ?: 0, false)
         binding.fullscreenViewPagerImage.offscreenPageLimit = 1
         binding.indicator.attachToPager(binding.fullscreenViewPagerImage)
     }

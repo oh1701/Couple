@@ -13,6 +13,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
@@ -135,11 +137,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         })
     }
 
-    override fun sharedObserve() {
-        super.sharedObserve()
-
-    }
-
     fun cameraOpen(){ // startForResultCamera 의 registerForActivityResult가 AppCompat 상속 아니면 안불러짐
         if(thisViewModel.diaryEnabled.value == true) { // 살펴보기 기능 꺼져있을 경우
             val option = arrayOf<CharSequence>("카메라로 촬영하기", "앨범에서 불러오기")
@@ -177,7 +174,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         diaryOnBackPressed.remove()
@@ -192,10 +188,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             val f = TravelDiaryFragment()
 
             val args = Bundle()
-
             args.putInt(markerID, myMarkerID)
             args.putInt(page, myPage)
-            Log.e("141414" , myPage.toString())
 
             f.arguments = args
 

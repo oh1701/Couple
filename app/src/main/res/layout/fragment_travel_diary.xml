@@ -43,7 +43,6 @@
             android:autoSizeTextType="uniform"
             android:autoSizePresetSizes="1dp"
             android:autoSizeMaxTextSize="20sp"
-            android:autoSizeMinTextSize="14sp"
             android:gravity="center"
             android:maxLines="1"
             android:typeface="serif"
@@ -219,10 +218,11 @@
             <EditText
                 android:id="@+id/content"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="start"
                 android:background="@android:color/transparent"
 
+                android:minHeight="200dp"
                 android:text="@={travelDiaryViewModel.diaryContent}"
                 android:textCursorDrawable="@null"
                 android:layout_marginTop="10dp"

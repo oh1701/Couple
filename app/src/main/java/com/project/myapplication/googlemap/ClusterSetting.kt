@@ -1,6 +1,7 @@
 package com.project.myapplication.googlemap
 
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import com.project.myapplication.ui.travel.view.TravelMapFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 
 class ClusterSetting {
+    private var lastClickTime = 0L
+
     fun <myViewModel>setCluster(context: Context, cluster: ClusterManager<MarkerClusterItem>, map: GoogleMap, viewModel: myViewModel){
         val render = MarkerClusterRenderer(
             context = context,
@@ -25,23 +28,32 @@ class ClusterSetting {
         map.setOnMarkerClickListener(cluster) // 마커 클릭시 실행하는 함수
 
         cluster.setOnClusterItemClickListener { markerItem ->
-            when(viewModel){
-                is TravelMapViewModel -> {
-                    viewModel.markerClickListener(arrayListOf(markerItem.title ?: "create"))
+            if((SystemClock.elapsedRealtime() - lastClickTime) > 1000) { // 중복 클릭 방지
+                when (viewModel) {
+                    is TravelMapViewModel -> viewModel.markerClickListener(
+                        arrayListOf(
+                            markerItem.title ?: "create"
+                        )
+                    )
                 }
+                lastClickTime = SystemClock.elapsedRealtime()
             }
             return@setOnClusterItemClickListener true
+
         }
 
         cluster.setOnClusterClickListener { markerClusterItem ->
-            when(viewModel){
-                is TravelMapViewModel -> {
-                    val list = arrayListOf<String>()
-                    markerClusterItem.items.forEach {
-                        list.add(it.title ?: "create")
+            if((SystemClock.elapsedRealtime() - lastClickTime) > 1000) { // 중복 클릭 방지
+                when (viewModel) {
+                    is TravelMapViewModel -> {
+                        val list = arrayListOf<String>()
+                        markerClusterItem.items.forEach {
+                            list.add(it.title ?: "create")
+                        }
+                        viewModel.markerClickListener(list)
                     }
-                    viewModel.markerClickListener(list)
                 }
+                lastClickTime = SystemClock.elapsedRealtime()
             }
             return@setOnClusterClickListener true
         }
@@ -86,5 +98,5 @@ class ClusterSetting {
         )
         cluster.cluster()
     }
-
 }
+

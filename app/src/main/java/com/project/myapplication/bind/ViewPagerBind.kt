@@ -20,8 +20,8 @@ object ViewPagerBind {
         "ViewPagerindicator", "ViewPagerImagePosition", "ViewPagerLeftBtn", "ViewPagerRightBtn")
     fun viewPagerDiaryImageBind(myViewPager2: ViewPager2, fragment: Fragment,
                   image:ArrayList<String>?, indicator: ScrollingPagerIndicator, imagePosition: (Int) -> Unit, leftBtn: ImageButton,
-                                rightBtn: ImageButton
-    ){
+                                rightBtn: ImageButton){
+
         myViewPager2.adapter = ViewPagerDiaryImageAdapter(fragment, image, imagePosition, myViewPager2)
         myViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         myViewPager2.offscreenPageLimit = 1
@@ -41,7 +41,7 @@ object ViewPagerBind {
 
     private fun setViewPagerBtnVisibility(myViewPager2: ViewPager2, rightBtn: ImageButton, leftBtn: ImageButton, image: ArrayList<String>?){
         when {
-            myViewPager2.currentItem == 0 -> {
+            myViewPager2.currentItem == 0 && !image.isNullOrEmpty() -> {
                 rightBtn.visibility = View.VISIBLE
                 leftBtn.visibility = View.GONE
             }
