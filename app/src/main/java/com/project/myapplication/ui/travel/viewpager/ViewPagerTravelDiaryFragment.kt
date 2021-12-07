@@ -2,6 +2,7 @@ package com.project.myapplication.ui.travel.viewpager
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -33,6 +34,7 @@ class ViewPagerTravelDiaryFragment():BaseFragment<FragmentViewpagerTravelDiaryBi
         binding.diaryViewPager.offscreenPageLimit = 1 // 좌우 Life 살려두기. 2면 왼쪽 2개, 오른쪽2개.
         binding.indicator.attachToPager(binding.diaryViewPager)
     }
+
     override fun initObserve() {
 
     }

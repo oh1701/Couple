@@ -19,6 +19,8 @@ class TravelViewModel:BaseViewModel() {
     val newCreateMarker:LiveData<Event<Int>> = _newCreateMarker
     private val _viewPagerBtnCheck = MutableLiveData<Event<String>>()
     val viewPagerBtnCheck:LiveData<Event<String>> = _viewPagerBtnCheck
+    private val _getViewPagerPage = MutableLiveData<Event<String>>()
+    val getViewPagerPage = MutableLiveData<Event<String>>()
 
     init{
         _geoCoderToLocation.value = "현재 위치를 찾고 있습니다 ..."
@@ -38,5 +40,9 @@ class TravelViewModel:BaseViewModel() {
 
     fun getViewPagerBtnString(tag:String){
         _viewPagerBtnCheck.value = Event(tag)
+    }
+
+    fun getViewPagerPage(str:String){
+        _getViewPagerPage.value = Event(str)
     }
 }

@@ -40,6 +40,7 @@ class PhotoClass(private val context: Context) {
         intent.type = ("image/*")
         intent.action = Intent.ACTION_GET_CONTENT
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)  // 다중 이미지를 가져올 수 있도록 세팅
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
         return intent
     }
@@ -48,7 +49,7 @@ class PhotoClass(private val context: Context) {
         val intent = Intent()
         intent.type = ("image/*")
         intent.action = Intent.ACTION_GET_CONTENT
-//        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
         return intent
     }
