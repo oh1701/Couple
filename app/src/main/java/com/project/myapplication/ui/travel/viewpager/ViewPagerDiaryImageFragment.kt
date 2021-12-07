@@ -2,6 +2,7 @@ package com.project.myapplication.ui.travel.viewpager
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
@@ -19,8 +20,7 @@ import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 @SuppressLint("ClickableViewAccessibility")
-class ViewPagerDiaryImageFragment(private val image:String?, private val fragment: Fragment, private val mytag:String):
-    BaseFragment<FragmentViewpagerImageBinding, BaseViewModel>() {
+class ViewPagerDiaryImageFragment(private val mytag:String?,private val image:String?,private val fragment:Fragment?): BaseFragment<FragmentViewpagerImageBinding, BaseViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_viewpager_image
     override val thisViewModel: BaseViewModel by viewModel()
@@ -36,7 +36,7 @@ class ViewPagerDiaryImageFragment(private val image:String?, private val fragmen
         }
 
         binding.layout.setOnClickListener {
-            if (fragment is TravelDiaryFragment) {
+            if(fragment is TravelDiaryFragment) {
                 fragment.cameraOpen()
             }
         }
@@ -45,4 +45,20 @@ class ViewPagerDiaryImageFragment(private val image:String?, private val fragmen
     override fun initObserve() {
 
     }
+
+//    companion object{
+//        private const val mytag = "mytag"
+//        private const val image = "image"
+//
+//        fun newInstance(mytagString: String, imageString:String?): ViewPagerDiaryImageFragment {
+//            val f = ViewPagerDiaryImageFragment()
+//
+//            val args = Bundle()
+//            args.putString(mytag, mytagString)
+//            args.putString(image, imageString)
+//            f.arguments = args
+//
+//            return f
+//        }
+//    }
 }

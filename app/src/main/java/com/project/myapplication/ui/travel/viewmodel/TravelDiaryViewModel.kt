@@ -117,7 +117,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontUpdateComplete = MutableLiveData<Boolean>()
 
     //현재 이미지 뷰페이저 위치
-    private val _imageViewPagerNumber = MutableLiveData<Int>(null)
+    private val _imageViewPagerNumber = MutableLiveData<Int>(0)
     val imageViewPagerNumber:LiveData<Int> = _imageViewPagerNumber
 
     //콜백
@@ -386,10 +386,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
         _diaryEnabled.value = boolean
-        when(boolean.not()){
-            false -> toast("수정 금지모드 해제")
-            true -> toast("수정 금지모드")
-        }
+//        when(boolean.not()){
+//            false -> toast("수정 금지모드 해제")
+//            true -> toast("수정 금지모드")
+//        }
     }
 
     fun changedButtonCheck(view: View){ // 버튼 상태 확인

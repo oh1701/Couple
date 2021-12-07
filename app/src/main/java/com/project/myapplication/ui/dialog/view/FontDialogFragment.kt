@@ -1,5 +1,7 @@
 package com.project.myapplication.ui.dialog.view
 
+import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.myapplication.R
@@ -8,6 +10,7 @@ import com.project.myapplication.databinding.DialogFragmentFontBinding
 import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.ui.dialog.viewmodel.FontDialogViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.ui.travel.viewpager.ViewPagerDiaryImageFragment
 import com.project.myapplication.utils.EventCustomCallback
 import com.project.myapplication.utils.customobserver.EventObserver
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -17,7 +20,6 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
     override val layoutResourceId: Int
         get() = R.layout.dialog_fragment_font
     override val thisViewModel: FontDialogViewModel by viewModel()
-    private val sharedActivityViewModel:TravelViewModel by sharedViewModel()
 
     override fun initView() {
         binding.fontDialogViewModel = thisViewModel
@@ -26,7 +28,7 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         binding.fontRecyclerview
 
         thisViewModel.getMetrics(resources.displayMetrics)
-        thisViewModel.getFontSetting(arguments?.getParcelable<FontBindSettingModel>("FontSetting"))
+        thisViewModel.getFontSetting(arguments?.getParcelable(fontSetting))
     }
 
     override fun initObserve() {
@@ -35,7 +37,7 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         })
 
         thisViewModel.fonSettingComplete.observe(this, EventObserver{ // Complete 되면 Callback 처리하기
-            arguments?.getParcelable<EventCustomCallback>("listener")?.dataChangeListener?.fontSettingCallback(
+            arguments?.getParcelable<EventCustomCallback>(listener)?.dataChangeListener?.fontSettingCallback(
                 FontBindSettingModel(thisViewModel.letterSpacing.value,
                     thisViewModel.lineSpacing.value,
                     thisViewModel.textTypedValue.value,
@@ -51,5 +53,22 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         super.onResume()
 
         dialogSettings.dialogMetricsSetting(this.dialog, 9, 9)
+    }
+
+    companion object{
+        private const val listener = "listener"
+        private const val fontSetting = "FontSetting"
+
+        fun newInstance(customCallback: EventCustomCallback, fontSettingModel:FontBindSettingModel?): FontDialogFragment {
+            val f = FontDialogFragment()
+
+            val args = Bundle()
+            args.putParcelable(listener, customCallback)
+            args.putParcelable(fontSetting, fontSettingModel)
+
+            f.arguments = args
+
+            return f
+        }
     }
 }

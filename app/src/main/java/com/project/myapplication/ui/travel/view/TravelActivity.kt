@@ -12,6 +12,7 @@ import com.project.myapplication.R
 import com.project.myapplication.base.BaseActivity
 import com.project.myapplication.databinding.ActivityTravelBinding
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
+import com.project.myapplication.ui.travel.ViewPagerDiaryImageFragmentFactory
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
 import com.project.myapplication.utils.GeoCoder
 import org.koin.android.ext.android.inject
@@ -36,8 +37,8 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
             }
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportFragmentManager.fragmentFactory = ViewPagerDiaryImageFragmentFactory(null, null, null) // super.oncreate 전에 선언해야함
         super.onCreate(savedInstanceState)
 
         getLocation()

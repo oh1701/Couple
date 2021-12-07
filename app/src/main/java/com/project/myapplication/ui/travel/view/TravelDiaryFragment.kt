@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
@@ -19,6 +21,7 @@ import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel
 import com.project.myapplication.ui.travel.viewmodel.TravelViewModel
+import com.project.myapplication.ui.travel.viewpager.ViewPagerDiaryImageFragment
 import com.project.myapplication.ui.travel.viewpager.ViewPagerFullScreenImageFragment
 import com.project.myapplication.utils.*
 import com.project.myapplication.utils.customobserver.CustomObserver
@@ -27,7 +30,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
+class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiaryViewModel>() {
     override val layoutResourceId: Int = R.layout.fragment_travel_diary
     override val thisViewModel: TravelDiaryViewModel by viewModel()
     private val sharedActivityViewModel: TravelViewModel by sharedViewModel()
@@ -82,10 +85,10 @@ class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTrave
         customCallback.setChanged()
         thisViewModel.getMetrics(resources.displayMetrics)
 
-        if(markerID == null){
+        if(arguments?.getInt("markerID") == 9999999 || arguments?.getInt("markerID") == null){
             thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)} // 다이어리 초기 설정해주기.
         else{
-            thisViewModel.getDiary(markerID) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
+            thisViewModel.getDiary(arguments?.getInt("markerID")!!) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
 
     }
 
@@ -128,12 +131,8 @@ class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTrave
         })
 
         thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{
-            FontDialogFragment().apply{
-                arguments = Bundle().apply{
-                    putParcelable("listener", customCallback)
-                    putParcelable("FontSetting", fontSettingModel)
-                }
-            }.show(supportFragmentManager, this.javaClass.simpleName)
+            FontDialogFragment.newInstance(customCallback, fontSettingModel)
+                .show(supportFragmentManager, this.javaClass.simpleName)
             binding.title.text
         })
     }
@@ -158,7 +157,7 @@ class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTrave
         supportFragmentManager
             .beginTransaction()
             .addToBackStack("Map")
-            .add(R.id.fragment_layout, ViewPagerFullScreenImageFragment(thisViewModel.diaryImageUri.value, thisViewModel.imageViewPagerNumber.value))
+            .add(R.id.fragment_layout, ViewPagerFullScreenImageFragment.newInstance(thisViewModel.imageViewPagerNumber.value!!, thisViewModel.diaryImageUri.value!!))
             .commit()
     }
 
@@ -177,13 +176,28 @@ class TravelDiaryFragment(private val markerID:Int?): BaseFragment<FragmentTrave
 
     fun onclick(v:View){
         when(v.tag){
-            "right" -> sharedActivityViewModel.aaa(v.tag.toString())
-            "left" -> sharedActivityViewModel.aaa(v.tag.toString())
+            "right" -> sharedActivityViewModel.getViewPagerBtnString(v.tag.toString())
+            "left" -> sharedActivityViewModel.getViewPagerBtnString(v.tag.toString())
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         diaryOnBackPressed.remove()
+    }
+
+    companion object{
+        private const val markerID = "markerID"
+
+        fun newInstance(myMarkerID: Int): TravelDiaryFragment {
+            val f = TravelDiaryFragment()
+
+            val args = Bundle()
+            args.putInt(markerID, myMarkerID)
+
+            f.arguments = args
+
+            return f
+        }
     }
 }

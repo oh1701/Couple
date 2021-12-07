@@ -1,6 +1,7 @@
 package com.project.myapplication.ui.travel.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -61,11 +62,11 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             }
             else{
                 MoveFragment()
-                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment(null))
-                    .addToBackStack("Map")
-                    .commit()
-            }
-        })
+                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment.newInstance(9999999))
+                        .addToBackStack("Map")
+                        .commit()
+                    }
+            })
 
         thisViewModel.cameraAutoSetting.observe(viewLifecycleOwner){
             if(::googleMapSetting.isInitialized) {
@@ -75,7 +76,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
 
         thisViewModel.markerClickListener.observe(viewLifecycleOwner, EventObserver{ MarkerID ->
             MoveFragment()
-                .createDiary(requireActivity().supportFragmentManager, ViewPagerTravelDiaryFragment(MarkerID))
+                .createDiary(requireActivity().supportFragmentManager, ViewPagerTravelDiaryFragment.newInstance(MarkerID))
                 .addToBackStack("Map")
                 .commit()
         })

@@ -2,6 +2,7 @@ package com.project.myapplication.adapter.viewpager_adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.project.myapplication.ui.travel.ViewPagerDiaryImageFragmentFactory
 import com.project.myapplication.ui.travel.viewpager.ViewPagerDiaryImageFragment
 
 class ViewPagerFullScreenImageAdapter(private val fragment: Fragment, private val image: ArrayList<String>?) : FragmentStateAdapter(fragment){
@@ -14,8 +15,10 @@ class ViewPagerFullScreenImageAdapter(private val fragment: Fragment, private va
 
     override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
         return when (image?.size) {
-            null, 0 -> ViewPagerDiaryImageFragment(null, fragment, "fullScreen")
-            else -> ViewPagerDiaryImageFragment(image[position], fragment, "fullScreen")
+            null, 0 -> ViewPagerDiaryImageFragmentFactory("fullScreen", null, fragment).instantiate(
+                ClassLoader.getSystemClassLoader(), ViewPagerDiaryImageFragment::class.java.name)
+            else -> ViewPagerDiaryImageFragmentFactory("fullScreen", image[position], fragment).instantiate(
+                ClassLoader.getSystemClassLoader(), ViewPagerDiaryImageFragment::class.java.name)
         }
     }
 }
