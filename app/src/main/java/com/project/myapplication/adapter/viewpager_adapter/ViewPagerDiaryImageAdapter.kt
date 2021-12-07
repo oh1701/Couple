@@ -21,17 +21,12 @@ class ViewPagerDiaryImageAdapter(private val fragment: Fragment, private val ima
         }
     }
 
-    override fun containsItem(itemId: Long): Boolean {
-        return super.containsItem(itemId)
-    }
-
     override fun getItemId(position: Int): Long {
         imagePosition.invoke(myViewPager2.currentItem) // ViewPager 현재 포지션 Callback
         return super.getItemId(position)
     }
 
     override fun createFragment(position: Int): Fragment { // 현재 포지션에 따라 보여줄 프래그먼트
-
         return when (image?.size) {
             null, 0 -> {
                 viewPagerDiaryImageFragmentFactory.getViewPagerDiaryImageFragment("diary", null, fragment)

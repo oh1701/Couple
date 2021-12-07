@@ -29,7 +29,7 @@ class ViewPagerTravelDiaryFragment():BaseFragment<FragmentViewpagerTravelDiaryBi
     override fun initView() {
         binding.diaryViewPager.adapter = ViewPagerTravelDiaryAdapter(this, arguments?.getStringArrayList(diaryID))
         binding.diaryViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.diaryViewPager.isUserInputEnabled = false // 슬라이드로 못넘어가게 하기.
+        binding.diaryViewPager.isUserInputEnabled = true // 슬라이드로 못넘어가게 하기.
         binding.diaryViewPager.setCurrentItem(0, true)
         binding.diaryViewPager.offscreenPageLimit = 1 // 좌우 Life 살려두기. 2면 왼쪽 2개, 오른쪽2개.
         binding.indicator.attachToPager(binding.diaryViewPager)

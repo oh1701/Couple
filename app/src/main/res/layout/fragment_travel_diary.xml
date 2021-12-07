@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
+
         <ImageButton
             android:id="@+id/backPressed"
             android:layout_width="30dp"
@@ -70,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/viewpagerLayout"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -90,16 +91,56 @@
                     app:ViewPagerLiveImage="@{travelDiaryViewModel.diaryImageUri}"
                     app:ViewPagerindicator="@{indicator}"
                     app:ViewPagerImagePosition="@{travelDiaryViewModel.imageViewPagerNumberCallback}"
+                    app:ViewPagerLeftBtn="@{leftPagingBtn}"
+                    app:ViewPagerRightBtn="@{rightPagingBtn}"
                     android:scaleType="fitXY"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:background="@drawable/notsetting_image_background" />
+
+
+                <ImageButton
+                    android:id="@+id/leftPaging_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.6"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_baseline_chevron_left_24"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:tag="left"/>
+
+                <ImageButton
+                    android:id="@+id/rightPaging_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_percent="0.6"
+
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:tag="right"/>
+
 
                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
                     android:id="@+id/indicator"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginBottom="10dp"
-                    app:spi_dotSize="5dp"
-                    android:layout_gravity="bottom|center" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:spi_dotSize="5dp" />
 
                 <ImageButton
                     android:id="@+id/ImageFullButton"
@@ -110,8 +151,10 @@
                     android:onClickListener="@{() -> travelDiaryFragment.fullScreenViewPagerOpen()}"
                     android:visibility="@{travelDiaryViewModel.viewPagerFullScreenButtonVisibility}"
                     android:layout_margin="10dp"
-                    android:layout_gravity="top|end"/>
-            </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -303,37 +346,5 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageButton
-            android:id="@+id/leftPaging_btn"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.85"
-
-            android:src="@drawable/ic_baseline_chevron_left_24"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:tag="left"
-            android:visibility="gone"
-            android:onClickListener="@{(v) -> travelDiaryFragment.onclick(v)}" />
-
-        <ImageButton
-            android:id="@+id/rightPaging_btn"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.85"
-
-            android:src="@drawable/ic_baseline_chevron_right_24"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:tag="right"
-            android:visibility="gone"
-            android:onClickListener="@{(v) -> travelDiaryFragment.onclick(v)}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

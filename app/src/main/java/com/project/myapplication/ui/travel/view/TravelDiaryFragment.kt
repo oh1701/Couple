@@ -89,21 +89,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)} // 다이어리 초기 설정해주기.
         else{
             thisViewModel.getDiary(arguments?.getInt("markerID")!!) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
-
-        when{ // 다음 페이지 이전 페이지 보여주기 설정
-            arguments?.getInt(page) == -1 -> {
-                binding.leftPagingBtn.visibility = View.GONE
-                binding.rightPagingBtn.visibility = View.GONE
-            }
-            arguments?.getInt(page) == 0 -> {
-                binding.leftPagingBtn.visibility = View.GONE
-                binding.rightPagingBtn.visibility = View.VISIBLE
-            }
-            arguments?.getInt(page)!! >= 1 -> {
-                binding.leftPagingBtn.visibility = View.VISIBLE
-                binding.rightPagingBtn.visibility = View.VISIBLE
-            }
-        }
     }
 
     override fun initObserve() {
@@ -192,12 +177,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         }
     }
 
-    fun onclick(v:View){
-        when(v.tag){
-            "right" -> sharedActivityViewModel.getViewPagerBtnString(v.tag.toString())
-            "left" -> sharedActivityViewModel.getViewPagerBtnString(v.tag.toString())
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
