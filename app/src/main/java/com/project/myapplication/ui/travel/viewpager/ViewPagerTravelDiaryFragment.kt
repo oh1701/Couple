@@ -24,6 +24,7 @@ class ViewPagerTravelDiaryFragment():BaseFragment<FragmentViewpagerTravelDiaryBi
         get() = R.layout.fragment_viewpager_travel_diary
     override val thisViewModel: BaseViewModel by viewModel()
     private val sharedViewModel:TravelViewModel by sharedViewModel()
+
     override fun initView() {
         binding.diaryViewPager.adapter = ViewPagerTravelDiaryAdapter(this, arguments?.getStringArrayList(diaryID))
         binding.diaryViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -41,17 +42,10 @@ class ViewPagerTravelDiaryFragment():BaseFragment<FragmentViewpagerTravelDiaryBi
 
         sharedViewModel.viewPagerBtnCheck.observe(viewLifecycleOwner, EventObserver{
             when(it){
-                "left" -> {
-                    binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem - 1, true)
-                }
-
-                 //null이면 안들어가서 걱정없이 넣어도 된다.
-                "right" -> {
-                    binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem + 1, true)
-                }
+                "left" -> binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem - 1, true)
+                "right" -> binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem + 1, true)
+                //null이면 안들어가서 걱정없이 넣어도 된다.
             }
-            Log.e("확인하기", binding.diaryViewPager.adapter?.itemCount.toString())
-            sharedViewModel.setNowViewPager(binding.diaryViewPager.currentItem)
         })
     }
 

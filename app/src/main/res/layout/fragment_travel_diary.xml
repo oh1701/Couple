@@ -210,11 +210,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/content">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/Flex_recycler"
-                        app:recyclerTagSet="@{travelDiaryViewModel.recyclerList}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/Flex_recycler"-->
+<!--                        app:recyclerTagSet="@{travelDiaryViewModel.recyclerList}"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"/>-->
 
                 </com.google.android.flexbox.FlexboxLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -262,16 +262,16 @@
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/ic_baseline_pan_tool_24"/>
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+<!--            <ImageButton-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="match_parent"-->
 
-                android:tag="tag"
-                android:background="@drawable/btn_select"
-                app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck.peekContent()}"
-                android:layout_marginLeft="8dp"
-                android:src="@drawable/ic_baseline_tag_24"
-                android:onClickListener="@{() -> travelDiaryViewModel.addTagRecyclerlist()}"/>
+<!--                android:tag="tag"-->
+<!--                android:background="@drawable/btn_select"-->
+<!--                app:OnOffBoolean="@{travelDiaryViewModel.diaryTagBtnCheck.peekContent()}"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:src="@drawable/ic_baseline_tag_24"-->
+<!--                android:onClickListener="@{() -> travelDiaryViewModel.addTagRecyclerlist()}"/>-->
 
             <ImageButton
                 android:layout_width="40dp"

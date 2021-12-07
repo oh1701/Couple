@@ -32,11 +32,11 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
     }
 
     override fun initObserve() {
-        thisViewModel.toastLiveData.observe(this, EventObserver{message ->
+        thisViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver{message ->
             toast(message)
         })
 
-        thisViewModel.fonSettingComplete.observe(this, EventObserver{ // Complete 되면 Callback 처리하기
+        thisViewModel.fonSettingComplete.observe(viewLifecycleOwner, EventObserver{ // Complete 되면 Callback 처리하기
             arguments?.getParcelable<EventCustomCallback>(listener)?.dataChangeListener?.fontSettingCallback(
                 FontBindSettingModel(thisViewModel.letterSpacing.value,
                     thisViewModel.lineSpacing.value,

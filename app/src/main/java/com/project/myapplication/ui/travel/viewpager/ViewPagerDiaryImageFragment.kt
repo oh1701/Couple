@@ -45,20 +45,4 @@ class ViewPagerDiaryImageFragment(private val mytag:String?,private val image:St
     override fun initObserve() {
 
     }
-
-//    companion object{
-//        private const val mytag = "mytag"
-//        private const val image = "image"
-//
-//        fun newInstance(mytagString: String, imageString:String?): ViewPagerDiaryImageFragment {
-//            val f = ViewPagerDiaryImageFragment()
-//
-//            val args = Bundle()
-//            args.putString(mytag, mytagString)
-//            args.putString(image, imageString)
-//            f.arguments = args
-//
-//            return f
-//        }
-//    }
 }

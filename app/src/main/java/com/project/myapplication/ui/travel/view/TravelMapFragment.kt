@@ -62,7 +62,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             }
             else{
                 MoveFragment()
-                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment.newInstance(9999999))
+                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment.newInstance(9999999, -1))
                         .addToBackStack("Map")
                         .commit()
                     }

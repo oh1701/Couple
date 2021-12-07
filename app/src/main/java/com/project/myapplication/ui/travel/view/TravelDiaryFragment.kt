@@ -90,6 +90,20 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         else{
             thisViewModel.getDiary(arguments?.getInt("markerID")!!) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
 
+        when{ // 다음 페이지 이전 페이지 보여주기 설정
+            arguments?.getInt(page) == -1 -> {
+                binding.leftPagingBtn.visibility = View.GONE
+                binding.rightPagingBtn.visibility = View.GONE
+            }
+            arguments?.getInt(page) == 0 -> {
+                binding.leftPagingBtn.visibility = View.GONE
+                binding.rightPagingBtn.visibility = View.VISIBLE
+            }
+            arguments?.getInt(page)!! >= 1 -> {
+                binding.leftPagingBtn.visibility = View.VISIBLE
+                binding.rightPagingBtn.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun initObserve() {
@@ -133,8 +147,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{
             FontDialogFragment.newInstance(customCallback, fontSettingModel)
                 .show(supportFragmentManager, this.javaClass.simpleName)
-            binding.title.text
         })
+    }
+
+    override fun sharedObserve() {
+        super.sharedObserve()
+
     }
 
     fun cameraOpen(){ // startForResultCamera 의 registerForActivityResult가 AppCompat 상속 아니면 안불러짐
@@ -188,12 +206,17 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
     companion object{
         private const val markerID = "markerID"
+        private const val page = "page"
+        private const val size = "size"
 
-        fun newInstance(myMarkerID: Int): TravelDiaryFragment {
+        fun newInstance(myMarkerID: Int, myPage:Int): TravelDiaryFragment {
             val f = TravelDiaryFragment()
 
             val args = Bundle()
+
             args.putInt(markerID, myMarkerID)
+            args.putInt(page, myPage)
+            Log.e("141414" , myPage.toString())
 
             f.arguments = args
 

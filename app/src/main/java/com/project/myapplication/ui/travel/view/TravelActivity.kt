@@ -38,7 +38,7 @@ class TravelActivity:BaseActivity<ActivityTravelBinding, TravelViewModel>() {
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportFragmentManager.fragmentFactory = ViewPagerDiaryImageFragmentFactory(null, null, null) // super.oncreate 전에 선언해야함
+        supportFragmentManager.fragmentFactory = fragmentFactory // super.oncreate 전에 선언해야함
         super.onCreate(savedInstanceState)
 
         getLocation()

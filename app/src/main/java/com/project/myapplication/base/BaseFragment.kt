@@ -12,9 +12,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.project.myapplication.ui.travel.ViewPagerDiaryImageFragmentFactory
 import com.project.myapplication.utils.CheckSelfPermission
 import com.project.myapplication.utils.MoveFragment
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 
 abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), CheckSelfPermission {
     abstract val layoutResourceId:Int
@@ -28,6 +30,7 @@ abstract class BaseFragment<T: ViewDataBinding, V:BaseViewModel?>: Fragment(), C
     protected val moveFragment = MoveFragment()
     protected lateinit var supportFragmentManager: FragmentManager
     private lateinit var backPressedCallback: OnBackPressedCallback
+    protected val fragmentFactory: ViewPagerDiaryImageFragmentFactory by inject()
 
     override fun onAttach(context: Context) { // startFragment가 아닌 곳에서 뒤로가기 누를 시, Fragment는 start로 되돌아간다.
         super.onAttach(context)

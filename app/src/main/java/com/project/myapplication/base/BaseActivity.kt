@@ -10,7 +10,9 @@ import androidx.databinding.ViewDataBinding
 import com.project.myapplication.utils.CheckSelfPermission
 import com.project.myapplication.ui.intro.view.FirstAccessSettingActivity
 import com.project.myapplication.ui.intro.view.IntroActivity
+import com.project.myapplication.ui.travel.ViewPagerDiaryImageFragmentFactory
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 
 abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel?>:AppCompatActivity(), CheckSelfPermission {
     abstract val layoutResourceId:Int
@@ -19,6 +21,7 @@ abstract class BaseActivity<T: ViewDataBinding, V:BaseViewModel?>:AppCompatActiv
 
     private var toast:Toast? = null
     protected val compositeDisposable = CompositeDisposable()
+    protected val fragmentFactory: ViewPagerDiaryImageFragmentFactory by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
