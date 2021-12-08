@@ -37,6 +37,12 @@ open class ListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
         value = items
     }
 
+    open fun removeAt(itemAt: Int){
+        val items = value
+        items?.removeAt(itemAt)
+        value = items
+    }
+
     open fun notifyChange() {
         val items: ArrayList<T> = value!!
         value = items

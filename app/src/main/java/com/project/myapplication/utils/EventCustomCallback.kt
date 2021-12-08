@@ -7,18 +7,18 @@ import kotlinx.parcelize.IgnoredOnParcel
 /** Create By Gyu Seong Oh. 2021 / 11  */
 
 @kotlinx.parcelize.Parcelize
-class EventCustomCallback(val fontCallback: (FontBindSettingModel) -> Unit) :Parcelable {
+class EventCustomCallback<T>(val fontCallback: (T) -> Unit) :Parcelable {
     @IgnoredOnParcel
-    lateinit var dataChangeListener: DataChangeListener
+    lateinit var dataChangeListener: DataChangeListener<T>
 
-    interface DataChangeListener {
-            fun fontSettingCallback(index: FontBindSettingModel)
+    interface DataChangeListener <T>{
+        fun myCustomCallback(index: T)
     }
 
     fun setChanged(){
-        dataChangeListener = object : DataChangeListener{
-            override fun fontSettingCallback(index: FontBindSettingModel) {
-                fontCallback.invoke(index)
+        dataChangeListener = object : DataChangeListener<T>{
+            override fun myCustomCallback(index: T) {
+
             }
         }
     }

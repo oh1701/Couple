@@ -62,6 +62,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val diaryEnabled:LiveData<Boolean> = _diaryEnabled
     private val _getNowLocation = MutableLiveData<String>()
     val getNowLocation:LiveData<String> = _getNowLocation
+    var markerViewPagerToastMessage = true
 
     // 다이어리 입력
     val diaryImageUri = ListMutableLiveData<String>()
@@ -109,6 +110,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     //뷰페이저 확대, 지우기 버튼 visibility
     private val _viewPagerFullScreenButtonVisibility = MutableLiveData<Int>(View.GONE)
     val viewPagerFullScreenButtonVisibility:LiveData<Int> = _viewPagerFullScreenButtonVisibility
+    private val _viewPagerImageRemoveVisibility = MutableLiveData<Int>(View.GONE)
+    val viewPagerImageRemoveVisibility:LiveData<Int> = _viewPagerImageRemoveVisibility
 
     //마커 클릭 후 콘텐츠 변화 상태 확인
     private val _updateImageValue = ListMutableLiveData<String>()
@@ -385,10 +388,15 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
         _diaryEnabled.value = boolean
-//        when(boolean.not()){
-//            false -> toast("내용 수정이 금지되었습니다.")
-//            true -> toast("내용 수정이 가능합니다.")
-//        }
+        if(markerViewPagerToastMessage) {
+            when (boolean.not()) { // 마커 클릭으로 들어왔으면 안띄우게 만들기.
+                false -> toast("내용 수정이 금지되었습니다.")
+                true -> toast("내용 수정이 가능합니다.")
+            }
+        }
+        else{
+            markerViewPagerToastMessage = true
+        }
     }
 
     fun changedButtonCheck(view: View){ // 버튼 상태 확인
@@ -399,8 +407,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
         if(diaryEnabled.value == true) {
             when (view.tag) {
-                "tag" -> _diaryTagBtnCheck.value =
-                    CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
+                "tag" -> _diaryTagBtnCheck.value = CustomObserve(_diaryTagBtnCheck.value?.peekContent()!!.not(), false)
                 "trash" -> {
                     _diaryTrashBtnCheck.value = CustomObserve(_diaryTrashBtnCheck.value?.peekContent()!!.not(), false)
                     diarySaveOrRemoveButtonChange()
@@ -414,13 +421,21 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         if(_diaryTrashBtnCheck.value?.peekContent()!! || _diaryTrashBtnCheck.value?.peekContent() == null){ // 휴지통 버튼 켜져있으면
             _diarySaveOrRemoveButton.value = "삭제하기"
             _viewPagerFullScreenButtonVisibility.value = View.GONE
+            _viewPagerImageRemoveVisibility.value = View.VISIBLE
         }
         else{
             _diarySaveOrRemoveButton.value = "저장하기"
 
-            if(!diaryImageUri.value.isNullOrEmpty())
+            if(!diaryImageUri.value.isNullOrEmpty()) {
                 _viewPagerFullScreenButtonVisibility.value = View.VISIBLE
+                _viewPagerImageRemoveVisibility.value = View.GONE
+            }
         }
+    }
+
+    fun viewPagerRemoveImage(){
+        diaryImageUri.removeAt(imageViewPagerNumber.value!!)
+        Log.e("실행", "실행")
     }
     
     fun closeDiary():Boolean{

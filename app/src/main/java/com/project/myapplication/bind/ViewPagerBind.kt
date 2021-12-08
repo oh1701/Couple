@@ -24,6 +24,7 @@ object ViewPagerBind {
 
         myViewPager2.adapter = ViewPagerDiaryImageAdapter(fragment, image, imagePosition, myViewPager2)
         myViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        myViewPager2.isUserInputEnabled = false
         myViewPager2.offscreenPageLimit = 1
         indicator.attachToPager(myViewPager2)
         setViewPagerBtnVisibility(myViewPager2, rightBtn, leftBtn, image)

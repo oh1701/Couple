@@ -37,7 +37,7 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         })
 
         thisViewModel.fonSettingComplete.observe(viewLifecycleOwner, EventObserver{ // Complete 되면 Callback 처리하기
-            arguments?.getParcelable<EventCustomCallback>(listener)?.dataChangeListener?.fontSettingCallback(
+            arguments?.getParcelable<EventCustomCallback<FontBindSettingModel>>(listener)?.dataChangeListener?.myCustomCallback(
                 FontBindSettingModel(thisViewModel.letterSpacing.value,
                     thisViewModel.lineSpacing.value,
                     thisViewModel.textTypedValue.value,
@@ -59,11 +59,10 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
         private const val listener = "listener"
         private const val fontSetting = "FontSetting"
 
-        fun newInstance(customCallback: EventCustomCallback, fontSettingModel:FontBindSettingModel?): FontDialogFragment {
+        fun newInstance(fontCustomCallback: EventCustomCallback<FontBindSettingModel>, fontSettingModel:FontBindSettingModel?): FontDialogFragment {
             val f = FontDialogFragment()
-
             val args = Bundle()
-            args.putParcelable(listener, customCallback)
+            args.putParcelable(listener, fontCustomCallback)
             args.putParcelable(fontSetting, fontSettingModel)
 
             f.arguments = args

@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelDiaryBinding
+import com.project.myapplication.model.ImageRemoveModel
 import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.ui.dialog.view.FontDialogFragment
 import com.project.myapplication.ui.dialog.view.WarningDialogFragment
@@ -43,8 +44,15 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private lateinit var startForResultCamera: ActivityResultLauncher<Uri>
     private lateinit var cameraFileUri: Uri
     private lateinit var diaryOnBackPressed:OnBackPressedCallback
-    private lateinit var customCallback:EventCustomCallback
+    private lateinit var fontCustomCallback:EventCustomCallback<FontBindSettingModel>
+    private lateinit var imageRemoveCustomCallback:EventCustomCallback<Boolean>
     private var fontSettingModel:FontBindSettingModel? = null
+    
+    private val imageCustomCallbackEvent:(Boolean) -> Unit = { boolean ->
+        if (boolean)// 삭제하면
+            thisViewModel.viewPagerRemoveImage()
+    }
+    
     private val fontCustomEvent:(FontBindSettingModel) -> Unit = { setting ->
         fontSettingModel = setting
         thisViewModel.fontSetting(setting)
@@ -82,15 +90,21 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     override fun initView() {
         binding.travelDiaryViewModel = thisViewModel
         binding.travelDiaryFragment = this
-
-        customCallback = EventCustomCallback(fontCustomEvent)
-        customCallback.setChanged()
         thisViewModel.getMetrics(resources.displayMetrics)
 
-        if(arguments?.getInt("markerID") == 9999999 || arguments?.getInt("markerID") == null){
-            thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value)} // 다이어리 초기 설정해주기.
+        fontCustomCallback = EventCustomCallback(fontCustomEvent)
+        fontCustomCallback.setChanged()
+        imageRemoveCustomCallback = EventCustomCallback(imageCustomCallbackEvent)
+        imageRemoveCustomCallback.setChanged()
+
+        if (arguments?.getInt("markerID") == 9999999 || arguments?.getInt("markerID") == null) {
+            thisViewModel.createDiarysetting(sharedActivityViewModel.myLocationLatLng.value) // 다이어리 초기 설정해주기.
+            thisViewModel.markerViewPagerToastMessage = true
+        }
         else{
-            thisViewModel.getDiary(arguments?.getInt("markerID")!!) } // 마커 클릭을 통해 들어온 것인지를 우선 파악. null이면 마커 클릭 아님
+            thisViewModel.getDiary(arguments?.getInt("markerID")!!)
+            thisViewModel.markerViewPagerToastMessage = false
+        }
     }
 
     override fun initObserve() {
@@ -124,7 +138,8 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.removeWarningDialog.observe(viewLifecycleOwner, EventObserver{
             if(it){
-                warningDialogFragment.show(supportFragmentManager, "${arguments?.getInt("markerID")}")
+                if(!warningDialogFragment.isAdded)
+                    warningDialogFragment.show(supportFragmentManager, "${arguments?.getInt("markerID")}")
             }
         })
 
@@ -133,7 +148,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
         })
 
         thisViewModel.diaryFontBtnCheck.observe(viewLifecycleOwner, EventObserver{
-            FontDialogFragment.newInstance(customCallback, fontSettingModel)
+            FontDialogFragment.newInstance(fontCustomCallback, fontSettingModel)
                 .show(supportFragmentManager, this.javaClass.simpleName)
         })
     }
@@ -152,6 +167,11 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
             }
             dialog.show()
         }
+    }
+
+    fun removeImageWarningDialog(){
+        if(!warningDialogFragment.isAdded)
+            WarningDialogFragment.newInstance(imageRemoveCustomCallback).show(supportFragmentManager, "removeImage")
     }
 
     fun fullScreenViewPagerOpen(){
