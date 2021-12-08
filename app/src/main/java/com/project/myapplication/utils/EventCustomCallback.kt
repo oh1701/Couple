@@ -18,7 +18,7 @@ class EventCustomCallback<T>(val fontCallback: (T) -> Unit) :Parcelable {
     fun setChanged(){
         dataChangeListener = object : DataChangeListener<T>{
             override fun myCustomCallback(index: T) {
-
+                fontCallback.invoke(index)
             }
         }
     }

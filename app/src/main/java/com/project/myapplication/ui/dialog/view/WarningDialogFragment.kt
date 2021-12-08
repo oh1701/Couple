@@ -24,7 +24,6 @@ class WarningDialogFragment:BaseDialogFragment<DialogFragmentWarningBinding, War
 
     override fun initView() {
         binding.dialogViewModel = thisViewModel
-
         thisViewModel.settingDialog(this.tag)
     }
 

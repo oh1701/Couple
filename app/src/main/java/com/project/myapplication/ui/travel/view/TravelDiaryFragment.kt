@@ -51,6 +51,7 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private val imageCustomCallbackEvent:(Boolean) -> Unit = { boolean ->
         if (boolean)// 삭제하면
             thisViewModel.viewPagerRemoveImage()
+        Log.e("삭제", "삭제")
     }
     
     private val fontCustomEvent:(FontBindSettingModel) -> Unit = { setting ->
