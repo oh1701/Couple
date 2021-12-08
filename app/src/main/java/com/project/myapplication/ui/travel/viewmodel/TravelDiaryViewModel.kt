@@ -4,9 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.net.Uri
-import android.text.Html
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -18,12 +15,10 @@ import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.data.room.entity.RoomFontEntity
 import com.project.myapplication.model.DiaryTagModel
 import com.project.myapplication.model.font.FontBindSettingModel
-import com.project.myapplication.model.font.FontTypeFace
 import com.project.myapplication.ui.travel.repository.TravelDiaryRepository
-import com.project.myapplication.utils.FontToHtml
 import com.project.myapplication.utils.customobserver.CustomObserve
 import com.project.myapplication.utils.customobserver.Event
-import com.project.myapplication.utils.customobserver.ListMutableLiveData
+import com.project.myapplication.utils.customobserver.ArrayListMutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -65,7 +60,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     var markerViewPagerToastMessage = true
 
     // 다이어리 입력
-    val diaryImageUri = ListMutableLiveData<String>()
+    val diaryImageUri = ArrayListMutableLiveData<String>()
     val diaryTitle = MutableLiveData<String>()
     val diaryContent = MutableLiveData<String>()
 
@@ -105,7 +100,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontTypefaceToString = MutableLiveData<String>("기본")
 
     //리사이클러뷰
-    val recyclerList = ListMutableLiveData<DiaryTagModel>()
+    val recyclerList = ArrayListMutableLiveData<DiaryTagModel>()
 
     //뷰페이저 확대, 지우기 버튼 visibility
     private val _viewPagerFullScreenButtonVisibility = MutableLiveData<Int>(View.GONE)
@@ -114,7 +109,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val viewPagerImageRemoveVisibility:LiveData<Int> = _viewPagerImageRemoveVisibility
 
     //마커 클릭 후 콘텐츠 변화 상태 확인
-    private val _updateImageValue = ListMutableLiveData<String>()
+    private val _updateImageValue = ArrayListMutableLiveData<String>()
     private val _updateTitleValue = MutableLiveData<String>()
     private val _updateContentValue = MutableLiveData<String>()
     val fontUpdateComplete = MutableLiveData<Boolean>()

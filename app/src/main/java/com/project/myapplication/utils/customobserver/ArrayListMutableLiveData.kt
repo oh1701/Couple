@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 
 /** 처음에 init 으로 listLiveData() 무조건 설정해줘야함.*/
 
-open class ListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
+open class ArrayListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
     open fun listLiveData() { // 초기 설정. value를 가져온 ArrayList 형식으로 지정
         value = ArrayList() //NPE 방지용 (NullPointerException). null확인 시 오류남.
     }

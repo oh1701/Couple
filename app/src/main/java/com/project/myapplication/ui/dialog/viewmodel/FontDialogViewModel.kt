@@ -1,8 +1,8 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.model.font.FontBindSettingModel
 import com.project.myapplication.utils.customobserver.Event
+import com.project.myapplication.utils.customobserver.ArrayListMutableLiveData
 
+//ArrayList[0] ~ [4] ColorStateList 만들어야함
 class FontDialogViewModel:BaseViewModel() {
     private val _letterSpacing = MutableLiveData(0.0f)
     val letterSpacing:LiveData<Float> = _letterSpacing
@@ -28,6 +30,13 @@ class FontDialogViewModel:BaseViewModel() {
     val textTypeFace:LiveData<Typeface> = _textTypeFace
     private val _buttonColor = MutableLiveData<Int>()
     val buttonColor:LiveData<Int> = _buttonColor
+
+    val backgroundTint = ArrayListMutableLiveData<ColorStateList>()
+
+    init{
+        backgroundTint.listLiveData()
+        backgroundTint.add(ColorStateList.valueOf(-570425344))
+    }
 
     fun plusSizeFont(v: View){
         when(v.tag){
@@ -82,6 +91,16 @@ class FontDialogViewModel:BaseViewModel() {
     }
 
     fun dialogComplete(){
+        if(backgroundTint.value?.size!! < 6){ // 최근 색깔 지정
+            backgroundTint.add(ColorStateList.valueOf(textColor.value!!))
+        }
+        else{
+            backgroundTint.value!![1] = ColorStateList.valueOf(textColor.value!!)
+            for(i in 1 until backgroundTint.value!!.size){
+                backgroundTint.value!![i + 1] = backgroundTint.value!![i]
+            }
+        }
+        
         _fontSettingComplete.value = Event(true)
     }
 
@@ -97,6 +116,12 @@ class FontDialogViewModel:BaseViewModel() {
             _letterSpacing.value = fontSettingModel.letterSpacing
             _textColor.value = fontSettingModel.colorHex!!.defaultColor
             _textTypeFace.value = fontSettingModel.fontTypeFace
+        }
+    }
+
+    fun colorIntListToColorState(arrColor:ArrayList<Int>){
+        arrColor.forEach {
+            backgroundTint.add(ColorStateList.valueOf(arrColor[it]))
         }
     }
 }

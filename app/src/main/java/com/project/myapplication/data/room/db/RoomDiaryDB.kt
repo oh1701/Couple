@@ -11,7 +11,7 @@ import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.data.room.entity.RoomFontEntity
 
 @Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, RoomFontEntity::class], version = 1)
-@TypeConverters(ListConvertor::class)
+@TypeConverters(ListStringConvertor::class, ListIntConvertor::class)
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao
@@ -42,10 +42,18 @@ abstract class RoomDiaryDB:RoomDatabase() {
     }
 }
 
-class ListConvertor{
+class ListStringConvertor{
     @TypeConverter
     fun imageStringToJson(value: List<String?>) = Gson().toJson(value)
 
     @TypeConverter
     fun jsonToImageString(value: String) = Gson().fromJson(value, Array<String?>::class.java).toList()
+}
+
+class ListIntConvertor{
+    @TypeConverter
+    fun colorIntToJson(value: List<Int?>) = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonTocolorInt(value: String) = Gson().fromJson(value, Array<Int?>::class.java).toList()
 }

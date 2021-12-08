@@ -119,7 +119,7 @@
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp" />
             </TableRow>
 
             <TableRow
