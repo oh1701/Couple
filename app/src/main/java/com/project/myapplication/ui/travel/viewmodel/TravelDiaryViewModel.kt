@@ -204,12 +204,11 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
         else{ // 삭제하기
             roomRemoveDiary()
-            Log.e("콘텐트는", diaryContent.value.toString())
         }
     }
 
     private fun roomRemoveDiary(){ // Room 삭제, value에 ID 저장 후 observe를 통해 ID에 맞는 Marker 삭제
-//        _removeWarningDialog.value = Event(true)
+        _removeWarningDialog.value = Event(true)
     }
 
     private fun roomSaveDiary(){ // Room 저장, value에 ID 저장 후 observe를 통해 Marker 생성.
@@ -387,8 +386,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     fun viewEnabledValue(boolean:Boolean){ // 뷰 Enabled 값 터치버튼 활성화에 따라 나누기
         _diaryEnabled.value = boolean
 //        when(boolean.not()){
-//            false -> toast("수정 금지모드 해제")
-//            true -> toast("수정 금지모드")
+//            false -> toast("내용 수정이 금지되었습니다.")
+//            true -> toast("내용 수정이 가능합니다.")
 //        }
     }
 
@@ -457,10 +456,5 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
 
     fun getGeoCoder(geoCoderString: String?){
         _getNowLocation.value = geoCoderString
-    }
-
-    fun addTagRecyclerlist(){
-        if(diaryEnabled.value == true)
-            recyclerList.add(DiaryTagModel("# ", "1"))
     }
 }

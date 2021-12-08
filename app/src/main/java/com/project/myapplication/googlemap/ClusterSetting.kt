@@ -3,15 +3,11 @@ package com.project.myapplication.googlemap
 import android.content.Context
 import android.os.SystemClock
 import android.util.Log
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.ClusterMarkerModel
-import com.project.myapplication.ui.travel.view.TravelMapFragment
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
 
 class ClusterSetting {
@@ -59,43 +55,66 @@ class ClusterSetting {
         }
     }
 
-    fun clusterAddItemList(cluster: ClusterManager<MarkerClusterItem>, diary:List<RoomDiaryEntity>){ // Generic으로 raw type 확인 못함(is List<value>) 불가.
+    fun clusterItemList(cluster: ClusterManager<MarkerClusterItem>, diary:List<RoomDiaryEntity>){ // Generic으로 raw type 확인 못함(is List<value>) 불가.
         diary.map { diary ->
-            cluster.addItem(
-                MarkerClusterItem(
-                    LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
-                    diary.id.toString(),
-                    null,
-                    ClusterMarkerModel(
-                        diary.imageUri,
-                        diary.title,
-                        diary.content,
-                        diary.createDay,
-                        diary.coupleDay,
-                        null
+                cluster.addItem(
+                    MarkerClusterItem(
+                        LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
+                        diary.id.toString(),
+                        null,
+                        ClusterMarkerModel(
+                            diary.imageUri,
+                            diary.title,
+                            diary.content,
+                            diary.createDay,
+                            diary.coupleDay,
+                            null
+                        )
                     )
                 )
-            )
-        }
+            }
+        Log.e("현재 사이즈 리스트", cluster.algorithm.items.toString())
         cluster.cluster()
     }
 
-    fun clusterAddItem(cluster: ClusterManager<MarkerClusterItem>, diary:RoomDiaryEntity){
-        cluster.addItem(
-            MarkerClusterItem(
-                LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
-                diary.id.toString(),
-                null,
-                ClusterMarkerModel(
-                    diary.imageUri,
-                    diary.title,
-                    diary.content,
-                    diary.createDay,
-                    diary.coupleDay,
-                    null
+    fun clusterItem(cluster: ClusterManager<MarkerClusterItem>, diary:RoomDiaryEntity, crud: String){
+        when(crud){
+            "ADD" -> {
+                cluster.addItem(
+                    MarkerClusterItem(
+                        LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
+                        diary.id.toString(),
+                        null,
+                        ClusterMarkerModel(
+                            diary.imageUri,
+                            diary.title,
+                            diary.content,
+                            diary.createDay,
+                            diary.coupleDay,
+                            null
+                        )
+                    )
                 )
-            )
-        )
+            }
+            "REMOVE" -> {
+                cluster.removeItem(
+                    MarkerClusterItem(
+                        LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
+                        diary.id.toString(),
+                        null,
+                        ClusterMarkerModel(
+                            diary.imageUri,
+                            diary.title,
+                            diary.content,
+                            diary.createDay,
+                            diary.coupleDay,
+                            null
+                        )
+                    )
+                )
+            }
+        }
+        Log.e("현재 사이즈", cluster.algorithm.items.toString())
         cluster.cluster()
     }
 }

@@ -63,6 +63,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
             userMarker = googleMap?.addMarker(MarkerOptions()
                 .zIndex(1.5f)
                 .position(latlng))!!
+            
             glideUtils.glideListener(view, R.drawable.couple3, imageView, userMarker, "user")
         }
     }

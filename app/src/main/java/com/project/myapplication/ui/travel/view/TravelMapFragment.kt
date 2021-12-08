@@ -48,12 +48,20 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     }
 
     override fun initObserve() {
-        thisViewModel.googleMapAllDiaryMarker.observe(viewLifecycleOwner, EventObserver{ diary ->
-            clusterSetting.clusterAddItemList(cluster, diary)
+        thisViewModel.googleMapAllDiaryMarker.observe(viewLifecycleOwner, EventObserver{ AddAlldiary ->
+            clusterSetting.clusterItemList(cluster, AddAlldiary)
         })
 
-        thisViewModel.googleMapCreateNewMarker.observe(viewLifecycleOwner, EventObserver{ diary ->
-            clusterSetting.clusterAddItem(cluster, diary)
+        thisViewModel.googleMapCreateNewMarker.observe(viewLifecycleOwner, EventObserver{ createDiary ->
+            clusterSetting.clusterItem(cluster, createDiary, "ADD")
+        })
+
+        thisViewModel.googleMapRemoveMarker.observe(viewLifecycleOwner, EventObserver{ removeDiary ->
+            clusterSetting.clusterItem(cluster, removeDiary, "REMOVE")
+        })
+
+        thisViewModel.toastLiveData.observe(viewLifecycleOwner, {
+            toast(it.peekContent())
         })
 
         thisViewModel.createTravelDiary.observe(viewLifecycleOwner, EventObserver{ // 다이어리 버튼 눌리면.
@@ -97,8 +105,13 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
             }
         }
 
-        sharedActivityViewModel.newCreateMarker.observe(viewLifecycleOwner, EventObserver{ Diaryid ->
-            thisViewModel.newCreateMapMarker(Diaryid)
+        sharedActivityViewModel.newCreateMarker.observe(viewLifecycleOwner, EventObserver{ AddDiaryid ->
+            thisViewModel.newCreateMapMarker(AddDiaryid)
+        })
+
+
+        sharedActivityViewModel.removeMarker.observe(viewLifecycleOwner, EventObserver{ removeDiaryID ->
+            thisViewModel.removeMarkerGetEntity(removeDiaryID)
         })
     }
 

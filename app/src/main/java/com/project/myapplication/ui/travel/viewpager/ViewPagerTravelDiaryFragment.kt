@@ -41,12 +41,10 @@ class ViewPagerTravelDiaryFragment():BaseFragment<FragmentViewpagerTravelDiaryBi
 
     override fun sharedObserve() {
         super.sharedObserve()
-
         sharedViewModel.viewPagerBtnCheck.observe(viewLifecycleOwner, EventObserver{
             when(it){
-                "left" -> binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem - 1, true)
-                "right" -> binding.diaryViewPager.setCurrentItem(binding.diaryViewPager.currentItem + 1, true)
-                //null이면 안들어가서 걱정없이 넣어도 된다.
+                false -> binding.diaryViewPager.isUserInputEnabled = it // 슬라이드로 못넘어가게 하기.
+                true -> binding.diaryViewPager.isUserInputEnabled = it // 슬라이드로 넘어가기 가능.
             }
         })
     }

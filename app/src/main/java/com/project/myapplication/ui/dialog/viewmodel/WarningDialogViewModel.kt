@@ -1,5 +1,6 @@
 package com.project.myapplication.ui.dialog.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +8,9 @@ import com.project.myapplication.application.KoinApplication
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.utils.customobserver.Event
 import com.project.myapplication.ui.dialog.repository.WarningDialogRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class WarningDialogViewModel(private val repository: WarningDialogRepository):BaseViewModel() {
     override val compositeDisposable: CompositeDisposable
@@ -26,6 +29,8 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
     val selectButtonClick:LiveData<Event<String>> = _selectButtonClick
     private val _warningText = MutableLiveData<String>()
     val warningText:LiveData<String> = _warningText
+    private val _markerRemoveShared = MutableLiveData<Event<Int>>()
+    val markerRemoveShared : LiveData<Event<Int>> = _markerRemoveShared
 
     fun settingDialog(tag: String?) {
         text(tag)
@@ -38,7 +43,7 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
                 _positiveButtonTag.value = "나가기"
                 _negativeButtonTag.value = "취소"
             }
-            "removeDiary" -> {
+            else -> {
                 _positiveButtonTag.value = "삭제"
                 _negativeButtonTag.value = "취소"
             }
@@ -50,7 +55,7 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
             "나가기" -> { _selectButtonClick.value = Event("onBackPressed") }
             "취소" -> { _selectButtonClick.value = Event("dismiss") }
             "설정" -> { _selectButtonClick.value = Event("Setting") }
-            "삭제" -> {_selectButtonClick.value = Event("removeDiary")}
+            else -> {_selectButtonClick.value = Event("removeDiary")}
         }
     }
 
@@ -58,7 +63,11 @@ class WarningDialogViewModel(private val repository: WarningDialogRepository):Ba
         when(tag){
             "Permission" -> _warningText.value = "정상적인 기능 사용을 위해 설정에서 카메라 및 저장정보 권한을 활성화 시켜주세요."
             "closeDiary" -> _warningText.value = "작성중인 내용이 존재합니다.\n해당 내용을 저장하지 않고 나가시겠습니까?"
-            "removeDiary" -> _warningText.value = "이 게시물을 삭제하시겠습니까?\n삭제된 게시물은 복구되지 않습니다."
+            else -> _warningText.value = "이 게시물을 삭제하시겠습니까?\n삭제된 게시물은 복구되지 않습니다."
         }
+    }
+
+    fun removeDiary(id:Int){
+        _markerRemoveShared.value = Event(id)
     }
 }

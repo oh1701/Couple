@@ -119,11 +119,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.diaryTouchBtnCheck.observe(viewLifecycleOwner, CustomObserver{ boolean ->
             thisViewModel.viewEnabledValue(boolean.not()) // 버튼이 켜지면 Enabled false 처리해야함.
+            sharedActivityViewModel.getViewPagerBtnString(boolean) // boolean 값에 따라 뷰페이저 페이징 켜짐, 꺼짐 설정
         })
 
         thisViewModel.removeWarningDialog.observe(viewLifecycleOwner, EventObserver{
             if(it){
-                warningDialogFragment.show(supportFragmentManager, "removeDiary")
+                warningDialogFragment.show(supportFragmentManager, "${arguments?.getInt("markerID")}")
             }
         })
 
@@ -182,15 +183,12 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     companion object{
         private const val markerID = "markerID"
         private const val page = "page"
-        private const val size = "size"
 
         fun newInstance(myMarkerID: Int, myPage:Int): TravelDiaryFragment {
             val f = TravelDiaryFragment()
-
             val args = Bundle()
             args.putInt(markerID, myMarkerID)
             args.putInt(page, myPage)
-
             f.arguments = args
 
             return f

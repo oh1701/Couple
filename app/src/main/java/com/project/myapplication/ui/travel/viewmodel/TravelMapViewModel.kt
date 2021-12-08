@@ -1,5 +1,6 @@
 package com.project.myapplication.ui.travel.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.maps.android.clustering.Cluster
@@ -16,7 +17,9 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     private val _googleMapAllDiaryMarker = MutableLiveData<Event<List<RoomDiaryEntity>>>()
     val googleMapAllDiaryMarker:LiveData<Event<List<RoomDiaryEntity>>> = _googleMapAllDiaryMarker
     private val _googleMapCreateNewMarker = MutableLiveData<Event<RoomDiaryEntity>>()
-    val googleMapCreateNewMarker:MutableLiveData<Event<RoomDiaryEntity>> = _googleMapCreateNewMarker
+    val googleMapCreateNewMarker:LiveData<Event<RoomDiaryEntity>> = _googleMapCreateNewMarker
+    private val _googleMapRemoveMarker = MutableLiveData<Event<RoomDiaryEntity>>()
+    val googleMapRemoveMarker:LiveData<Event<RoomDiaryEntity>> = _googleMapRemoveMarker
     private val _createTravelDiary = MutableLiveData<Event<Boolean>>()
     val createTravelDiary:LiveData<Event<Boolean>> = _createTravelDiary
     private val _cameraAutoSetting = MutableLiveData<Boolean>()
@@ -55,6 +58,38 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
                 throwableMessage(it)
             }
             .subscribe()
+        )
+    }
+
+    fun removeMarkerGetEntity(id:Int){
+        compositeDisposable.add(repository.getIdDiary(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess {
+                _googleMapRemoveMarker.value = Event(it)
+                removeMarker(id)
+            }
+            .doOnError {
+                throwableMessage(it)
+            }
+            .subscribe()
+        )
+    }
+
+    private fun removeMarker(id:Int){
+        compositeDisposable.add(
+            repository
+                .removeDiaryDB(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    toast("다이어리 제거 성공")
+                }
+                .doOnError {
+                    Log.e("Error, RemoveDiary ::", "$it")
+                    toast("다이어리 제거 실패")
+                }
+                .subscribe()
         )
     }
 
