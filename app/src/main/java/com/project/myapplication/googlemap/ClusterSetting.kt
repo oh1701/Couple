@@ -97,24 +97,9 @@ class ClusterSetting {
                 )
             }
             "REMOVE" -> {
-                cluster.removeItem(
-                    MarkerClusterItem(
-                        LatLng(diary.latitude.toDouble(), diary.longitude.toDouble()),
-                        diary.id.toString(),
-                        null,
-                        ClusterMarkerModel(
-                            diary.imageUri,
-                            diary.title,
-                            diary.content,
-                            diary.createDay,
-                            diary.coupleDay,
-                            null
-                        )
-                    )
-                )
+                cluster.removeItem(cluster.algorithm.items.toMutableList().find { it.title == diary.id.toString()}) //id가 동일한 클러스터 삭제하기.
             }
         }
-        Log.e("현재 사이즈", cluster.algorithm.items.toString())
         cluster.cluster()
     }
 }
