@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="travelDiaryViewModel"
             type="com.project.myapplication.ui.travel.viewmodel.TravelDiaryViewModel" />
@@ -38,7 +37,7 @@
         <TextView
             android:id="@+id/diary_location"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
 
             android:text="@{travelDiaryViewModel.getNowLocation}"
             android:textColor="@color/black"

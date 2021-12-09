@@ -3,6 +3,7 @@ package com.project.myapplication.bind
 import android.util.Log
 import android.widget.ImageButton
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.project.myapplication.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,5 +26,16 @@ object ImageButtonBind {
                 }
             }
             .subscribe()
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("MapCameraAutoCheck")
+    fun ImageButton.mapCameraAutoCheck(check:Boolean?){
+        if(check == true)
+            Glide.with(this.context).load(R.drawable.ic_baseline_location_searching_24).into(this)
+        else
+            Glide.with(this.context).load(R.drawable.ic_baseline_location_disabled_24).into(this)
+
     }
 }

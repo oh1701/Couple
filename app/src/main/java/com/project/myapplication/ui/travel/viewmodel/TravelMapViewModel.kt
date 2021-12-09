@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
+import com.project.myapplication.R
 import com.project.myapplication.base.BaseViewModel
 import com.project.myapplication.utils.customobserver.Event
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
@@ -24,14 +25,11 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
     val createTravelDiary:LiveData<Event<Boolean>> = _createTravelDiary
     private val _cameraAutoSetting = MutableLiveData<Boolean>()
     val cameraAutoSetting:LiveData<Boolean> = _cameraAutoSetting
-    private val _cameraAutoText = MutableLiveData<String>()
-    val cameraAutoText:LiveData<String> = _cameraAutoText
     private val _markerClickListener = MutableLiveData<Event<ArrayList<String>>>()
     val markerClickListener:LiveData<Event<ArrayList<String>>> = _markerClickListener
 
     init {
         _cameraAutoSetting.value = true
-        _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
     }
 
     fun getAllDiary(){ // 저장된 다이어리들 가져오기.
@@ -99,7 +97,11 @@ class TravelMapViewModel(private val repository: TravelMapRepository):BaseViewMo
 
     fun cameraAutoSet(){
         _cameraAutoSetting.value = _cameraAutoSetting.value?.not()
-        _cameraAutoText.value = "Auto Camera\n" + _cameraAutoSetting.value.toString()
+
+        if(cameraAutoSetting.value!!)
+            toast("카메라 자동 조정")
+        else
+            toast("카메라 수동 조정")
     }
 
     fun markerClickListener(id:ArrayList<String>){

@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/map_title"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,19 +91,19 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_baseline_create_24"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/CameraAutoSet"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
         android:onClickListener="@{() -> travelMapViewModel.cameraAutoSet()}"
         android:layout_margin="20dp"
-        android:background="@color/white"
+        android:background="@drawable/circle_black"
         android:scaleType="fitXY"
-        android:text="@{travelMapViewModel.cameraAutoText}" />
+        app:MapCameraAutoCheck="@{travelMapViewModel.cameraAutoSetting}"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

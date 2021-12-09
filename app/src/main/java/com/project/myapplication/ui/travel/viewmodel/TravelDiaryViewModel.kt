@@ -427,10 +427,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         }
         else{
             _diarySaveOrRemoveButton.value = "저장하기"
+            _viewPagerImageRemoveVisibility.value = View.GONE
 
             if(!diaryImageUri.value.isNullOrEmpty()) {
                 _viewPagerFullScreenButtonVisibility.value = View.VISIBLE
-                _viewPagerImageRemoveVisibility.value = View.GONE
             }
         }
     }
