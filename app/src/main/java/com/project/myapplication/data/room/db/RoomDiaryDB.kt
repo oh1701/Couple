@@ -11,7 +11,7 @@ import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.data.room.entity.RoomFontEntity
 
 @Database(entities = [RoomDiaryEntity::class, RoomCoupleSettingEntity::class, RoomFontEntity::class], version = 1)
-@TypeConverters(ListStringConvertor::class, ListIntConvertor::class)
+@TypeConverters(*[ListStringConvertor::class, ListIntConvertor::class])
 abstract class RoomDiaryDB:RoomDatabase() {
     abstract fun roomDaoImage(): RoomDiaryDao
     abstract fun roomDaoCoupleSetting(): RoomCoupleSettingDao

@@ -3,6 +3,7 @@ package com.project.myapplication.ui.travel.view
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
@@ -51,7 +52,6 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
     private val imageCustomCallbackEvent:(Boolean) -> Unit = { boolean ->
         if (boolean)// 삭제하면
             thisViewModel.viewPagerRemoveImage()
-        Log.e("삭제", "삭제")
     }
     
     private val fontCustomEvent:(FontBindSettingModel) -> Unit = { setting ->
@@ -123,8 +123,14 @@ class TravelDiaryFragment(): BaseFragment<FragmentTravelDiaryBinding, TravelDiar
 
         thisViewModel.fontUpdateComplete.observe(viewLifecycleOwner, {
             val v = thisViewModel
+            val colorList:ArrayList<ColorStateList> = arrayListOf()
+
+            v.fontColorStateList.value?.forEach {
+                colorList.add(ColorStateList.valueOf(it))
+            }
+
             fontSettingModel = FontBindSettingModel(v.fontletterSpacing.value, v.fontlineSpacing.value,
-            v.fontTypedSizeValue.value, v.fontcolorHex.value, v.fontTypeFace.value)
+            v.fontTypedSizeValue.value, v.fontcolorHex.value, v.fontTypeFace.value, colorList)
         })
 
         thisViewModel.createMarkerEvent.observe(viewLifecycleOwner, EventObserver{

@@ -85,6 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 app:buttonColor="@{fontDialogViewModel.buttonColor}"
+                app:fontCallback="@{fontDialogViewModel.fontColorCallBack}"
                 app:ColorPickerListener="@{previewedit}"/>
 
         </LinearLayout>
@@ -112,14 +113,15 @@
                     android:layout_margin="5dp"
 
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
-                    android:backgroundTint="#000000"/>
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[0]}"/>/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn2"
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[1]}"/>
             </TableRow>
 
             <TableRow
@@ -133,14 +135,17 @@
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[2]}"/>/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn4"
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[3]}"/>/>
+                />
 
             </TableRow>
 
@@ -155,14 +160,18 @@
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[4]}"/>/>
+                />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/color_btn6"
                     android:onClickListener="@{(v) -> fontDialogViewModel.setEditTextColor(v)}"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@{fontDialogViewModel.backgroundTint[5]}"/>/>
+                />
             </TableRow>
 
         </TableLayout>

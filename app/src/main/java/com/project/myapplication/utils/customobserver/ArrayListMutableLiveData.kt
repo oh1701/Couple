@@ -47,4 +47,10 @@ open class ArrayListMutableLiveData <T>:MutableLiveData<ArrayList<T>>() {
         val items: ArrayList<T> = value!!
         value = items
     }
+
+    open fun allChange(item: List<T>){
+        val myItem = ArrayList<T>()
+        myItem.addAll(item)
+        value = myItem
+    }
 }

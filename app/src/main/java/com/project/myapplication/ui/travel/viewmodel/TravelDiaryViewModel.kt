@@ -95,6 +95,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     val fontcolorHex:LiveData<ColorStateList> = _fontcolorHex
     private val _fontTypeFace = MutableLiveData<Typeface>(Typeface.DEFAULT)
     val fontTypeFace:LiveData<Typeface> = _fontTypeFace
+    val fontColorStateList = ArrayListMutableLiveData<Int>()
     
     //TypeFace 변경용
     val fontTypefaceToString = MutableLiveData<String>("기본")
@@ -112,7 +113,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     private val _updateImageValue = ArrayListMutableLiveData<String>()
     private val _updateTitleValue = MutableLiveData<String>()
     private val _updateContentValue = MutableLiveData<String>()
-    val fontUpdateComplete = MutableLiveData<Boolean>()
+    private val _fontUpdateComplete = MutableLiveData<Boolean>()
+    val fontUpdateComplete:LiveData<Boolean> = _fontUpdateComplete
 
     //현재 이미지 뷰페이저 위치
     private val _imageViewPagerNumber = MutableLiveData<Int>(0)
@@ -138,6 +140,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         recyclerList.listLiveData()
         diaryImageUri.listLiveData()
         _updateImageValue.listLiveData()
+        fontColorStateList.listLiveData()
     }
 
     // DB 관련
@@ -186,7 +189,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 fontTypefaceToString.value = it.textTypeFace
                 _fontTypedSizeValue.value = it.fontTypedSizeValue
                 _fontSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, fontTypedSizeValue.value!!, metrics.value)
-                fontUpdateComplete.value = true
+                fontColorStateList.allChange(it.colorList)
+                _fontUpdateComplete.value = true
             }
             .doOnError {
                 Log.e("getFontEntity ::", "실패 이유 $:$it")
@@ -287,6 +291,7 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
     }
 
     private fun roomInsertFont(){
+        Log.e("칼라스테이트", fontColorStateList.value.toString())
         compositeDisposable.add(
             repository.insertFontDB(
                 RoomFontEntity(
@@ -295,7 +300,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                     fontcolorHex.value!!.defaultColor,
                     fontletterSpacing.value,
                     fontlineSpacing.value,
-                    fontTypedSizeValue.value
+                    fontTypedSizeValue.value,
+                    fontColorStateList.value!!
                 ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -319,7 +325,8 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
                 fontcolorHex.value!!.defaultColor,
                 fontletterSpacing.value,
                 fontlineSpacing.value,
-                fontTypedSizeValue.value
+                fontTypedSizeValue.value,
+                fontColorStateList.value!!
             ))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -458,6 +465,10 @@ class TravelDiaryViewModel(private val repository: TravelDiaryRepository):BaseVi
         _fontcolorHex.value = setting.colorHex
         _fontTypedSizeValue.value = setting.fontTypedSizeValue
         _fontSize.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, setting.fontTypedSizeValue!!, metrics.value)
+
+        val a = arrayListOf<Int>()
+        setting.colorList.forEach { a.add(it.defaultColor) }
+        fontColorStateList.allChange(a)
     }
 
     fun getFontTypeface(typeface: Typeface){

@@ -9,6 +9,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.project.myapplication.R
 import com.project.myapplication.utils.GlideUtils
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
+
+
+
 
 
 /** 맵 패키지 안에 마커 , 카메라 부분 등등으로 나누기*/
@@ -19,7 +23,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
     private val view = LayoutInflater.from(context).inflate(R.layout.google_usermarker, null)
     private val imageView = view.findViewById<ImageView>(R.id.profile_image)
     private val glideUtils = GlideUtils(context)
-
+    private var lastOpened: Marker? = null
     // Setting
 
     fun mapSetting(){
@@ -27,9 +31,8 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
         googleMap?.uiSettings?.isRotateGesturesEnabled = false // 제스쳐로 회전 시키는 설정 끄기
         googleMap?.uiSettings?.isMyLocationButtonEnabled = false // 내 위치 버튼 나오게하는 설정 끄기
         googleMap?.uiSettings?.isMapToolbarEnabled = false // Toolbar 나오게 하는 설정 끄기
-    }
+    } // Camera
 
-    // Camera
 
     fun repeatFunction(latlng: LatLng){
         animateCamera(latlng)
@@ -63,7 +66,7 @@ class GoogleMapSetting(val context: Context, private val googleMap: GoogleMap?) 
             userMarker = googleMap?.addMarker(MarkerOptions()
                 .zIndex(1.5f)
                 .position(latlng))!!
-            
+
             glideUtils.glideListener(view, R.drawable.couple3, imageView, userMarker, "user")
         }
     }

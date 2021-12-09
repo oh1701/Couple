@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.collections.MarkerManager
 import com.project.myapplication.data.room.entity.RoomDiaryEntity
 import com.project.myapplication.model.ClusterMarkerModel
 import com.project.myapplication.ui.travel.viewmodel.TravelMapViewModel
@@ -21,9 +22,10 @@ class ClusterSetting {
         )
         cluster.renderer = render
         map.setOnCameraIdleListener(cluster) // 지도 화면의 움직임 감시
-        map.setOnMarkerClickListener(cluster) // 마커 클릭시 실행하는 함수
+        map.setOnMarkerClickListener(cluster.markerManager) // 마커 클릭시 실행하는 함수
 
         cluster.setOnClusterItemClickListener { markerItem ->
+            Log.e("141414 ,", "실행실행")
             if((SystemClock.elapsedRealtime() - lastClickTime) > 1000) { // 중복 클릭 방지
                 when (viewModel) {
                     is TravelMapViewModel -> viewModel.markerClickListener(
@@ -35,7 +37,6 @@ class ClusterSetting {
                 lastClickTime = SystemClock.elapsedRealtime()
             }
             return@setOnClusterItemClickListener true
-
         }
 
         cluster.setOnClusterClickListener { markerClusterItem ->
@@ -51,6 +52,7 @@ class ClusterSetting {
                 }
                 lastClickTime = SystemClock.elapsedRealtime()
             }
+            Log.e("클릭", "클릭")
             return@setOnClusterClickListener true
         }
     }

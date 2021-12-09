@@ -19,15 +19,18 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import com.project.myapplication.R
 import com.project.myapplication.googlemap.GoogleMapSetting
 
 /** Create By Gyu Seong Oh. 2021 / 11  */
 
 class GlideUtils(private val context: Context){
     fun <Type, V, mapMarker> glideListener(view: View, image:Type?, intoView:V, getmarker:mapMarker?, tag:String){ // 제너릭 타입을 통해 타입 미지정
+
         Glide.with(view)
-            .load(image)
+            .load(image ?: R.mipmap.myappicon)
             .circleCrop()
+            .placeholder(R.mipmap.myappicon) // 기본 이미지 설정
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -81,8 +84,8 @@ class GlideUtils(private val context: Context){
     private fun<getMarker> markerSeticon(getmarker:getMarker, view:View, tag:String){
         getmarker?.let{ mymarker -> // 마커가 Null이 아니면 설정해줌.
             if(mymarker is Marker){
-                mymarker
-                    .setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+                mymarker.setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(view)))
+
                 when(tag){
                     "user" -> mymarker.zIndex = 1.5f
                     "cluster" -> mymarker.zIndex = 1.0f

@@ -3,6 +3,7 @@ package com.project.myapplication.ui.dialog.viewmodel
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -32,6 +33,9 @@ class FontDialogViewModel:BaseViewModel() {
     val buttonColor:LiveData<Int> = _buttonColor
 
     val backgroundTint = ArrayListMutableLiveData<ColorStateList>()
+    val fontColorCallBack:(ColorStateList) -> Unit = {
+        _textColor.value = it.defaultColor
+    }
 
     init{
         backgroundTint.listLiveData()
@@ -91,18 +95,21 @@ class FontDialogViewModel:BaseViewModel() {
     }
 
     fun dialogComplete(){
-        if(backgroundTint.value?.size!! < 6){ // 최근 색깔 지정
+        if (backgroundTint.value?.size!! < 6) { // 최근 색깔 지정
             backgroundTint.add(ColorStateList.valueOf(textColor.value!!))
-        }
-        else{
-            backgroundTint.value!![1] = ColorStateList.valueOf(textColor.value!!)
-            for(i in 1 until backgroundTint.value!!.size){
-                backgroundTint.value!![i + 1] = backgroundTint.value!![i]
+        } else {
+            for (i in 5 downTo 1) {
+                if(i > 1)
+                    backgroundTint.value!![i] = backgroundTint.value!![i - 1]
+                else if(i == 1){
+                    backgroundTint.value!![i] = (ColorStateList.valueOf(textColor.value!!))
+                }
             }
         }
-        
         _fontSettingComplete.value = Event(true)
     }
+
+    //6개중에서 0번째는 검정 고정. 1번째는 현재, 2번째는 -1 3번째는 -1 4번째는 -1 5번째는 -1
 
     fun setEditTextColor(v:View){
         _buttonColor.value = v.backgroundTintList?.defaultColor
@@ -116,12 +123,7 @@ class FontDialogViewModel:BaseViewModel() {
             _letterSpacing.value = fontSettingModel.letterSpacing
             _textColor.value = fontSettingModel.colorHex!!.defaultColor
             _textTypeFace.value = fontSettingModel.fontTypeFace
-        }
-    }
-
-    fun colorIntListToColorState(arrColor:ArrayList<Int>){
-        arrColor.forEach {
-            backgroundTint.add(ColorStateList.valueOf(arrColor[it]))
+            backgroundTint.allChange(fontSettingModel.colorList)
         }
     }
 }

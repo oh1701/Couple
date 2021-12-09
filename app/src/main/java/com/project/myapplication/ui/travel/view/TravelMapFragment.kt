@@ -1,12 +1,14 @@
 package com.project.myapplication.ui.travel.view
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.collections.MarkerManager
 import com.project.myapplication.R
 import com.project.myapplication.base.BaseFragment
 import com.project.myapplication.databinding.FragmentTravelMapBinding
@@ -33,6 +35,7 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
     private lateinit var googleMapSetting: GoogleMapSetting
     private lateinit var cluster : ClusterManager<MarkerClusterItem>
     private val clusterSetting = ClusterSetting()
+    private var lastClickTime = 0L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,14 +70,19 @@ class TravelMapFragment:BaseFragment<FragmentTravelMapBinding, TravelMapViewMode
         thisViewModel.createTravelDiary.observe(viewLifecycleOwner, EventObserver{ // 다이어리 버튼 눌리면.
             if(sharedActivityViewModel.myLocationLatLng.value == null){
                 toast("위치 정보가 불러와지지 않았습니다.\n잠시 후 다시 시도해주세요.")
-            }
-            else{
-                MoveFragment()
-                    .createDiary(requireActivity().supportFragmentManager, TravelDiaryFragment.newInstance(9999999, -1))
+            } else {
+                if ((SystemClock.elapsedRealtime() - lastClickTime) > 1000) { // 중복 클릭 방지
+                    MoveFragment()
+                        .createDiary(
+                            requireActivity().supportFragmentManager,
+                            TravelDiaryFragment.newInstance(9999999, -1)
+                        )
                         .addToBackStack("Map")
                         .commit()
-                    }
-            })
+                }
+                lastClickTime = SystemClock.elapsedRealtime()
+            }
+        })
 
         thisViewModel.cameraAutoSetting.observe(viewLifecycleOwner){
             if(::googleMapSetting.isInitialized) {

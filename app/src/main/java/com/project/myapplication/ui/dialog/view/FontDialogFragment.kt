@@ -44,7 +44,8 @@ class FontDialogFragment:BaseDialogFragment<DialogFragmentFontBinding, FontDialo
                     thisViewModel.lineSpacing.value,
                     thisViewModel.textTypedValue.value,
                     binding.previewedit.textColors,
-                    binding.previewedit.typeface)
+                    binding.previewedit.typeface,
+                    thisViewModel.backgroundTint.value!!)
             )
             this.dialog?.dismiss()
         })
